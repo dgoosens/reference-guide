@@ -185,7 +185,7 @@ At this moment following modules with pollable channels are available:
 * [DBAL Support](../modules/dbal-support.md#message-channel)
 
 {% hint style="info" %}
-Current available Message Channels are integrated with great library [enqueue](https://github.com/php-enqueue/enqueue).
+Currently available Message Channels are integrated with great library [enqueue](https://github.com/php-enqueue/enqueue).
 {% endhint %}
 
 {% tabs %}
