@@ -1,0 +1,121 @@
+# Repository
+
+Repositories are used for retrieving and saving the aggregate to persistent storage. 
+
+Aggregate need to be loaded in order to call method on it.   
+Normally the flow for calling aggregate method, would looks like below. Which involves having handling service with access to repository.
+
+```php
+class AssignWorkerCommmand
+{
+    private string $ticketId;
+    
+    private string $workerId;
+    
+    public function getTicketId() : string;
+    {
+       return $this->ticketId;
+    }
+    
+    public function getWorkerId() : string
+    {
+       return $this->workerId;
+    }
+}
+
+
+/**
+* @MessageEndpoint()
+*/
+class CloseTicketHandler
+{
+    private TicketRepository $ticketRepository;
+
+    /**
+    * @CommandHandler()
+    */
+    public function handle(CreateTicketCommand $command) : void
+    {
+       $ticket = $this->ticketRepository->findBy($command->getTicketId());
+       $ticket->assignWorker($command->getWorkerId());
+       $this->ticketRepository->save($ticket);    
+    }
+}
+
+class Ticket
+{
+    public function assignWorker(string $workerId)
+    {
+       // do something with assignation
+    }
+}
+```
+
+_Ecotone_ provides possibility to mark Ticket Aggregate [methods as `@CommandHandler` directly.](state-stored-aggregate.md)   
+In that situation, Ecotone retrievies identifiers from Command message, pass them to `Repository`, calls the method on aggregate instance and saves it. In short it does code from \#31 to \#33 for you. 
+
+{% hint style="info" %}
+As Ecotone does not try to impose specific solutions, you are free to choose, which fits you best in specific context. Above example is based on [External Command Handlers](external-command-handlers.md).
+{% endhint %}
+
+To get more details how to implement _Aggregate,_ go to previous pages:
+
+{% page-ref page="state-stored-aggregate.md" %}
+
+{% page-ref page="event-sourcing-aggregate.md" %}
+
+### How to implement Repository
+
+There are two types of repositories. One for storing [`State-Stored Aggregate`](state-stored-aggregate.md) and another one for storing [`Event Sourcing Aggregate`](event-sourcing-aggregate.md).
+
+Based on which interface is implemented, `Ecotone` knows which Aggregate type was selected.  
+The interface informs, if specific `Repository` can handle given `Aggregate class.`  
+You may implement 
+
+#### Repository for State-Stored Aggregate
+
+```php
+namespace Ecotone\Modelling;
+
+interface StandardRepository
+{
+    
+    1 public function canHandle(string $aggregateClassName): bool; 
+    
+    2 public function findBy(string $aggregateClassName, array $identifiers) : ?object;
+    
+    3 public function save(array $identifiers, object $aggregate, array $metadata, ?int $expectedVersion): void;
+}
+```
+
+1. `canHandle method` informs, which `Aggregate Classes` can be handled with this `Repository`. Return true, if saving specific aggregate is possible, false otherwise.
+2. `findBy method` returns if found, existing `Aggregate instance`, otherwise null. 
+3. `save method` is reponsible for storing given `Aggregate instance`. 
+
+
+
+* `$identifiers` are array of `@AggregateIdentifier` defined within aggregate.
+* `$aggregate` is instance of aggregate
+* `$metadata` is array of extra information, that can be passed with Command
+* `$expectedVersion` if version locking by `@Version` is enabled it will carry currently expected version
+
+#### Repository for Event Sourced Aggregate
+
+```php
+namespace Ecotone\Modelling;
+
+interface EventSourcedRepository
+{
+    public function canHandle(string $aggregateClassName): bool;
+    
+    1 public function findBy(string $aggregateClassName, array $identifiers) : ?array;
+
+    2 public function save(array $identifiers, array $events, array $metadata, ?int $expectedVersion): void;
+}
+```
+
+The only difference between State-Stored Repository and Event Sourced is, that instead of working with aggregate instance, we work with events. 
+
+1. `findBy method` returns previously created events for given aggregate. 
+2. `save method` gets array of events to save returned by `@CommandHandler` after performing an action
+
