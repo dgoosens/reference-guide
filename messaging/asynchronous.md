@@ -184,6 +184,10 @@ At this moment following modules with pollable channels are available:
 * [AMQP Support \(RabbitMQ\)](../modules/amqp-support-rabbitmq.md#message-channel)
 * [DBAL Support](../modules/dbal-support.md#message-channel)
 
+{% hint style="info" %}
+Current available Message Channels are integrated with great library [enqueue](https://github.com/php-enqueue/enqueue).
+{% endhint %}
+
 {% tabs %}
 {% tab title="Symfony" %}
 ```php
