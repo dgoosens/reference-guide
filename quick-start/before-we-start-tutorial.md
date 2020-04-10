@@ -32,14 +32,14 @@ In places where configuration will differ, there will be two tabs available each
 {% tab title="Symfony" %}
 ```
 git clone git@github.com:ecotoneframework/quickstart-symfony.git
-cd quickstart
+# Go to quickstart-symfony catalog
 ```
 {% endtab %}
 
 {% tab title="Laravel" %}
 ```bash
 git clone git@github.com:ecotoneframework/quickstart-laravel.git
-cd quickstart
+# Go to quickstart-laravel catalog
 
 # Normally you will use "php artisan" for running console commands
 # To reduce number of difference "artisan" is changed to "bin/console"
