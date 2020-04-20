@@ -1,13 +1,9 @@
 # Scheduling and Asynchronous
 
-## Channel Adapter
-
-A channel adapter is a message endpoint that enables connecting a single sender or receiver to a message channel.   
-Inbound Channel Adapter connects receiver to a channel, while Outbound Channel Adapter connects channel to sender.
-
 ## Scheduling
 
-`Ecotone` comes with support for running `period tasks` or `cron jobs` using `InboundChannelAdapter.`
+`Ecotone` comes with support for running `period tasks` or `cron jobs` using `Scheduled.`  
+
 
 ```php
 /**
@@ -16,7 +12,7 @@ Inbound Channel Adapter connects receiver to a channel, while Outbound Channel A
 class CurrencyExchanger
 {
     /**
-     * @InboundChannelAdapter(
+     * @Scheduled(
      *     endpointId="currencyExchanger",
      *     requestChannelName="exchange",
      *     poller=@Poller(
