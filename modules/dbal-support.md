@@ -105,7 +105,7 @@ To enable transactions on specific endpoint, mark it with `Ecotone\Dbal\DbalTran
     }
 ```
 
-If you want to enable for all [Polling Endpoints](../quick-start/lesson-6-scheduling-and-asynchronous.md) or specific for Command Bus. You may use of `ApplicationContext.`
+If you want to enable for all [Asynchronous Endpoints](../quick-start/lesson-6-scheduling-and-asynchronous.md) or specific for Command Bus. You may use of `ApplicationContext.`
 
 ```php
 use Ecotone\Dbal\Configuration\DbalConfiguration;
