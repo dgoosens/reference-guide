@@ -47,7 +47,7 @@ List of namespace prefixes, that should be loaded aby Ecotone
 
 ### serializationMediaType
 
-Describes default serialization type within application. If not configured default serialization will be `application/x-php-serialized,` ~~~~which is sierliazed PHP class.
+Describes default serialization type within application. If not configured default serialization will be `application/x-php-serialized,`which is serialized PHP class.
 
 ### defaultErrorChannel
 
