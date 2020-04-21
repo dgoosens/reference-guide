@@ -124,8 +124,8 @@ class ChannelConfiguration
     {
         return [
             DbalConfiguration::createWithDefaults()
-                ->withDefaultTransactionOnPollabeEndpoints(true)
-                ->withDefaultTransactionOnCommandBus(true)
+                ->withTransactionOnAsynchronousEndpoints(true)
+                ->withTransactionOnCommandBus(true)
         ];
     }
 

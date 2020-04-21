@@ -279,8 +279,8 @@ class ChannelConfiguration
     {
         return [
             AmqpConfiguration::createWithDefaults()
-                ->withDefaultTransactionOnPollabeEndpoints(true)
-                ->withDefaultTransactionOnCommandBus(true)
+                ->withTransactionOnAsynchronousEndpoints(true)
+                ->withTransactionOnCommandBus(true)
         ];
     }
 
