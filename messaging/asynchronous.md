@@ -3,7 +3,7 @@
 ## Scheduling
 
 `Ecotone` comes with support for running `period tasks` or `cron jobs` using `Scheduled.`  
-
+`Scheduled` creates [Message](messaging-concepts/message.md) from given method and send it to given `requestChannelName`.
 
 ```php
 /**
@@ -289,9 +289,9 @@ class Configuration
 }
 ```
 
-##  Intercepting polling endpoint
+##  Intercepting asynchronous endpoint
 
-All polling endpoints are marked with special annotation`Ecotone\Messaging\Annotation\PollableEndpoint`   
+All asynchronous endpoints are marked with special annotation`Ecotone\Messaging\Annotation\PollableEndpoint`   
 If you want to intercept all polling endpoints you should make use of [annotation related point cut](interceptors.md#pointcut).  
  `@(Ecotone\Messaging\Annotation\PollableEndpoint)`
 

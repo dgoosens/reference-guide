@@ -24,6 +24,11 @@ cacheConfiguration: bool (default: false, production: true)
 namespaces: string[] (default: [])
 serializationMediaType: string (default: application/x-php-serialized) [application/json, application/xml]
 defaultErrorChannel: string (default: null)
+defaultMemoryLimit: string (default: null)
+defaultChannelPollRetry: 
+   initialDelay: int (default: 100, production: 1000)
+   maxAttempts: int (default: 3, production: 5)
+   multiplier: int (default: 3)
 ```
 
 ### loadAppNamespaces
@@ -46,5 +51,17 @@ Describes default serialization type within application. If not configured defau
 
 ### defaultErrorChannel
 
-Provides default [Poller configuration](../messaging/asynchronous.md#polling-metadata) with error channel for all pollable endpoints.
+Provides default [Poller configuration](../messaging/asynchronous.md#polling-metadata) with error channel for all asynchronous endpoints.
+
+### defaultMemoryLimit
+
+Provides default memory limit in megabytes for all asynchronous endpoints
+
+### defaultChannelPollRetry
+
+Provides default channel poll retry template. It's responsible for connection retry for asynchronous endpoints.
+
+`initialDelay` - delay after first retry in milliseconds  
+`multiplier` - how much initialDelay should be multipled with each try  
+`maxAttempts` - How many attemps should be done, before closing closing endpoint
 

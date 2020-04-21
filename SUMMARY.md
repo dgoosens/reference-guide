@@ -54,6 +54,6 @@
 * [Symfony Bundle](modules/symfony-bundle.md)
 * [Laravel](modules/laravel.md)
 * [JMS Converter](modules/jms-converter.md)
-* [AMQP Support \(RabbitMQ\)](modules/amqp-support-rabbitmq.md)
+* [RabbitMQ Support](modules/amqp-support-rabbitmq.md)
 * [DBAL Support](modules/dbal-support.md)
 

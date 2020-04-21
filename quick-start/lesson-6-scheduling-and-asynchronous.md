@@ -461,13 +461,13 @@ class MessagingConfiguration
 Now we need to tell our `order.place` Command Handler, that it should run asynchronously using our new`orders` channel. 
 
 ```php
-use Ecotone\Messaging\Annotation\Async;
+use Ecotone\Messaging\Annotation\Asynchronous;
 
 (...)
 
 /**
+ * @Asynchronous(channelName="orders")
  * @CommandHandler(endpointId="place_order_endpoint", inputChannelName="order.place")
- * @Async(channelName="orders")
  */
 public static function placeOrder(PlaceOrderCommand $command, array $metadata, QueryBus $queryBus) : self
 {
@@ -481,8 +481,8 @@ public static function placeOrder(PlaceOrderCommand $command, array $metadata, Q
 }
 ```
 
-We do it by adding `@Async` annotation with `channelName` used for asynchronous call.   
-Endpoints using `@Async` are required to have `endpointId` defined, the name can be anything as long as it's not the same as `inputChannelName`. 
+We do it by adding `@Asynchronous` annotation with `channelName` used for asynchronous endpoint.   
+Endpoints using `@Asynchronous` are required to have `endpointId` defined, the name can be anything as long as it's not the same as `inputChannelName`. 
 
 ```php
 @CommandHandler(endpointId="place_order_endpoint" (...)

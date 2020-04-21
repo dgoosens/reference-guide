@@ -1,4 +1,4 @@
-# AMQP Support \(RabbitMQ\)
+# RabbitMQ Support
 
 ## Installation
 
@@ -125,7 +125,7 @@ class AMQPConfiguration
     public function registerAmqpConfig()
     {
         return 
-            RegisterAmqpPublisher::create(
+            AmqpMessagePublisherConfiguration::create(
                 Publisher::class, // 1
                 "delivery", // 2
                 "application/json" // 3
