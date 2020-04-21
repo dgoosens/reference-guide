@@ -23,7 +23,7 @@ ecotone:
     namespaces: string[] (default: [])
     serializationMediaType: string (default: application/x-php-serialized) [application/json, application/xml]
     defaultErrorChannel: string (default: null)
-    defaultMemoryLimit: string (default: null)
+    defaultMemoryLimit: string (default: 1024)
     defaultChannelPollRetry: 
        initialDelay: int (default: 100, production: 1000)
        maxAttempts: int (default: 3, production: 5)
