@@ -6,18 +6,12 @@ Not having code for _Lesson 6?_
 `git checkout lesson-6`
 {% endhint %}
 
-`Ecotone` provides abstractions for asynchronous execution and scheduling.  
-
+`Ecotone` provides abstractions for asynchronous execution and scheduling.
 
 ### Scheduling
 
 Some times you will want to run endpoint on given time or with specific rate.  
-In order to do it `Ecotone` comes with `Inbound Channel Adapter`.   
-Inbound Channel Adapter indicates, that it connects something external to our inside channel. 
-
-{% hint style="info" %}
-You will also meet `Outbound Channel Adapters`, which work opposite. It will get the Message out of the channel and publish it something external. 
-{% endhint %}
+In order to do it `Ecotone` comes with `Scheduled` endpoint. 
 
 Let's suppose that we integrate with Currency Exchange Service and we need to recalculate the price, whenever the currency ratio will change.   
 We will periodically call the external service and change the price our product.   
@@ -54,7 +48,7 @@ bin/console ecotone:quickstart
 Good job, scenario ran with success!
 ```
 
-So our price now is `110`.  Now we will add our first `InboundChannelAdapter`
+So our price now is `110`.  Now we will add our first `Scheduled` endpoint
 
 ```php
 namespace App\Infrastructure;
@@ -85,8 +79,8 @@ class CurrencyExchanger
 }
 ```
 
-We start by marking method as `@InboundChannelAdapter` and class as `@MessageEndpoint.`   
-It takes the data returned from the method and use it as payload's for the [Message](../messaging/messaging-concepts/message.md). Then sends it `requestChannelName`.  
+We start by marking method as `@Scheduled` and class as `@MessageEndpoint.`   
+It takes the data returned from `exchange` method and use it as payload's for the [Message](../messaging/messaging-concepts/message.md) which is send to `requestChannelName`.  
   
 `endpointId` - Describes endpoint identifier  
 `requestChannelName` - describes where it should send created message  
