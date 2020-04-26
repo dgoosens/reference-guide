@@ -59,7 +59,7 @@ So our price now is `110`.  Now we will add our first `InboundChannelAdapter`
 ```php
 namespace App\Infrastructure;
 
-use Ecotone\Messaging\Annotation\InboundChannelAdapter;
+use Ecotone\Messaging\Annotation\Scheduled;
 use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Messaging\Annotation\Poller;
 
@@ -69,7 +69,7 @@ use Ecotone\Messaging\Annotation\Poller;
 class CurrencyExchanger
 {
     /**
-     * @InboundChannelAdapter(
+     * @Scheduled(
      *     endpointId="currency_exchanger",
      *     requestChannelName="product.changePrice",
      *     poller=@Poller(
