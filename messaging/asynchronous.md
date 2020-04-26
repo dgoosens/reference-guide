@@ -3,7 +3,7 @@
 ## Scheduling
 
 `Ecotone` comes with support for running `period tasks` or `cron jobs` using `Scheduled.`  
-`Scheduled` creates [Message](messaging-concepts/message.md) from given method and send it to given `requestChannelName`.
+`Scheduled` creates [Message](messaging-concepts/message.md) from given method and send it to `requestChannelName`.
 
 ```php
 /**
@@ -33,7 +33,7 @@ class CurrencyExchanger
 public function exchange(ExchangeCommand $command) : void;
 ```
 
-`endpointId` - Inbound Channel Adapter requires defined `endpointId,` it will be used in order to run Adapter.   
+`endpointId` - `Scheduled` requires defined `endpointId,` it will be used in order to run Adapter.   
 `requestChannelName` - The channel name to which [Message](messaging-concepts/message.md) should be send  
 `poller` - Configuration how to execute Inbound Channel Adapter, [read more in next section](asynchronous.md#polling-metadata). This configuration tells `Ecotone` to execute Channel Adapter every second.
 
@@ -56,7 +56,7 @@ $consumers = $messagingSystem->getListOfSeparatelyRunningConsumers()
 {% endtab %}
 {% endtabs %}
 
-After setting up Inbound Channel Adapter we can run the endpoint:
+After setting up Scheduled endpoint we can run the endpoint:
 
 {% tabs %}
 {% tab title="Symfony" %}
@@ -72,7 +72,7 @@ $messagingSystem->runSeparatelyRunningEndpointBy("currencyExchanger");
 {% endtab %}
 {% endtabs %}
 
-After running `Inbound Channel Adapter` every second it will poll message from `callExchange`and call  Command Handler `exchange`with array payload  `["currency" => "EUR", "ratio" => 1.23]`. When the Message will arrive on the Command Handler it will be automatically converted to `ExchangeCommand.` If you want to understand how the conversion works, you may read about it in [Conversion section](conversion/).
+After running`currencyExchanger` endpoint it will poll message from `callExchange`and call  Command Handler `exchange`with array payload  `["currency" => "EUR", "ratio" => 1.23]`. When the Message will arrive on the Command Handler it will be automatically converted to `ExchangeCommand.` If you want to understand how the conversion works, you may read about it in [Conversion section](conversion/).
 
 ## Polling Metadata
 
