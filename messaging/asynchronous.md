@@ -158,14 +158,14 @@ We do not want to expose such endpoint to public world, that's why we use @Servi
 
 `Ecotone` does allow for easy change endpoint to be running synchronously or asynchronously according to current running process.
 
-In order to run Endpoint asynchronously  it should run asynchronously using our new`orders` channel. 
+In order to run Endpoint asynchronously we need to mark it as `@Asynchronous`.
 
 ```php
-use Ecotone\Messaging\Annotation\Async;
+use Ecotone\Messaging\Annotation\Asynchronous;
 
 /**
+ * @Asynchronous(channelName="orders")
  * @CommandHandler(endpointId="place_order_endpoint", inputChannelName="order.place")
- * @Async(channelName="orders")
  */
 public function placeOrder(PlaceOrderCommand $command) : void
 {
@@ -173,8 +173,8 @@ public function placeOrder(PlaceOrderCommand $command) : void
 }
 ```
 
-To add Endpoint as asynchronous we need to mark is with `@Async`. This also requires adding endpointId on our endpoint's annotation, in this case in `@CommandHandler.`   
-`@Async` has channelName defined as `orders` we need to register such channel. In order to do it, we need to use one of the Modules, that provides pollable channels.   
+We need to add endpointId on our endpoint's annotation, in this case in `@CommandHandler.`   
+`@Asynchronous` has channelName defined as `orders` we need to register such channel. In order to do it, we need to use one of the Modules, that provides pollable channels.   
 At this moment following modules with pollable channels are available:
 
 * [AMQP Support \(RabbitMQ\)](../modules/amqp-support-rabbitmq.md#message-channel)
@@ -221,7 +221,7 @@ $messagingSystem->runSeparatelyRunningEndpointBy("orders");
 
 ### Asynchronous Class
 
-You may put `@Async` on the class, level so all the endpoints within a class will becomes asynchronous.
+You may put `@Asynchronous` on the class, level so all the endpoints within a class will becomes asynchronous.
 
 ### Query Handler
 
