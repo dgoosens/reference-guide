@@ -233,7 +233,7 @@ class Consumer
 1. `endpointId` - Defines identifier for this consumer. It will be available under this name to run
 
 ```php
-ecotone:list-all-pollable-endpoints
+ecotone:list-all-asynchronous-endpoints
 +--------------------+
 | Endpoint Names     |
 +--------------------+

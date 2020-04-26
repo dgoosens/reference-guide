@@ -40,7 +40,7 @@ public function exchange(ExchangeCommand $command) : void;
 {% tabs %}
 {% tab title="Symfony" %}
 ```php
-bin/console ecotone:list-all-pollable-endpoints
+bin/console ecotone:list-all-asynchronous-endpoints
 +--------------------+
 | Endpoint Names     |
 +--------------------+

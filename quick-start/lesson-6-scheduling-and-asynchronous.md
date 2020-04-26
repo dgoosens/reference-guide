@@ -100,11 +100,11 @@ You can also set up `cron` expression. In this case to run it every second we wo
 ```
 
 {% hint style="success" %}
-Let's run our command which will tell us what pollable endpoints we have defined in our system: `ecotone:list-all-pollable-endpoints`
+Let's run our command which will tell us what asynchronous endpoints we have defined in our system: `ecotone:list-all-asynchronous-endpoints`
 {% endhint %}
 
 ```php
-bin/console ecotone:list-all-pollable-endpoints
+bin/console ecotone:list-all-asynchronous-endpoints
 +--------------------+
 | Endpoint Names     |
 +--------------------+
@@ -489,11 +489,11 @@ Endpoints using `@Asynchronous` are required to have `endpointId` defined, the n
 ```
 
 {% hint style="success" %}
-Let's run our command which will tell us what pollable endpoints we have defined in our system: `ecotone:list-all-pollable-endpoints`
+Let's run our command which will tell us what asynchronous endpoints we have defined in our system: `ecotone:list-all-asynchronous-endpoints`
 {% endhint %}
 
 ```php
-bin/console ecotone:list-all-pollable-endpoints
+bin/console ecotone:list-all-asynchronous-endpoints
 +--------------------+
 | Endpoint Names     |
 +--------------------+
@@ -502,7 +502,7 @@ bin/console ecotone:list-all-pollable-endpoints
 +--------------------+
 ```
 
-We have new pollable endpoint available `orders.` Name comes from the message channel name.  
+We have new asynchronous endpoint available `orders.` Name comes from the message channel name.  
 You may wonder why it is not `place_order_endpoint,` it's because via single asynchronous channel we can handle multiple endpoints, if needed. This is further explained in [asynchronous section](../messaging/asynchronous.md).
 
 Let's change `orderId` in our testing command, so we can place new order.
@@ -541,9 +541,9 @@ AggregateNotFoundException:
   rs {"orderId":990}  
 ```
 
-That's fine, we have registered `order.place` Command Handler to run asynchronously, so we need to run our `pollable endpoint` in order to handle `Command Message`. If you did not received and exception, it's probably you did not change the `orderId` and we already registered such order.  
+That's fine, we have registered `order.place` Command Handler to run asynchronously, so we need to run our `asynchronous endpoint` in order to handle `Command Message`. If you did not received and exception, it's probably you did not change the `orderId` and we already registered such order.  
   
-Let's run our asynchronous pollable endpoint
+Let's run our asynchronous endpoint
 
 ```php
 bin/console ecotone:run-endpoint orders -vvv
