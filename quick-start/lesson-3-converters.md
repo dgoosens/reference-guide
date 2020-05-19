@@ -52,7 +52,7 @@ Let's start with implementing `matches` method. Which tells us, if this converte
 public function matches(TypeDescriptor $sourceType, MediaType $sourceMediaType, TypeDescriptor $targetType, MediaType $targetMediaType): bool
 {
     return $sourceMediaType->isCompatibleWith(MediaType::createApplicationJson()) // if source media type is JSON
-        && $targetMediaType->isCompatibleWith(MediaType::createApplicationXPHP())    ; // and target media type is PHP
+        && $targetMediaType->isCompatibleWith(MediaType::createApplicationXPHP()); // and target media type is PHP
 }
 ```
 
