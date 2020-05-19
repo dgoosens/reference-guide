@@ -243,6 +243,8 @@ class GetProductPriceQuery
 We also need Handler for this query. Let's add `Query Handler` __to the `ProductService`
 
 ```php
+<?php
+
 namespace App\Domain\Product;
 
 use Ecotone\Messaging\Annotation\MessageEndpoint;
@@ -329,6 +331,8 @@ For sending Queries we will use `Query Bus Gateway`.
 Let's inject and call Query and Command bus into EcotoneQuickstart class. 
 
 ```php
+<?php
+
 namespace App;
 
 use App\Domain\Product\GetProductPriceQuery;
@@ -378,6 +382,8 @@ In order to do it, we will make use of `Event Bus Gateway` which can publish eve
 Let's start by creating `ProductWasRegisteredEvent.`
 
 ```php
+<?php
+
 namespace App\Domain\Product;
 
 class ProductWasRegisteredEvent
@@ -424,6 +430,8 @@ You may wonder, how `EventBus` is injected into the Command Handler's method.
 Now, when our event is published, whenever new product is registered, we want to listen for it and notify. Let's create new class and annotate method with `@EventHandler`. 
 
 ```php
+<?php
+
 namespace App\Domain\Product;
 
 use Ecotone\Messaging\Annotation\MessageEndpoint;
