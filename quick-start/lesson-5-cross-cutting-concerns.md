@@ -376,7 +376,7 @@ SQL
 ```
 
 1. `Connection` to sqlite database using dbal library
-2. `Serializer` is [Gateway](../messaging/messaging-concepts/messaging-gateway.md) registered by `Ecotone.`  Serializer can handle serialization using [Converters](untitled.md).  It this case it will know how to register `Cost` class, as we already registered Converter for it. Serializer give us access for conversion `from PHP` type to specific Media Type or from specific Media Type `to PHP` type. We will use it to easily serialize our `Product` model into `JSON` and store it in database.
+2. `Serializer` is [Gateway](../messaging/messaging-concepts/messaging-gateway.md) registered by `Ecotone.`  Serializer can handle serialization using [Converters](converters.md).  It this case it will know how to register `Cost` class, as we already registered Converter for it. Serializer give us access for conversion `from PHP` type to specific Media Type or from specific Media Type `to PHP` type. We will use it to easily serialize our `Product` model into `JSON` and store it in database.
 3. This does create database table, if needed. It does create simple table structure containing `id` of the aggregate, the `class` type and serialized `data` in `JSON`. Take a look at `createSharedTableIfNeeded` if you want more details.
 4. Deserialize aggregate to `PHP`
 5. Serialize aggregate to `JSON`
