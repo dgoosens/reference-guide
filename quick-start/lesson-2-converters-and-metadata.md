@@ -70,7 +70,7 @@ Now remove `App\Domain\Product\ProductService` as it contains handlers for same 
 Before we will run our test scenario, we need to register `Repository`.
 
 {% hint style="info" %}
-Usually you will mark `services` as Query Handlers not `aggregates. Ecotone`does not block possibility to place Query Handler on _Aggregate_. It's up to you, where do you want to active as Query Handler.
+Usually you will mark `services` as Query Handlers not `aggregates. Ecotone`does not block possibility to place Query Handler on _Aggregate_. It's up to you, where do you want to place Query Handler.
 {% endhint %}
 
 ### Repository
