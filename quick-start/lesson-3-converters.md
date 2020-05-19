@@ -193,7 +193,7 @@ Product with id 1 was registered!
 Good job, scenario ran with success!
 ```
 
-#### Ecotone JMS Converter
+### Ecotone JMS Converter
 
 `Ecotone` comes with integration with [JMS Serializer](https://jmsyst.com/libs/serializer) and extending it with extra features.  
 Let's replace our own written Converter with JMS Serializer integration.   
@@ -216,29 +216,31 @@ Good job, scenario ran with success!
 
 Do you wonder, how come, that we just deserialized our Command and Query classes without any additional code?  
 Well we already described those classes using type hints or docblocks.   
-`Ecotone JMS` reads properties and deserializes according to type hint and if it's missing using the docblock. 
+`Ecotone JMS` reads properties and deserializes according to type hint or docblock if it is array. 
 
 ```php
-Conversion examples:
+Conversion Table examples:
 
-private int $productId; => int
+private int $productId => int
 
-private string $data; => string
+private string $data => string
 
 private \stdClass $data => \stdClass
 
 /**
 * @var int 
 */
-private $data; => int
+private $data => int
  
 /**
 * @var \stdClass[] 
 */
-private array $data; => array<\stdClass>
+private array $data => array<\stdClass>
 ```
 
-We found out, that we have bug in the software. Our system users have registered product with negative price, which in result lowered the bill. 
+### 
+
+Let's imagine we found out, that we have bug in our software. Our system users have registered product with negative price, which in result lowered the bill. 
 
 `Product should be registered only with positive cost`  
   
@@ -255,7 +257,7 @@ class Cost
     public function __construct(int $amount)
     {
         if ($amount <= 0) {
-            throw new \InvalidArgumentException("The cost should not negative or zero, {$amount} given.");
+            throw new \InvalidArgumentException("The cost cannot be negative or zero, {$amount} given.");
         }
         
         $this->amount = $amount;
