@@ -45,7 +45,7 @@ _Pollable channels_ extends Message Channels with capability of buffering Messag
 
 ![](../.gitbook/assets/endpoint-1.jpg)
 
-Message Endoints are consumers and producers of messages. Consumer are not necessary asynchronous, as you may build synchronous flow, compound of multiple endpoints.   
+Message Endpoints are consumers and producers of messages. Consumer are not necessary asynchronous, as you may build synchronous flow, compound of multiple endpoints.   
 You will not have to implement them directly, as you should not even have to build messages and invoke or receive message directly from the [Message channel](lesson-1-messaging-concepts.md#message-channel). Instead you will be able to focus on your specific domain model with with an implementation based on plain PHP objects. By providing declarative configuration, you can "connect” your domain-specific code to the messaging infrastructure provided by `Ecotone`. 
 
 {% hint style="info" %}
