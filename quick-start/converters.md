@@ -72,7 +72,7 @@ public function convert($source, TypeDescriptor $sourceType, MediaType $sourceMe
             return GetProductPriceQuery::fromArray($data);
         }
         default: {
-            throw new \InvalidArgumentException("Can't handle conversion type is unknown");
+            throw new \InvalidArgumentException("Unknown conversion type");
         }
     }
 }
