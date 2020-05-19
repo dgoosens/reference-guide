@@ -475,5 +475,5 @@ In this lesson we have learned basic of Messaging and CQRS.
 We are ready for Lesson 2!
 {% endhint %}
 
-{% page-ref page="lesson-2-converters-and-metadata.md" %}
+{% page-ref page="lesson-2-tactical-ddd.md" %}
 

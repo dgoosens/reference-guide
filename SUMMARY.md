@@ -4,7 +4,7 @@
 * [Quick Start](quick-start/README.md)
   * [Before we start tutorial](quick-start/before-we-start-tutorial.md)
   * [Lesson 1: Messaging Concepts](quick-start/lesson-1-messaging-concepts.md)
-  * [Lesson 2: Tactical DDD](quick-start/lesson-2-converters-and-metadata.md)
+  * [Lesson 2: Tactical DDD](quick-start/lesson-2-tactical-ddd.md)
   * [Lesson 3: Converters](quick-start/lesson-3-converters.md)
   * [Lesson 4: Metadata and Method Invocation](quick-start/lesson-4-method-invocation-and-metadata.md)
   * [Lesson 5: Interceptors](quick-start/lesson-5-cross-cutting-concerns.md)
