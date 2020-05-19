@@ -200,7 +200,7 @@ Let's replace our own written Converter with JMS Serializer integration.
 Let's download the Converter using [Composer](https://getcomposer.org).   
 `composer require ecotone/jms-converter`
 
-Let's remove `constructs` and`fromArray` methods from `RegisterProductCommand` `GetProductPriceQuery` and the `App\Domain\Product\JsonToPHPConverter` class completely, as we won't need it anymore.
+Let's remove `__construct` and`fromArray` methods from `RegisterProductCommand` `GetProductPriceQuery` and the `App\Domain\Product\JsonToPHPConverter` class completely, as we won't need it anymore.
 
 {% hint style="success" %}
 Let's run our testing command:
