@@ -238,7 +238,7 @@ Good job, scenario ran with success!
 ### Injecting arguments
 
 `Ecotone` inject arguments based on `parameter converters`.  
-Parameter converters , tells `Ecotone` how to resolve specific parameter and what kind of argument is it expecting.  The one used for injecting services like the `UserService` is `@Reference` converter.  
+Parameter converters , tells `Ecotone` how to resolve specific parameter and what kind of argument it is expecting.  The one used for injecting services like the `UserService` is `@Reference` converter.  
 Let's see how could we use it in our `product.register` command handler. 
 
 Let's suppose UserService is registered under `user-service` in Dependency Container. Then we would need to set up the `@CommandHandler`like below.
