@@ -51,7 +51,7 @@ If we want to make use of existing connection using `Manager Registry`, we can d
     Enqueue\Dbal\DbalConnectionFactory:
         class: Enqueue\Dbal\ManagerRegistryConnectionFactory
         arguments:
-            - "@doctrine.orm.entity_manager"
+            - "@doctrine"
             - 
                 connection_name: "default"
 ```
