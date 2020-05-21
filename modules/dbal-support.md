@@ -105,7 +105,7 @@ To enable transactions on specific endpoint, mark it with `Ecotone\Dbal\DbalTran
     }
 ```
 
-If you want to enable for all [Asynchronous Endpoints](../quick-start/lesson-6-scheduling-and-asynchronous.md) or specific for Command Bus. You may use of `ApplicationContext.`
+By default `Ecotone`enables transactions for all [Asynchronous Endpoints](../quick-start/lesson-6-scheduling-and-asynchronous.md) and Command Bus. You may use of `ApplicationContext` to turn off this configuration. You may also add more connections to be handled.
 
 ```php
 use Ecotone\Dbal\Configuration\DbalConfiguration;
@@ -126,6 +126,10 @@ class ChannelConfiguration
             DbalConfiguration::createWithDefaults()
                 ->withTransactionOnAsynchronousEndpoints(true)
                 ->withTransactionOnCommandBus(true)
+                ->withDefaultConnectionReferenceNames([
+                    "Enqueue\Dbal\DbalConnectionFactory",
+                    "AnotherDbalConnectionFactory"
+                ])
         ];
     }
 
