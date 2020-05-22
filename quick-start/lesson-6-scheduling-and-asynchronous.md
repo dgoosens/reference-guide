@@ -253,7 +253,7 @@ class Order
 ```
 
 `placeOrder` - Place order method make use of `QueryBus` to retrieve cost of each ordered product.  
-You could find out, that we are not using `application/json` for `product.getCost` query, `ecotone/jms-converter` can handle `array` transformation, so we do need to use `json`.
+You could find out, that we are not using `application/json` for `product.getCost` query, `ecotone/jms-converter` can handle `array` transformation, so we do not need to use `json`.
 
 {% hint style="info" %}
 You could inject service into  `placeOrder` that will hide `QueryBus` implementation from the domain, or you may get this data from `data store` directly. We do not want to complicate the solution now, so we will use `QueryBus` directly. 
