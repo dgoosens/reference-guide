@@ -190,7 +190,7 @@ class AddUserIdService
 
 **`changeHeaders`** - Tells `Ecotone` if this Interceptor modifies `payload` or `headers`. The default is `payload`.   
 If `changeHeaders=true` then`headers` are picked and associative array must be returned. The returned value is merged with current headers.   
-If `changeHeaders=false` then `payload` is picked, then current payload is replaced by returned value, the headers stays the same.  
+If `changeHeaders=false` then `payload` is picked and current payload is replaced by returned value, the headers stays the same.  
 You may of course inject current payload and headers into the method if needed, as with usual endpoint.   
   
 **`precedence`** - Tells `Ecotone` in what order interceptors should be called. The lower the value is the quicker interceptor will be called. The order exists within interceptor type: `before/around/after.`  
