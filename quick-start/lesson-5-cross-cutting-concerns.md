@@ -22,7 +22,7 @@ After one of our administrators went for holiday, the others found out, they can
 
 We could copy paste the logic from `product.register` to `product.changePrice`but we want to avoid code duplication, especially logic that may happen more often. Let's intercept our `Command Handlers.`
 
-Let's start by creating `Annotation` called `IsAdministrator` in new namepace `App\Infrastructure\RequireAdministrator`
+Let's start by creating `Annotation` called `RequireAdministrator` in new namepace `App\Infrastructure\RequireAdministrator`
 
 ```php
 namespace App\Infrastructure\RequireAdministrator;
