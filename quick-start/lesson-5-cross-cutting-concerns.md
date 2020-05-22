@@ -479,7 +479,7 @@ You may read more about interceptors in [dedicated section](../messaging/interce
 
 {% hint style="success" %}
 Great, we have just finished Lesson 5!  
-Interceptors are very powerful concept. Without extending any classes or interfaces from `Ecotone`, we can build build up Authorization, Transactions, Delegate duplicated logic, Call some external service before invoking endpoint, the amount of possibilities is endless.   
+Interceptors are very powerful concept. Without extending any classes or interfaces from `Ecotone`, we can build build up Authorization, Transactions, Delegate duplicated logic, Call some external service, Logging and Tracing before invoking endpoint, the amount of possibilities is endless.   
   
 In the next chapter, we will learn about scheduling and polling endpoints 
 {% endhint %}
