@@ -85,7 +85,7 @@ It takes the data returned from `exchange` method and use it as payload's for th
 `endpointId` - Describes endpoint identifier  
 `requestChannelName` - describes where it should send created message  
 `poller` - Describes, how this endpoint should be invoked. In this case, we informed `Ecotone`that we want to trigger this method every second \(1000 milliseconds is 1 second\) using `fixedRateInMilliseconds`.   
-You can also set up `cron` expression. In this case to run it every second we would do: 
+You can also set up `cron` expression. In this case to run it every minute we would do: 
 
 ```php
 @Poller(
