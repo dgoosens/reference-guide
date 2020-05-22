@@ -250,7 +250,8 @@ Good job, scenario ran with success!
 
 #### Breaking the flow
 
-If during `Before` or `Around` you decide to break the flow, just return `null`. `Null`indiciates, that there is no message and the current flow ends.  
+If during `Before` or `Around` you decide to break the flow, return `null`. `Null`indiciates, that there is no message and the current flow ends.    
+Null can not be returned in header changing interceptor, it does work only for payload changing interceptor.
 
 ### Around Interceptor
 
