@@ -62,7 +62,7 @@ class UserService
     public function isAdmin(?string $userId) : void
     {
         if ($userId != 1) {
-            throw new \InvalidArgumentException("You need to be administrator in order to register new product");
+            throw new \InvalidArgumentException("You need to be administrator to perform this action");
         }
     }
 }
