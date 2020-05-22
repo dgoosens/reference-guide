@@ -386,7 +386,7 @@ SQL
 You do not need to focus too much on the Repository implementation, this is just example.   
 In your application, you may implement it using your ORM for example.   
   
-\* This implementation will override aggregate for `registerProduct`, if one already exists. We will be able to run our test class multiple types, without changing identifiers.
+_This implementation will override aggregate for `registerProduct`, if one already exists. It will  will insert or update if aggregate exists._
 {% endhint %}
 
 We want to intercept `Command Bus Gateway` with transaction. So whenever we call it, it will invoke our Command Handler within transaction.
