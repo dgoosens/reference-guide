@@ -2,7 +2,7 @@
 description: Start using Ecotone
 ---
 
-# Quick Start
+# Tutorial
 
 ## Install for Symfony
 
