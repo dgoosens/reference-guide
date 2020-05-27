@@ -13,6 +13,10 @@ In this first lesson, we will learn fundamental blocks in messaging architecture
 
 _Ecotone_ from the ground is built around messaging to provide a simple model for building integration solutions while maintaining the separation of concerns that is essential for producing maintainable, testable code. To achieve that, fundamental messaging blocks are implemented using [Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com) \(EIP\). In order to use higher level of abstraction, CQRS and DDD support, we need to briefly get known with those patterns. This will help us understand, how specific parts of _Ecotone_ does work together. 
 
+{% hint style="info" %}
+_`Ecotone`_ is heavily inspired by [_Spring Integration_](https://spring.io/projects/spring-integration)_,_ [_Axon Framework_](https://docs.axoniq.io/reference-guide/) _and_ [_NServiceBus_](https://particular.net/nservicebus)_._
+{% endhint %}
+
 ### Message
 
 ![](../.gitbook/assets/message.jpg)
@@ -61,7 +65,7 @@ It does build from domain specific objects a [Message](lesson-1-messaging-concep
 To not have dependency on the `Ecotone` _API_ — including the gateway class, `Ecotone` provides the Gateway as interface. Framework generates a proxy for any interface and internally invokes the gateway methods. By using dependency injection, you can then expose the interface to your business methods.
 
 {% hint style="info" %}
-Command/Query/Event buses are implemented using Messaging Gateway
+Command/Query/Event buses are implemented using Messaging Gateway.
 {% endhint %}
 
 {% hint style="success" %}
