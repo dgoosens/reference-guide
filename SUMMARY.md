@@ -1,14 +1,14 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Tutorial](quick-start/README.md)
-  * [Before we start tutorial](quick-start/before-we-start-tutorial.md)
-  * [Lesson 1: Messaging Concepts](quick-start/lesson-1-messaging-concepts.md)
-  * [Lesson 2: Tactical DDD](quick-start/lesson-2-tactical-ddd.md)
-  * [Lesson 3: Converters](quick-start/lesson-3-converters.md)
-  * [Lesson 4: Metadata and Method Invocation](quick-start/lesson-4-method-invocation-and-metadata.md)
-  * [Lesson 5: Interceptors](quick-start/lesson-5-cross-cutting-concerns.md)
-  * [Lesson 6: Scheduling And Asynchronous](quick-start/lesson-6-scheduling-and-asynchronous.md)
+* [Tutorial](tutorial/README.md)
+  * [Before we start tutorial](tutorial/before-we-start-tutorial.md)
+  * [Lesson 1: Messaging Concepts](tutorial/lesson-1-messaging-concepts.md)
+  * [Lesson 2: Tactical DDD](tutorial/lesson-2-tactical-ddd.md)
+  * [Lesson 3: Converters](tutorial/lesson-3-converters.md)
+  * [Lesson 4: Metadata and Method Invocation](tutorial/lesson-4-method-invocation-and-metadata.md)
+  * [Lesson 5: Interceptors](tutorial/lesson-5-cross-cutting-concerns.md)
+  * [Lesson 6: Scheduling And Asynchronous](tutorial/lesson-6-scheduling-and-asynchronous.md)
 
 ## Modelling
 
