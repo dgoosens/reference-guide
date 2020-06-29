@@ -27,7 +27,6 @@
   * [Handling Events](modelling/event-handling/handling-events.md)
   * [Saga](modelling/event-handling/saga.md)
   * [Dispatching Events](modelling/event-handling/dispatching-events.md)
-* [Examples](modelling/examples.md)
 
 ## Messaging
 
@@ -46,7 +45,6 @@
   * [Conversion](messaging/conversion/conversion.md)
 * [Interceptors](messaging/interceptors.md)
 * [Scheduling and Asynchronous](messaging/asynchronous.md)
-* [Examples](messaging/examples.md)
 
 ## Modules
 
