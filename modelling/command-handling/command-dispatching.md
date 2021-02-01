@@ -220,7 +220,7 @@ use Ecotone\Modelling\Annotation\CommandHandler;
 class CloseTicketCommandHandler
 {   
     /**
-    * @CommandHandler(inputChannelName="closeTicket")
+    * @CommandHandler("closeTicket")
     */
     public function closeTicket(CloseTicketCommand $command)
     {
