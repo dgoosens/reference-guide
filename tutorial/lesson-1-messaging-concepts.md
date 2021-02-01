@@ -406,7 +406,7 @@ class ProductWasRegisteredEvent
 {% hint style="info" %}
 As you can see `Ecotone` does not really care what class Command/Query/Event is. It does not require to implement any interfaces neither prefix or suffix the class name.  
 In fact commands, queries and events can be of any type and we will see it in next Lessons.  
-In tutorial we do use Command/Query/Event suffixes to clarify the distinction.
+In the tutorial we do use Command/Query/Event suffixes to clarify the distinction.
 {% endhint %}
 
 Let's inject `EventBus` into our `@CommandHandler` in order to publish `ProductWasRegisteredEvent`.
