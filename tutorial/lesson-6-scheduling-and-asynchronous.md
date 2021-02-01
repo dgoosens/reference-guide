@@ -535,7 +535,7 @@ AggregateNotFoundException:
   rs {"orderId":990}  
 ```
 
-That's fine, we have registered `order.place` Command Handler to run asynchronously, so we need to run our `asynchronous endpoint` in order to handle `Command Message`. If you did not received and exception, it's probably you did not change the `orderId` and we already registered such order.  
+That's fine, we have registered `order.place` Command Handler to run asynchronously, so we need to run our `asynchronous endpoint` in order to handle `Command Message`. If you did not received and exception, it's probably because `orderId` was not changed and we already registered such order.  
   
 Let's run our asynchronous endpoint
 
