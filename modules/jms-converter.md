@@ -45,7 +45,7 @@ Suppose we have endpoint with following Command:
 
 ```php
 /**
-*  @CommandHandler(inputChannelName="order.place")
+*  @CommandHandler("order.place")
 */
 public function placeOrder(PlaceOrder $orderId)
 {
