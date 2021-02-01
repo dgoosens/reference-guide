@@ -5,12 +5,8 @@
 In order to handle events published within a system we can use  `@EventHandler` with combination of specific `class`.
 
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\EventHandler;
 
-/**
- * @MessageEndpoint()
- */
 class Notifier
 {
     /**
@@ -23,7 +19,7 @@ class Notifier
 }
 ```
 
-In order to listen for event we need to mark method as `@EventHandler` and the class name as `@MessageEndpoint.` This work exactly the same as [External Command Handlers.](../command-handling/external-command-handlers.md)
+In order to listen for event we need to mark method as `@EventHandler.` This work exactly the same as [External Command Handlers.](../command-handling/external-command-handlers.md)
 
 Whenever `AppointmentWasCreatedEvent` will be published our `notify` method will be called,
 
@@ -60,12 +56,8 @@ If we will type hint for `object` then this `Event Handler` will be called for a
 There may be a situations when events will arrive from different systems. We may not have access to specific class or we may not want to share events a cross applications. In that case we can listen for events with specific name. 
 
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\EventHandler;
 
-/**
- * @MessageEndpoint()
- */
 class EmailService
 {
     /**
