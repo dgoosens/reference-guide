@@ -418,7 +418,7 @@ class QuickStartProvider extends ServiceProvider
 {% endtabs %}
 
 {% hint style="info" %}
-We register our AmqpConnectionFactory under the class name `Enqueue\AmqpLib\AmqpConnectionFactory.` This will help Ecotone resolve it automatically, without any additional configuration.
+We register our `AmqpConnectionFactory` under the class name `Enqueue\AmqpLib\AmqpConnectionFactory.` This will help Ecotone resolve it automatically, without any additional configuration.
 {% endhint %}
 
 Let's add our first `AMQP Backed Channel` \(RabbitMQ Channel\), in order to do it, we need to create our first `Application Context.`   
