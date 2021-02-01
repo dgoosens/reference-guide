@@ -301,6 +301,6 @@ Great, we have just finished Lesson 4!
 In this Lesson we learned about using Meta Data to provide extra information to our Message.  
 Besides we took a look on how arguments are injected into endpoint and how we can make use of it.  
   
-Now we will learn about Interceptors
+Now we will learn about powerful Interceptors, which can be describes as Middlewares on steroids.
 {% endhint %}
 
