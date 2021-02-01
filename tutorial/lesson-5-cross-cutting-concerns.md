@@ -163,11 +163,7 @@ class AddUserId {}
 namespace App\Infrastructure\AddUserId;
 
 use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
 
-/**
- * @MethodInterceptor()
- */
 class AddUserIdService
 {
     /**
