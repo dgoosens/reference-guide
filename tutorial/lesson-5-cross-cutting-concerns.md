@@ -376,7 +376,7 @@ SQL
 
 {% hint style="info" %}
 You do not need to focus too much on the Repository implementation, this is just example.   
-In your application, you may implement it using your ORM for example.   
+In your application, you may implement it using your ORM or whatever fits you best.   
   
 _This implementation will override aggregate for `registerProduct`, if one already exists. It will  will insert or update if aggregate exists._
 {% endhint %}
