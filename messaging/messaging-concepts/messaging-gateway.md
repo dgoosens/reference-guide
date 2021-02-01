@@ -12,11 +12,8 @@ To not have dependency on the _Ecotone API_ — including the gateway class,
 namespace Product;
 
 use Ecotone\Messaging\Annotation\Gateway;
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 
-/**
- * @MessageEndpoint() // 1
- */
+//1
 interface ProductGateway
 {
     /**
@@ -26,7 +23,7 @@ interface ProductGateway
 }
 ```
 
-1. `@MessageEndpoint` marks interface so it can be find by _Ecotone._  By default gateway will be available under interface name, in that case `Product\ProductGateway.` If you want to register it under different name for example "productGateway", then pass it to annotation `@MessageEndpoint(referenceName="productGateway")`
+1. By default gateway will be available under interface name, in that case `Product\ProductGateway.` If you want to register it under different name for example "productGateway", then pass it to annotation `@ClassReference("productGateway")`
 
 {% tabs %}
 {% tab title="Symfony" %}
