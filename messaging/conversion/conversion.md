@@ -49,7 +49,7 @@ Suppose we have `Command Handler` endpoint, which expects `PlaceOrderCommand` cl
 
 ```php
 /**
-*  @CommandHandler(inputChannelName="place.order")
+*  @CommandHandler("place.order")
 */
 public function placeOrder(PlaceOrderCommand $command)
 {
