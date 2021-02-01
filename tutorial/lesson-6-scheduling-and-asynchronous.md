@@ -54,12 +54,8 @@ So our price now is `110`.  Now we will add our first `Scheduled` endpoint
 namespace App\Infrastructure;
 
 use Ecotone\Messaging\Annotation\Scheduled;
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Messaging\Annotation\Poller;
 
-/**
- * @MessageEndpoint()
- */
 class CurrencyExchanger
 {
     /**
@@ -79,7 +75,7 @@ class CurrencyExchanger
 }
 ```
 
-We start by marking method as `@Scheduled` and class as `@MessageEndpoint.`   
+We start by marking method as `@Scheduled.`   
 It takes the data returned from `exchange` method and use it as payload's for the [Message](../messaging/messaging-concepts/message.md) which is send to `requestChannelName`.  
   
 `endpointId` - Describes endpoint identifier  
