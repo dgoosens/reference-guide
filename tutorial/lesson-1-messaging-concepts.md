@@ -219,8 +219,8 @@ class ProductService
 
 ### Query Handler - Endpoint
 
-We can register our Product now we also need possibility to query our `ProductService` for registered products.  
-This is the role of Query Handlers. They do query the state and return it to us.    
+We also need possibility to query our `ProductService` for registered products.  
+This is the role of `Query Handlers`. They do query the state and return it to us.    
 Let's starts with `GetProductPriceQuery` _class._ This _query_ will tell us what is the price of specific product.
 
 ```php
@@ -255,9 +255,6 @@ use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- * @MessageEndpoint()
- */
 class ProductService
 {
     private array $registeredProducts = [];
@@ -281,7 +278,7 @@ class ProductService
 ```
 
 {% hint style="info" %}
-Some CQRS frameworks expects Handlers be defined as a class, not method. This is somehow limiting and producing a lot of boilerplate. `Ecotone` does allow for full flexibility, if you want to have only one handler per class, so be it, if more just annotate next methods
+Some CQRS frameworks expects Handlers be defined as a class, not method. This is somehow limiting and producing a lot of boilerplate. `Ecotone` does allow for full flexibility, if you want to have only one handler per class, so be it, if more just annotate next methods.
 {% endhint %}
 
 {% tabs %}
