@@ -224,7 +224,7 @@ class Order
     }
 
     /**
-     * @CommandHandler(inputChannelName="order.place")
+     * @CommandHandler("order.place")
      */
     public static function placeOrder(PlaceOrderCommand $command, array $metadata, QueryBus $queryBus) : self
     {
@@ -238,7 +238,7 @@ class Order
     }
 
     /**
-     * @QueryHandler(inputChannelName="order.getTotalPrice")
+     * @QueryHandler("order.getTotalPrice")
      */
     public function getTotalPrice() : int
     {
