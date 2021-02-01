@@ -159,6 +159,12 @@ class QuickStartProvider extends ServiceProvider
 Everything is set up by the framework, please continue...
 ```
 {% endtab %}
+
+{% tab title="No Framework" %}
+```
+Everything is set up, please continue...
+```
+{% endtab %}
 {% endtabs %}
 
 {% hint style="success" %}
