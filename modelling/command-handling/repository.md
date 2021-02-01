@@ -24,9 +24,6 @@ class AssignWorkerCommmand
 }
 
 
-/**
-* @MessageEndpoint()
-*/
 class CloseTicketHandler
 {
     private TicketRepository $ticketRepository;

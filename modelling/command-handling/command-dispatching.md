@@ -67,12 +67,8 @@ $commandBus->send(new CloseTicketCommand($ticketId));
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -141,9 +137,6 @@ $commandBus->sendWithMetadata(
 use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -211,12 +204,8 @@ $commandBus->convertAndSend(
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -285,9 +274,6 @@ $commandBus->convertAndSendWithMetadata(
 ```php
 use Ecotone\Modelling\Annotation\CommandHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**

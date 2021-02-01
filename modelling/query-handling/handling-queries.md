@@ -9,12 +9,8 @@ In `Ecotone`, an object may declare a number of query handler methods, by annota
 For a query handler method, the first declared parameter defines which query message object it will receive.
 
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- * @MessageEndpoint()
- */
 class OrderSummary
 {
     /**
