@@ -124,7 +124,7 @@ class CurrencyExchanger
     }
     
    /**
-   * @CommandHandler(inputChannelName="exchange")
+   * @CommandHandler("exchange")
    */
    public function exchange(ExchangeCommand $command) : void
    {
