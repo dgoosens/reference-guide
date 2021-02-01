@@ -29,7 +29,7 @@ class OrderSummary
 
 ### Name Routing
 
-To route `Message` to `@QueryHandler` by name we can use `inputChannelName.`   
+To route `Message` to `@QueryHandler` by name we can use `routing.`   
 In below example Message will be routed by `order.getOrders`.   
 
 ```php
@@ -42,7 +42,7 @@ use Ecotone\Modelling\Annotation\QueryHandler;
 class OrderSummary
 {
     /**
-     * @QueryHandler(inputChannelName="order.getOrders")
+     * @QueryHandler("order.getOrders")
      */
     public function getOrders(GetOrdersQuery $query) : array
     {
