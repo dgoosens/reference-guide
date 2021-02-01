@@ -9,7 +9,7 @@ Not having code for _Lesson 4?_
 ### Metadata
 
 Message can contain headers. Headers may contain anything e.g. `currentUser`, `timestamp`, `contentType`, `messageId.` Headers are helpful, to give extra insights about the message and how it should be handled.   
-In `Ecotone` headers and metadata means the same. During lessons you will see used them interchangeably.
+In `Ecotone` headers and metadata means the same. Those terms will be used interchangeably.
 
 We just got new requirement for our Products in Shopping System.:
 
