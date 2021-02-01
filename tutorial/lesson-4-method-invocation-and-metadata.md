@@ -88,7 +88,7 @@ class Product
     }
 
     /**
-     * @CommandHandler(inputChannelName="product.register")
+     * @CommandHandler("product.register")
      */
     public static function register(RegisterProductCommand $command, array $metadata) : self
     {
@@ -102,7 +102,7 @@ We can add `changePrice` method now.
 
 ```php
 /**
- * @CommandHandler(inputChannelName="product.changePrice")
+ * @CommandHandler("product.changePrice")
  */
 public function changePrice(ChangePriceCommand $command, array $metadata) : void
 {
@@ -179,7 +179,7 @@ The good place for it, would not allow for any invocation of `product.register c
 
 ```php
 /**
- * @CommandHandler(inputChannelName="product.register")
+ * @CommandHandler("product.register")
  */
 public static function register(RegisterProductCommand $command, array $metadata, UserService $userService) : self
 {
