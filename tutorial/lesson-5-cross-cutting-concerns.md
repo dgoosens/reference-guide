@@ -43,12 +43,8 @@ Let's create our first `Before Interceptor.` Start by removing old `UserService`
 namespace App\Infrastructure\RequireAdministrator;
 
 use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
 use Ecotone\Messaging\Annotation\Parameter\Header;
 
-/**
- * @MethodInterceptor()
- */
 class UserService
 {
     /**
@@ -68,7 +64,7 @@ class UserService
 }
 ```
 
-`@MethodInterceptor`- marks class as `Interceptor`, to be found by `Ecotone.`
+`@Before`- marks method as `Interceptor`, so it can be be found by `Ecotone.`
 
 `Pointcut` - describes what should be intercepted. 
 
