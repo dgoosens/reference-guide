@@ -50,12 +50,8 @@ $result = $queryBus->sendWithMetadata(
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class GetTicketStatusQueryHandler
 {   
     /**
