@@ -67,12 +67,8 @@ $result = $queryBus->send(new GetTicketStatusQuery($ticketId));
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class GetTicketStatusQueryHandler
 {   
     /**
@@ -138,12 +134,8 @@ $result = $queryBus->sendWithMetadata(
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class GetTicketStatusQueryHandler
 {   
     /**
@@ -211,12 +203,8 @@ $result = $queryBus->convertAndSend(
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class GetTicketStatusQueryHandler
 {   
     /**
@@ -283,12 +271,8 @@ $result = $queryBus->convertAndSendWithMetadata(
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- *  @MessageEndpoint()
- */
 class GetTicketStatusQueryHandler
 {   
     /**
