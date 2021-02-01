@@ -239,7 +239,7 @@ Let's imagine we found out, that we have bug in our software. Our system users h
 
 `Product should be registered only with positive cost`  
   
-We could put constraint in `Product`, validating the `Cost` amount. But this would assure us only in that place, that this is correct and we want to be sure, that the `Cost` is correct, whenever we make use of it, so we can avoid potential future bugs.   
+We could put constraint in `Product`, validating the `Cost` amount. But this would assure us only in that place, that this constraint is met and we want to be sure, that the `Cost` is correct, whenever we make use of it, so we can avoid potential future bugs.   
 To achieve that we will create _Value Object named `Cost`_that will handle the validation, during the construction. 
 
 ```php
@@ -283,11 +283,7 @@ namespace App\Infrastructure\Converter;
 
 use App\Domain\Product\Cost;
 use Ecotone\Messaging\Annotation\Converter;
-use Ecotone\Messaging\Annotation\ConverterClass;
 
-/**
- * @ConverterClass()
- */
 class CostConverter
 {
     /**
@@ -308,7 +304,7 @@ class CostConverter
 }
 ```
 
-We mark the class by `@ConverterClass()` and put `@Converter()` on each method, so `Ecotone` can read parameter type and return type in order to know, how he can convert from scalar/array to specific class and vice versa.  
+We mark the methods with`@Converter()`, so `Ecotone` can read parameter type and return type in order to know, how he can convert from scalar/array to specific class and vice versa.  
   
 Let's change our command and aggregate class, so it can use the Cost directly.
 
