@@ -184,12 +184,9 @@ Let's register a Command Handler now by creating class `App\Domain\Product\Produ
 
 namespace App\Domain\Product;
 
-use Ecotone\Messaging\Annotation\MessageEndpoint;
+use Ecotone\Messaging\Annotation\ClassReference;
 use Ecotone\Modelling\Annotation\CommandHandler;
 
-/**
- * @MessageEndpoint()
- */
 class ProductService
 {
     private array $registeredProducts = [];
@@ -204,18 +201,21 @@ class ProductService
 }
 ```
 
-First thing worth noticing is `@MessageEndpoint`.   
-This annotation marks our ProductService as an [Endpoint](lesson-1-messaging-concepts.md#message-endpoint), from that moment it can be found by `Ecotone.`
-
-{% hint style="info" %}
-`@MessageEndpoint` is a special [Annotation](https://www.doctrine-project.org/projects/doctrine-annotations/en/1.8/index.html)  it informs `Ecotone`how this service is registered in Depedency Container. As a default it takes the class name, which is compatible with auto-wiring system. If `ProductService` would be registered in Dependency Container as `productService`, we would do this:
-
-```php
-@MessageEndpoint(referenceName="productService")
-```
-{% endhint %}
+First thing worth noticing is `@CommandHandler`.   
+This annotation marks our `register` method in ProductService as an [Endpoint](lesson-1-messaging-concepts.md#message-endpoint), from that moment it can be found by `Ecotone.`
 
 `Ecotone` will read method declaration and base on the first parameter type hint will know that this `@CommandHandler` is responsible for handling `RegisterProductCommand.` 
+
+{% hint style="info" %}
+`@ClassReference` is a special [Annotation](https://www.doctrine-project.org/projects/doctrine-annotations/en/1.8/index.html)  it informs `Ecotone`how this service is registered in `Depedency Container`. As a default it takes the class name, which is compatible with auto-wiring system. If `ProductService` would be registered in `Dependency Container` as `productService`, we would do this:
+
+```php
+/**
+ * @ClassReference("productService")
+ */
+class ProductService
+```
+{% endhint %}
 
 ### Query Handler - Endpoint
 
