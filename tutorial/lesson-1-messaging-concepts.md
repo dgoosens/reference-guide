@@ -435,12 +435,8 @@ Now, when our event is published, whenever new product is registered, we want to
 
 namespace App\Domain\Product;
 
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\EventHandler;
 
-/**
- * @MessageEndpoint()
- */
 class ProductNotifier
 {
     /**
