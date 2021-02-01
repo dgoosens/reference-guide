@@ -173,7 +173,7 @@ public function run() : void
 
 We make use of different method now `convertAndSend.`   
 It takes as first argument `routing key` to which we want to send the message.   
-The second argument describes the format of message we send.  
+The second argument describes the `format` of message we send.  
 Third is the data to send itself, in this case command formatted as `JSON`.
 
 {% hint style="success" %}
