@@ -132,15 +132,15 @@ Good job, scenario ran with success!
 ```
 
 If we call our testing command now, everything is going fine, but we still send `PHP objects` instead of `JSON`, right?  
-In order to start sending `commands` and `queries` in different format, we need to provide our handlers with input channel name. So `Command and Query buses` will know, where to route the message. 
+In order to start sending `commands` and `queries` in different format, we need to provide our handlers with routing key. So `Command and Query buses` will know, where to route the message. 
 
 {% hint style="info" %}
-You may think now of input channel name, as a message name used in different CQRS frameworks in order to route the message to specific handler. But this is much more powerful, and we will see why in next lessons. 
+You may think now of routing key, as a message name used in different CQRS frameworks in order to route the message to specific handler. This is yet much more powerful, and we will see why in next lessons. 
 {% endhint %}
 
 ```php
 /**
- * @CommandHandler(inputChannelName="product.register")
+ * @CommandHandler("product.register")
  */
 public static function register(RegisterProductCommand $command) : self
 {
@@ -148,18 +148,13 @@ public static function register(RegisterProductCommand $command) : self
 }
 
 /**
- * @QueryHandler(inputChannelName="product.getCost")
+ * @QueryHandler("product.getCost")
  */
 public function getCost(GetProductPriceQuery $query) : int
 {
     return $this->cost;
 }
 ```
-
-{% hint style="success" %}
-Do you Remember from the Lesson 1, that each endpoint is connected to the channel?   
-We just gave it a name now.
-{% endhint %}
 
 Let's change our Testing class, so we call buses with `JSON` format.
 
