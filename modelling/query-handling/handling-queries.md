@@ -29,12 +29,8 @@ To route `Message` to `@QueryHandler` by name we can use `routing.`
 In below example Message will be routed by `order.getOrders`.   
 
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\QueryHandler;
 
-/**
- * @MessageEndpoint()
- */
 class OrderSummary
 {
     /**
