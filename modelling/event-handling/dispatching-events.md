@@ -33,13 +33,9 @@ Event is routed to the Handler by class type.
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 use Ecotone\Modelling\EventBus;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -59,12 +55,8 @@ class CloseTicketCommandHandler
 {% tabs %}
 {% tab title="Event Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\EventHandler;
 
-/**
- * @MessageEndpoint()
- */
 class NotificationService
 {   
     /**
@@ -86,13 +78,9 @@ Does allow for passing `extra meta information`, that can be used on targeted `E
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 use Ecotone\Modelling\EventBus;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -112,12 +100,8 @@ class CloseTicketCommandHandler
 {% tabs %}
 {% tab title="Event Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\EventHandler;
 
-/**
- * @MessageEndpoint()
- */
 class NotificationService
 {   
     /**
@@ -141,13 +125,9 @@ Sending events by name instead of class type, may be found useful in integration
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 use Ecotone\Modelling\EventBus;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -171,12 +151,8 @@ class CloseTicketCommandHandler
 {% tabs %}
 {% tab title="Event Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\EventHandler;
 
-/**
- * @MessageEndpoint()
- */
 class NotificationService
 {   
     /**
@@ -202,13 +178,9 @@ Same as [convertAndSend](dispatching-events.md#convertandsend) with possibility 
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 use Ecotone\Modelling\EventBus;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -233,12 +205,8 @@ class CloseTicketCommandHandler
 {% tabs %}
 {% tab title="Event Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\EventHandler;
 
-/**
- * @MessageEndpoint()
- */
 class NotificationService
 {   
     /**
@@ -279,13 +247,9 @@ Below we can comparison in execution order:
 {% tabs %}
 {% tab title="Lazy Event Bus" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
 use Ecotone\Modelling\Annotation\CommandHandler;
 use Ecotone\Modelling\LazyEventBus;
 
-/**
- *  @MessageEndpoint()
- */
 class CloseTicketCommandHandler
 {   
     /**
@@ -301,9 +265,6 @@ class CloseTicketCommandHandler
     }   
 }
 
-/**
- * @MessageEndpoint()
- */
 class NotificationService
 {   
     /**
