@@ -4,8 +4,6 @@ description: 'Installing Ecotone for Symfony, Laravel or stand alone'
 
 # Installation
 
-
-
 ## Install for Symfony
 
 1. Use composer in order to download `Ecotone Symfony Bundle`
