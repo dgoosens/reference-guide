@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Installation](installation.md)
 * [Tutorial](tutorial/README.md)
   * [Before we start tutorial](tutorial/before-we-start-tutorial.md)
   * [Lesson 1: Messaging Concepts](tutorial/lesson-1-messaging-concepts.md)
