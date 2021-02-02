@@ -4,7 +4,7 @@ description: Start using Ecotone
 
 # Tutorial
 
-## What are we building?
+## Get started with Ecotone
 
 The best way to get started with `Ecotone` is to use it to build something realistic.  
 We will build a small back-end for shopping system during this tutorial. The techniques you’ll learn in the tutorial are fundamental to building any application using `Ecotone`. 
