@@ -4,72 +4,24 @@ description: Start using Ecotone
 
 # Tutorial
 
-## Install for Symfony
+## What are we building?
 
-1. Use composer in order to download `Ecotone Symfony Bundle`
+The best way to get started with `Ecotone` is to use it to build something realistic.  
+We will build a small back-end for shopping system during this tutorial. The techniques you’ll learn in the tutorial are fundamental to building any application using `Ecotone`. 
 
-{% hint style="success" %}
-composer require [ecotone/](https://packagist.org/packages/ecotone/)symfony-bundle
-{% endhint %}
-
-If you're using _`Symfony Flex`_,  bundle will auto-configure. 
-
-2. Register bundle, if needed
-
-{% hint style="success" %}
-new Ecotone\SymfonyBundle\EcotoneSymfonyBundle::class =&gt; \['all' =&gt; true\]
-{% endhint %}
-
-## Install for Laravel
-
-1. Use composer in order to download `Ecotone Laravel`
-
-{% hint style="success" %}
-composer require [ecotone/](https://packagist.org/packages/ecotone/)laravel
-{% endhint %}
-
-Provider should be automatically registered.
-
-2. Register provider, if needed
-
-```php
-'providers' => [
-    \Ecotone\Laravel\EcotoneProvider::class
-],
-```
-
-## Install Lite \(No framework\)
-
-1. Use composer in order to download `Ecotone`
-
-{% hint style="success" %}
-composer require ecotone/ecotone
-{% endhint %}
-
-    2. Boostrap `Ecotone`
-
-```php
-use Ecotone\Lite\EcotoneLiteConfiguration;
-use Ecotone\Lite\InMemoryPSRContainer;
-use Ecotone\Messaging\Config\ApplicationConfiguration;
-
-$rootCatalog = "/var/www/html"; // path to root of your project, where composer.json exists
-$namespacesToUse = ["Example\Modelling\EventSourcing"]; // list of namespaces, that should be boostraped by Ecotone
-$psr11CompatibleContainer = InMemoryPSRContainer::createFromObjects([TicketRepository::createEmpty()]); // you may use existing in memory implemantation for testing purposes
-
-$messagingSystem = EcotoneLiteConfiguration::createWithConfiguration(
-    $rootCatalog,
-    $psr11CompatibleContainer,
-    ApplicationConfiguration::createWithDefaults()
-        ->withNamespaces($namespacesToUse)
-);
-```
+In doing so, you'll learn the architectural concepts behind the software and start to learn its capabilities.  You will learn how to build types of applications that may have seemed impossible or really, really hard to make prior to learning _Ecotone_.
 
 
 
-{% hint style="info" %}
-Ecotone is heavily based on annotations to avoid coupling domain with framework code.  
-  
-PHPStorm has great plugin, which allow auto-complete for annotations: [https://plugins.jetbrains.com/plugin/7320-php-annotations](https://plugins.jetbrains.com/plugin/7320-php-annotations/)
-{% endhint %}
+The tutorial is divided into several sections:
+
+* Lesson 1, we will learn **the fundamentals** of _Ecotone_: Endpoints, Messages, Channels, Gateways and using Command Query Responsibility Segregation \(CQRS\) on top of that
+* Lesson 2,  we will learn using **Tactical** [**Domain Driven Design \(DDD\)**](../modelling/modelling-1.md): Aggregates, Repositories and also Event Handlers
+* Lesson 3, we will learn **how to use Converters**
+* Lesson 4, we will learn about **Metadata and Method Invocation**
+* Lesson 5, we will learn about **Interceptors**, to handle cross cutting concerns
+* Lesson 6, we we will learn about **Scheduling And Asynchronous** Endpoints
+
+You don’t have to complete all of the lessons at once to get the value out of this tutorial.   
+You may start benefit from the tutorial even if it’s one or two lessons.
 
