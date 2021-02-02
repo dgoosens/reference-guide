@@ -11,9 +11,9 @@ We will build a small back-end for shopping system during this tutorial. The tec
 
 In doing so, you'll learn the architectural concepts behind the software and start to learn its capabilities.  You will learn how to build types of applications that may have seemed impossible or really, really hard to make prior to learning _Ecotone_.
 
+### Lessons
 
-
-The tutorial is divided into several sections:
+The tutorial is divided into several lessons:
 
 * Lesson 1, we will learn **the fundamentals** of _Ecotone_: Endpoints, Messages, Channels, Gateways and using Command Query Responsibility Segregation \(CQRS\) on top of that
 * Lesson 2,  we will learn using **Tactical** [**Domain Driven Design \(DDD\)**](../modelling/modelling-1.md): Aggregates, Repositories and also Event Handlers
