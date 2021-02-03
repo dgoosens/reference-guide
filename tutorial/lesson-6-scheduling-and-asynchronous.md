@@ -323,7 +323,7 @@ composer require ecotone/amqp
 We also need to add our `ConnectionFactory` to our `Dependency Container.` 
 
 {% tabs %}
-{% tab title="Symfony - Local Environment" %}
+{% tab title="Symfony - Local" %}
 ```php
 # Add AmqpConnectionFactory in config/services.yaml
 
@@ -370,7 +370,7 @@ services:
 ```
 {% endtab %}
 
-{% tab title="Laravel - Local Environment" %}
+{% tab title="Laravel - Local" %}
 ```php
 # Add AmqpConnectionFactory in bootstrap/QuickStartProvider.php
 
@@ -409,6 +409,26 @@ class QuickStartProvider extends ServiceProvider
         });
     }
 (...)
+```
+{% endtab %}
+
+{% tab title="No Framework - Local" %}
+```php
+# Add AmqpConnectionFactory in bin/console.php after // add additional service comment
+
+// add additional services
+$container->set(Enqueue\AmqpLib\AmqpConnectionFactory::class, new Enqueue\AmqpLib\AmqpConnectionFactory("amqp+lib://guest:guest@localhost:5672//"));
+
+
+```
+{% endtab %}
+
+{% tab title="No Framework - Docker" %}
+```php
+# Add AmqpConnectionFactory in bin/console.php after // add additional service comment
+
+// add additional services
+$container->set(Enqueue\AmqpLib\AmqpConnectionFactory::class, new Enqueue\AmqpLib\AmqpConnectionFactory("amqp+lib://guest:guest@rabbitmq:5672//"));
 ```
 {% endtab %}
 {% endtabs %}
