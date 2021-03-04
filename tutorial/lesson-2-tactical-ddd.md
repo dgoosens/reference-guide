@@ -16,19 +16,15 @@ Let's create our first _Aggregate_ `Product.`
 ```php
 namespace App\Domain\Product;
 
-use Ecotone\Modelling\Annotation\Aggregate;
-use Ecotone\Modelling\Annotation\AggregateIdentifier;
-use Ecotone\Modelling\Annotation\CommandHandler;
-use Ecotone\Modelling\Annotation\QueryHandler;
+use Ecotone\Modelling\Attribute\Aggregate;
+use Ecotone\Modelling\Attribute\AggregateIdentifier;
+use Ecotone\Modelling\Attribute\CommandHandler;
+use Ecotone\Modelling\Attribute\QueryHandler;
 
-/**
- * @Aggregate() // 1
- */
+#[Aggregate]
 class Product
 {
-    /**
-     * @AggregateIdentifier() // 2
-     */
+    #[AggregateIdentifier]
     private int $productId;
 
     private int $cost;
@@ -39,17 +35,13 @@ class Product
         $this->cost = $cost;
     }
 
-    /**
-     * @CommandHandler() // 3
-     */
+    #[CommandHandler]
     public static function register(RegisterProductCommand $command) : self
     {
         return new self($command->getProductId(), $command->getCost());
     }
 
-    /**
-     * @QueryHandler() // 4
-     */
+    #[QueryHandler]
     public function getCost(GetProductPriceQuery $query) : int
     {
         return $this->cost;
@@ -57,10 +49,10 @@ class Product
 }
 ```
 
-1. `@Aggregate` annotation marks class to be known as Aggregate
-2. `@AggregateIdentififer` marks properties as identifiers of specific Aggregate instance. Each _Aggregate_ must contains at least one identifier. 
-3. `@CommandHandler` enables command handling on specific method just as we did in [Lesson 1](lesson-1-messaging-concepts.md).  If method is static, it's treated as [factory method](https://en.wikipedia.org/wiki/Factory_method_pattern) and must return new aggregate instance. Rule applies as long as we do [State-Stored Aggregate](../modelling/command-handling/state-stored-aggregate.md#state-stored-aggregate) instead of [Event Sourcing Aggregate](../modelling/command-handling/event-sourcing-aggregate.md).
-4. `@QueryHandler` enables query handling on specific method just as we did in Lesson 1.
+1. `Aggregate` annotation marks class to be known as Aggregate
+2. `AggregateIdentififer` marks properties as identifiers of specific Aggregate instance. Each _Aggregate_ must contains at least one identifier. 
+3. `CommandHandler` enables command handling on specific method just as we did in [Lesson 1](lesson-1-messaging-concepts.md).  If method is static, it's treated as [factory method](https://en.wikipedia.org/wiki/Factory_method_pattern) and must return new aggregate instance. Rule applies as long as we use [State-Stored Aggregate](../modelling/command-handling/state-stored-aggregate.md#state-stored-aggregate) instead of [Event Sourcing Aggregate](../modelling/command-handling/event-sourcing-aggregate.md).
+4. `QueryHandler` enables query handling on specific method just as we did in Lesson 1.
 
 {% hint style="info" %}
 If you want to known more details about _Aggregate_ start with chapter [State-Stored Aggregate](../modelling/command-handling/state-stored-aggregate.md#state-stored-aggregate)
@@ -76,17 +68,15 @@ Usually you will mark `services` as Query Handlers not `aggregates. Ecotone`does
 ### Repository
 
 Repositories are used for retrieving and saving the aggregate to persistent storage.   
-We will build in memory implementation, as this will be enough for us.
+We will build in memory implementation for now.
 
 ```php
 namespace App\Domain\Product;
 
-use Ecotone\Modelling\Annotation\Repository;
+use Ecotone\Modelling\Attribute\Repository;
 use Ecotone\Modelling\StandardRepository;
 
-/**
- * @Repository() // 1
- */
+ #[Repository] // 1
 class InMemoryProductRepository implements StandardRepository // 2
 {
     /**
@@ -118,7 +108,7 @@ class InMemoryProductRepository implements StandardRepository // 2
 }
 ```
 
-1. `@Repository` annotation marks class to be known to `Ecotone` as Repository.
+1. `Repository` annotation marks class to be known to `Ecotone` as Repository.
 2. We need to implement some methods in order to allow `Ecotone`, retrieve and save Aggregate. Based on implemented interface, `Ecotone` knowns, if _Aggregate_ is state-stored or event sourced.  
 3. `canHandle` tells which classes can be handled by this specific repository
 4. `findBy`  return found aggregate instance or null. As there may be more, than single indentifier per aggregate, identifiers are array.
@@ -160,7 +150,7 @@ Everything is set up by the framework, please continue...
 ```
 {% endtab %}
 
-{% tab title="No Framework" %}
+{% tab title="Lite" %}
 ```
 Everything is set up, please continue...
 ```
