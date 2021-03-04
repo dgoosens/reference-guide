@@ -370,9 +370,9 @@ class EcotoneQuickstart
 }
 ```
 
-1. If you are using `Symfony` or `Laravel`, `Gateways` are auto registered in Dependency Container and available for auto-wire.  `Ecotone` comes with few set up Gateways. Command and Query buses are available instantly to you. You will be able to extend them or create your own ones, if needed.  For no-framework version, this is manually wired together, you can check it in `bin/console`.
-2. We are sending command`RegisterProductCommand` to the `@CommandHandler` we registered before. 
-3. Same as above, but in that case we are sending query `GetProductPriceQuery` to the `@QueryHandler`
+1. `Gateways` are auto registered in Dependency Container and available for auto-wire.  `Ecotone` comes with few set up Gateways. Command and Query buses are available instantly to you. You will be able to extend them or create your own ones, if needed.
+2. We are sending command`RegisterProductCommand` to the `CommandHandler` we registered before. 
+3. Same as above, but in that case we are sending query `GetProductPriceQuery` to the `QueryHandler`
 
 If you run our testing command now, you should see the result. 
 
