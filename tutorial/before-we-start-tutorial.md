@@ -38,7 +38,7 @@ git clone git@github.com:ecotoneframework/quickstart-lite.git
 {% tabs %}
 {% tab title="Local Environment" %}
 ```php
-/** You need to have atleast PHP 7.3 and Composer installed */
+/** You need to have atleast PHP 8.0 and Composer installed */
 1. Run "composer install" 
 2. Run starting command "bin/console ecotone:quickstart"
 3. You should see:
@@ -50,11 +50,12 @@ Good job, scenario ran with success!"
 
 {% tab title="Docker" %}
 ```php
-/** Ecotone Quickstart ships with docker-compose with preinstalled PHP 7.4 */
-1. Run "docker-compose up -d" // It will automatically download composer packages
+/** Ecotone Quickstart ships with docker-compose with preinstalled PHP 8.0 */
+1. Run "docker-compose up -d"
 2. Enter container "docker exec -it ecotone-quickstart /bin/bash"
-3. Run starting command "bin/console ecotone:quickstart"
-4. You should see:
+3. Run starting command "composer instal"
+4. Run starting command "bin/console ecotone:quickstart"
+5. You should see:
 "Running example...
 Hello World
 Good job, scenario ran with success!"
