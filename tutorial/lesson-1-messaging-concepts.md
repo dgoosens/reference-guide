@@ -206,21 +206,19 @@ class ProductService
 First thing worth noticing is `#[CommandHandler]`.   
 This [attribute](https://wiki.php.net/rfc/attributes_v2) marks our `register` method in `ProductService` as an [Endpoint](lesson-1-messaging-concepts.md#message-endpoint), from that moment it can be found by `Ecotone.`
 
+`Ecotone` will read method declaration and base on the first parameter type hint will know that this `CommandHandler` is responsible for handling `RegisterProductCommand.` 
+
 {% hint style="info" %}
-`PHP 8 Introduced neat feature called` [`Attributes`](https://wiki.php.net/rfc/attributes_v2)`You may now know it under the name Annotations. Annotations were userland solution and Attributes are built in into language feature. Ecotone make use of it to decouple your code from the framework.   
+`PHP 8 Introduced neat feature called`[`Attributes`](https://wiki.php.net/rfc/attributes_v2)`You may now know it under the name Annotations. Annotations were userland solution and Attributes are built in into language feature. Ecotone make use of it to decouple your code from the framework.   
   
 Thank you Benjamin Eberlei and Martin Schroder for introducing this feature :)`
 {% endhint %}
 
-`Ecotone` will read method declaration and base on the first parameter type hint will know that this `CommandHandler` is responsible for handling `RegisterProductCommand.` 
-
 {% hint style="info" %}
-`@ClassReference` is a special [Attribute](https://wiki.php.net/rfc/attributes_v2)  it informs `Ecotone`how this service is registered in `Depedency Container`. As a default it takes the class name, which is compatible with auto-wiring system. If `ProductService` would be registered in `Dependency Container` as `productService`, we would do this:
+`#[ClassReference]` is a special [Attribute](https://wiki.php.net/rfc/attributes_v2)  it informs `Ecotone`how this service is registered in `Depedency Container`. As a default it takes the class name, which is compatible with auto-wiring system. If `ProductService` would be registered in `Dependency Container` as `productService`, we would do this:
 
 ```php
-/**
- * @ClassReference("productService")
- */
+#[ClassReference("productService")
 class ProductService
 ```
 {% endhint %}
