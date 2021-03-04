@@ -172,23 +172,19 @@ Have you noticed, what are we missing here? Our `Event Handler` was not called, 
 
 ### Event Publishing
 
-In order to automatically publish events recorded within Aggregate, we need to add method annotated with `@AggregateEvents.` This will tell `Ecotone` where to get the events from.  
+In order to automatically publish events recorded within Aggregate, we need to add method annotated with `AggregateEvents.` This will tell `Ecotone` where to get the events from.  
   
 `Ecotone` comes with default implementation, that can be used as trait `WithAggregateEvents`.
 
 ```php
 use Ecotone\Modelling\WithAggregateEvents;
 
-/**
- * @Aggregate()
- */
+#[Aggregate]
 class Product
 {
     use WithAggregateEvents;
 
-    /**
-     * @AggregateIdentifier()
-     */
+    #[AggregateIdentifier]
     private int $productId;
 
     private int $cost;
