@@ -91,6 +91,8 @@ If yes and this command does return above output, then we are ready to go.
 {% code title="https://github.com/ecotoneframework/quickstart-symfony/blob/lesson-1/src/EcotoneQuickstart.php" %}
 ```php
 Go to "src/EcotoneQuickstart.php"
+
+# This class is autoregistered using Symfony Autowire
 ```
 {% endcode %}
 {% endtab %}
@@ -113,8 +115,11 @@ Go to "src/EcotoneQuickstart.php"
 {% endtabs %}
 
 this method will be run, whenever we execute_`ecotone:quickstart`_.   
-This class is auto-registered using auto-wire system, both [Symfony](https://symfony.com/doc/current/service_container/autowiring.html) and [Laravel](https://laravel.com/docs/7.x/container) provides this great feature.   
-Thanks to that, we will not need to write any service registration configuration during this tutorial and we will be able to focus fully on what can `Ecotone` provide to us. 
+This class is auto-registered using auto-wire system, both [Symfony](https://symfony.com/doc/current/service_container/autowiring.html) and [Laravel](https://laravel.com/docs/7.x/container) provides this great feature. For `Lite` clean and easy to use [`PHP-DI`](https://github.com/PHP-DI/PHP-DI) is taken.  
+
+
+Thanks to that, we will avoid writing configuration files for service registrations during this tutorial.   
+And we will be able to fully focus on what can `Ecotone` provides to us. 
 
 ```php
 <?php
