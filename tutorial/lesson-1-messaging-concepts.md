@@ -257,25 +257,20 @@ We also need Handler for this query. Let's add `Query Handler` __to the `Product
 
 namespace App\Domain\Product;
 
-use Ecotone\Messaging\Annotation\MessageEndpoint;
-use Ecotone\Modelling\Annotation\CommandHandler;
-use Ecotone\Modelling\Annotation\QueryHandler;
+use Ecotone\Modelling\Attribute\CommandHandler;
+use Ecotone\Modelling\Attribute\QueryHandler;
 
 class ProductService
 {
     private array $registeredProducts = [];
 
-    /**
-     * @CommandHandler()
-     */
+    #[CommandHandler]
     public function register(RegisterProductCommand $command) : void
     {
         $this->registeredProducts[$command->getProductId()] = $command->getCost();
     }
 
-    /**
-     * @QueryHandler()
-     */
+    #[QueryHandler] 
     public function getPrice(GetProductPriceQuery $query) : int
     {
         return $this->registeredProducts[$query->getProductId()];
@@ -319,7 +314,7 @@ Everything is set up by the framework, please continue...
 ```
 {% endtab %}
 
-{% tab title="No Framework" %}
+{% tab title="Lite" %}
 ```
 Everything is set up, please continue...
 ```
