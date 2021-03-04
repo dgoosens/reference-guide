@@ -141,7 +141,7 @@ class EcotoneQuickstart
 
 ### Command Handler - Endpoint
 
-We will create our first `Command Handler` endpoint connected to `Point To Point Channel`.  
+We will start by creating `Command Handler` endpoint connected to `Point To Point Channel`.  
 `Command Handler` is place where we will put our business logic.   
 Let's create namespace `App\Domain\Product` and inside `RegisterProductCommand,` command for registering new product:
 
@@ -175,20 +175,8 @@ class RegisterProductCommand
 ```
 
 {% hint style="info" %}
-In the tutorial we are using PHP 7.4, feel free to use PHP 7.3, but remember to document your code.  
-PHP &gt;= 7.4
-
 ```php
 private int $productId;
-```
-
-PHP &lt;= 7.3
-
-```php
-/**
- * @var int
- */
-private $productId;
 ```
 
 Describing types, will help us in later lessons with automatic conversion. Just remember right now, that it's worth to keep the types defined.
@@ -201,16 +189,13 @@ Let's register a Command Handler now by creating class `App\Domain\Product\Produ
 
 namespace App\Domain\Product;
 
-use Ecotone\Messaging\Annotation\ClassReference;
-use Ecotone\Modelling\Annotation\CommandHandler;
+use Ecotone\Modelling\Attribute\CommandHandler;
 
 class ProductService
 {
     private array $registeredProducts = [];
     
-    /**
-     * @CommandHandler()
-     */
+    #[CommandHandler]
     public function register(RegisterProductCommand $command) : void
     {
         $this->registeredProducts[$command->getProductId()] = $command->getCost();
@@ -218,13 +203,13 @@ class ProductService
 }
 ```
 
-First thing worth noticing is `@CommandHandler`.   
-This annotation marks our `register` method in ProductService as an [Endpoint](lesson-1-messaging-concepts.md#message-endpoint), from that moment it can be found by `Ecotone.`
+First thing worth noticing is `#[CommandHandler]`.   
+This [attribute](https://wiki.php.net/rfc/attributes_v2) marks our `register` method in `ProductService` as an [Endpoint](lesson-1-messaging-concepts.md#message-endpoint), from that moment it can be found by `Ecotone.`
 
-`Ecotone` will read method declaration and base on the first parameter type hint will know that this `@CommandHandler` is responsible for handling `RegisterProductCommand.` 
+`Ecotone` will read method declaration and base on the first parameter type hint will know that this `CommandHandler` is responsible for handling `RegisterProductCommand.` 
 
 {% hint style="info" %}
-`@ClassReference` is a special [Annotation](https://www.doctrine-project.org/projects/doctrine-annotations/en/1.8/index.html)  it informs `Ecotone`how this service is registered in `Depedency Container`. As a default it takes the class name, which is compatible with auto-wiring system. If `ProductService` would be registered in `Dependency Container` as `productService`, we would do this:
+`@ClassReference` is a special [Attribute](https://wiki.php.net/rfc/attributes_v2)  it informs `Ecotone`how this service is registered in `Depedency Container`. As a default it takes the class name, which is compatible with auto-wiring system. If `ProductService` would be registered in `Dependency Container` as `productService`, we would do this:
 
 ```php
 /**
