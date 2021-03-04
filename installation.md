@@ -46,7 +46,7 @@ Provider should be automatically registered.
 composer require ecotone/ecotone
 {% endhint %}
 
-    2. Boostrap `Ecotone`
+    2. Bootstrap `Ecotone`
 
 ```php
 use Ecotone\Lite\EcotoneLiteConfiguration;
@@ -64,12 +64,4 @@ $messagingSystem = EcotoneLiteConfiguration::createWithConfiguration(
         ->withNamespaces($namespacesToUse)
 );
 ```
-
-
-
-{% hint style="info" %}
-Ecotone is heavily based on annotations to avoid coupling domain with framework code.  
-  
-PHPStorm has great plugin, which allow auto-complete for annotations: [https://plugins.jetbrains.com/plugin/7320-php-annotations](https://plugins.jetbrains.com/plugin/7320-php-annotations/)
-{% endhint %}
 
