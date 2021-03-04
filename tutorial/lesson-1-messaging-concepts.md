@@ -413,17 +413,15 @@ class ProductWasRegisteredEvent
 {% hint style="info" %}
 As you can see `Ecotone` does not really care what class Command/Query/Event is. It does not require to implement any interfaces neither prefix or suffix the class name.  
 In fact commands, queries and events can be of any type and we will see it in next Lessons.  
-In the tutorial we do use Command/Query/Event suffixes to clarify the distinction.
+In the tutorial however we use Command/Query/Event suffixes to clarify the distinction.
 {% endhint %}
 
-Let's inject `EventBus` into our `@CommandHandler` in order to publish `ProductWasRegisteredEvent`.
+Let's inject `EventBus` into our `CommandHandler` in order to publish `ProductWasRegisteredEvent` after product was registered.
 
 ```php
 use Ecotone\Modelling\EventBus;
 
-/**
- * @CommandHandler()
- */
+ #[CommandHandler]
 public function register(RegisterProductCommand $command, EventBus $eventBus) : void
 {
     $this->registeredProducts[$command->getProductId()] = $command->getCost();
@@ -435,20 +433,18 @@ public function register(RegisterProductCommand $command, EventBus $eventBus) : 
 You may wonder, how `EventBus` is injected into the Command Handler's method.  
 `Ecotone` does control method invocation for [endpoints](lesson-1-messaging-concepts.md#message-endpoint), if you have type hinted for specific class, framework will look in Dependency Container for specific service in order to inject it automatically. It does work similar to auto-wire system. If you want to know more, check chapter about [Method Invocation](../messaging/conversion/method-invocation.md).
 
-Now, when our event is published, whenever new product is registered, we want to listen for it and notify. Let's create new class and annotate method with `@EventHandler`. 
+Now, when our event is published, whenever new product is registered, we want to listen for it and notify. Let's create new class and annotate method with `EventHandler`. 
 
 ```php
 <?php
 
 namespace App\Domain\Product;
 
-use Ecotone\Modelling\Annotation\EventHandler;
+use Ecotone\Modelling\Attribute\EventHandler;
 
 class ProductNotifier
 {
-    /**
-     * @EventHandler() // 1
-     */
+    #[EventHandler] // 1
     public function notifyAbout(ProductWasRegisteredEvent $event) : void
     {
         echo "Product with id {$event->getProductId()} was registered!\n";
@@ -459,7 +455,10 @@ class ProductNotifier
 1. `@EventHandler` tells `Ecotone` to handle specific event based on declaration type hint, just like with `@CommandHandler.` 
 
 {% hint style="info" %}
-You may use interfaces or abstract classes for your first parameter type hint. Ecotone will resolve connection between published event and Event Handler.
+You may use interfaces or abstract classes for your first parameter type hint.   
+You may even, type hint using union type `(ProductWasRegistered|ProductWasSent)` in order to listen for one than one event in specific method.
+
+Ecotone will resolve connection between published event and Event Handler.
 {% endhint %}
 
 If you run our testing command now, you should see the result. 
