@@ -141,8 +141,8 @@ class EcotoneQuickstart
 
 ### Command Handler - Endpoint
 
-We will start by creating `Command Handler` endpoint connected to `Point To Point Channel`.  
-`Command Handler` is place where we will put our business logic.   
+We will start by creating `Command Handler`.  
+Command Handler is place where we will put our business logic.   
 Let's create namespace `App\Domain\Product` and inside `RegisterProductCommand,` command for registering new product:
 
 ```php
