@@ -2,10 +2,10 @@
 
 ## Setup for tutorial
 
-Depending on your preferences, you may choose tutorial using [`Symfony`](https://symfony.com/) or [`Laravel`](https://laravel.com/).  
-In places where configuration will differ, there will be two tabs available each with code specific to the framework.
+Depending on your preferences, you may choose for the tutorial [`Symfony`](https://symfony.com/)  [`Laravel`](https://laravel.com/) or `Lite (No extra framework)`.  
+If configuration will differ, there will be three tabs available, each with code specific to the chosen solution.
 
-1. Use [git](https://git-scm.com) to download  **a starting point** to follow the tutorial. Tutorial is simple Command Line based application.
+1. Use [git](https://git-scm.com) to download  **a starting point** to follow the tutorial.
 
 {% tabs %}
 {% tab title="Symfony" %}
