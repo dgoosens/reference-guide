@@ -101,6 +101,8 @@ Go to "src/EcotoneQuickstart.php"
 {% code title="https://github.com/ecotoneframework/quickstart-laravel/blob/lesson-1/app/EcotoneQuickstart.php" %}
 ```php
 Go to "app/EcotoneQuickstart.php"
+
+# This class is autoregistered using Laravel Autowire
 ```
 {% endcode %}
 {% endtab %}
@@ -110,6 +112,8 @@ Go to "app/EcotoneQuickstart.php"
 https://github.com/ecotoneframework/quickstart-lite/blob/lesson-1/src/EcotoneQuickstart.php
 
 Go to "src/EcotoneQuickstart.php"
+
+# This class is autoregistered using PHP-DI
 ```
 {% endtab %}
 {% endtabs %}
