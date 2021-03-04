@@ -474,6 +474,8 @@ Good job, scenario ran with success!
 {% hint style="success" %}
 Great, we have just finished Lesson 1.   
 In this lesson we have learned basic of Messaging and CQRS.   
+That was the longest lesson, as it had to introduce new concepts. Incoming lessons will be much shorter :\)
+
   
 We are ready for Lesson 2!
 {% endhint %}
