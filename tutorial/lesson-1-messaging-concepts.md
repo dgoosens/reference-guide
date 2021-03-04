@@ -96,11 +96,19 @@ Go to "src/EcotoneQuickstart.php"
 {% endtab %}
 
 {% tab title="Laravel" %}
-{% code title="https://github.com/ecotoneframework/quickstart-laravel/blob/master/app/EcotoneQuickstart.php" %}
+{% code title="https://github.com/ecotoneframework/quickstart-laravel/blob/lesson-1/app/EcotoneQuickstart.php" %}
 ```php
 Go to "app/EcotoneQuickstart.php"
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+https://github.com/ecotoneframework/quickstart-lite/blob/lesson-1/src/EcotoneQuickstart.php
+
+Go to "src/EcotoneQuickstart.php"
+```
 {% endtab %}
 {% endtabs %}
 
