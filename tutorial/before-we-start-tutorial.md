@@ -25,9 +25,9 @@ git clone git@github.com:ecotoneframework/quickstart-laravel.git
 ```
 {% endtab %}
 
-{% tab title="No Framework" %}
+{% tab title="Lite" %}
 ```
-git clone git@github.com:ecotoneframework/quickstart-no-framework.git
+git clone git@github.com:ecotoneframework/quickstart-lite.git
 # Go to quickstart-symfony catalog
 ```
 {% endtab %}
