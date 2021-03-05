@@ -332,7 +332,7 @@ class Product
         $this->productId = $productId;
         $this->cost = $cost;
 
-        $this->record(new ProductWasRegisteredEvent($productId));
+        $this->recordThat(new ProductWasRegisteredEvent($productId));
     }
 
     #[CommandHandler("product.register")]
