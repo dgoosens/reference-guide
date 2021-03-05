@@ -13,21 +13,19 @@ At the level of application however we want to deal with it in `PHP` format, as 
 
 Moving from one format to another requires conversion. `Ecotone` does provide extension point in which we can integrate different [Media Type](https://pl.wikipedia.org/wiki/Typ_MIME) converters. 
 
-Let's build our first converter from `JSON` to our `PHP` format. In order to do that, we will need to implement `Converter` interface and mark it with `@MediaTypeConverter().`
+Let's build our first converter from `JSON` to our `PHP` format. In order to do that, we will need to implement `Converter` interface and mark it with `MediaTypeConverter().`
 
 ```php
 <?php
 
 namespace App\Domain\Product;
 
-use Ecotone\Messaging\Annotation\MediaTypeConverter;
+use Ecotone\Messaging\Attribute\MediaTypeConverter;
 use Ecotone\Messaging\Conversion\Converter;
 use Ecotone\Messaging\Conversion\MediaType;
 use Ecotone\Messaging\Handler\TypeDescriptor;
 
-/**
- * @MediaTypeConverter()
- */
+#[MediaTypeConverter]
 class JsonToPHPConverter implements Converter
 {
     public function matches(TypeDescriptor $sourceType, MediaType $sourceMediaType, TypeDescriptor $targetType, MediaType $targetMediaType): bool
@@ -79,7 +77,7 @@ public function convert($source, TypeDescriptor $sourceType, MediaType $sourceMe
 ```
 
 {% hint style="info" %}
-Normally you would inject into Converter class, some kind of serializer used within your application for example JMS or Symfony one to make the conversion.
+Normally you would inject into Converter class, some kind of serializer used within your application for example `JMS Serializer` or `Symfony Serializer` to make the conversion.
 {% endhint %}
 
 And let's add `fromArray` method to `RegisterProductCommand` and `GetProductPriceQuery.`
@@ -139,17 +137,13 @@ You may think now of routing key, as a message name used in different CQRS frame
 {% endhint %}
 
 ```php
-/**
- * @CommandHandler("product.register")
- */
+#[CommandHandler("product.register")]
 public static function register(RegisterProductCommand $command) : self
 {
     return new self($command->getProductId(), $command->getCost());
 }
 
-/**
- * @QueryHandler("product.getCost")
- */
+#[QueryHandler("product.getCost")] 
 public function getCost(GetProductPriceQuery $query) : int
 {
     return $this->cost;
@@ -159,15 +153,13 @@ public function getCost(GetProductPriceQuery $query) : int
 Let's change our Testing class, so we call buses with `JSON` format.
 
 ```php
-use Ecotone\Messaging\Conversion\MediaType;
-
 (...)
 
 public function run() : void
 {
-    $this->commandBus->convertAndSend("product.register", MediaType::APPLICATION_JSON, \json_encode(["productId" => 1, "cost" => 100]));
+    $this->commandBus->sendWithRouting("product.register", \json_encode(["productId" => 1, "cost" => 100], "application/json"));
 
-    echo $this->queryBus->convertAndSend("product.getCost", MediaType::APPLICATION_JSON, \json_encode(["productId" => 1]));
+    echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1], "application/json"));
 }
 ```
 
@@ -282,21 +274,17 @@ Let's create class `App\Infrastructure\Converter\CostConverter.` We will put it 
 namespace App\Infrastructure\Converter;
 
 use App\Domain\Product\Cost;
-use Ecotone\Messaging\Annotation\Converter;
+use Ecotone\Messaging\Attribute\Converter;
 
 class CostConverter
 {
-    /**
-     * @Converter()
-     */
+    #[Converter]
     public function convertFrom(Cost $cost) : int
     {
         return $cost->getAmount();
     }
 
-    /**
-     * @Converter()
-     */
+    #[Converter]
     public function convertTo(int $amount) : Cost
     {
         return new Cost($amount);
@@ -304,7 +292,7 @@ class CostConverter
 }
 ```
 
-We mark the methods with`@Converter()`, so `Ecotone` can read parameter type and return type in order to know, how he can convert from scalar/array to specific class and vice versa.  
+We mark the methods with`Converter()`, so `Ecotone` can read parameter type and return type in order to know, how he can convert from scalar/array to specific class and vice versa.  
   
 Let's change our command and aggregate class, so it can use the Cost directly.
 
@@ -334,9 +322,7 @@ class Product
 {
     use WithAggregateEvents;
 
-    /**
-     * @AggregateIdentifier()
-     */
+    #[AggregateIdentifier]
     private int $productId;
 
     private Cost $cost;
@@ -349,17 +335,13 @@ class Product
         $this->record(new ProductWasRegisteredEvent($productId));
     }
 
-    /**
-     * @CommandHandler("product.register")
-     */
+    #[CommandHandler("product.register")]
     public static function register(RegisterProductCommand $command) : self
     {
         return new self($command->getProductId(), $command->getCost());
     }
 
-    /**
-     * @QueryHandler("product.getCost")
-     */
+    #[QueryHandler("product.getCost")]
     public function getCost(GetProductPriceQuery $query) : Cost
     {
         return $this->cost;
