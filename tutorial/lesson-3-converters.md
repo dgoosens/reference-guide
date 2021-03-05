@@ -157,9 +157,9 @@ Let's change our Testing class, so we call buses with `JSON` format.
 
 public function run() : void
 {
-    $this->commandBus->sendWithRouting("product.register", \json_encode(["productId" => 1, "cost" => 100], "application/json"));
+    $this->commandBus->sendWithRouting("product.register", \json_encode(["productId" => 1, "cost" => 100]), "application/json");
 
-    echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1], "application/json"));
+    echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1]), "application/json");
 }
 ```
 

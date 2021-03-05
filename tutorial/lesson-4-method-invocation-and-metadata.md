@@ -47,13 +47,13 @@ public function run() : void
     $this->commandBus->sendWithRouting(
         "product.register",
         \json_encode(["productId" => 1, "cost" => 100]),
-        MediaType::APPLICATION_JSON,        
+        "application/json",
         [
             "userId" => 5
         ]
     );
             
-    echo $this->queryBus->convertAndSend("product.getCost", MediaType::APPLICATION_JSON, \json_encode(["productId" => 1]));
+    echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1]), "application/json");
 }
 ```
 
