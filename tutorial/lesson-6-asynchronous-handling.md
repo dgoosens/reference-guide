@@ -74,22 +74,18 @@ And our `Order` aggregate
 namespace App\Domain\Order;
 
 use App\Infrastructure\AddUserId\AddUserId;
-use Ecotone\Messaging\Conversion\MediaType;
-use Ecotone\Modelling\Annotation\Aggregate;
-use Ecotone\Modelling\Annotation\AggregateIdentifier;
-use Ecotone\Modelling\Annotation\CommandHandler;
-use Ecotone\Modelling\Annotation\QueryHandler;
+use Ecotone\Messaging\Attribute\Asynchronous;
+use Ecotone\Modelling\Attribute\Aggregate;
+use Ecotone\Modelling\Attribute\AggregateIdentifier;
+use Ecotone\Modelling\Attribute\CommandHandler;
+use Ecotone\Modelling\Attribute\QueryHandler;
 use Ecotone\Modelling\QueryBus;
 
-/**
- * @Aggregate()
- * @AddUserId()
- */
+#[Aggregate]
+#[AddUserId]
 class Order
 {
-    /**
-     * @AggregateIdentifier()
-     */
+    #[AggregateIdentifier]
     private int $orderId;
 
     private int $buyerId;
@@ -105,24 +101,20 @@ class Order
         $this->buyerId = $buyerId;
         $this->orderedProducts = $orderedProducts;
     }
-
-    /**
-     * @CommandHandler("order.place")
-     */
+    
+    #[CommandHandler("order.place")]
     public static function placeOrder(PlaceOrderCommand $command, array $metadata, QueryBus $queryBus) : self
     {
         $orderedProducts = [];
         foreach ($command->getProductIds() as $productId) {
-            $productCost = $queryBus->convertAndSend("product.getCost", MediaType::APPLICATION_X_PHP_ARRAY, ["productId" => $productId]);
+            $productCost = $queryBus->sendWithRouting("product.getCost", ["productId" => $productId]);
             $orderedProducts[] = new OrderedProduct($productId, $productCost->getAmount());
         }
 
         return new self($command->getOrderId(), $metadata["userId"], $orderedProducts);
     }
 
-    /**
-     * @QueryHandler("order.getTotalPrice")
-     */
+    #[QueryHandler("order.getTotalPrice")]
     public function getTotalPrice() : int
     {
         $totalPrice = 0;
@@ -162,21 +154,18 @@ class EcotoneQuickstart
 
     public function run() : void
     {
-        $this->commandBus->convertAndSend(
+        $this->commandBus->sendWithRouting(
             "product.register",
-            MediaType::APPLICATION_X_PHP_ARRAY,
             ["productId" => 1, "cost" => 100]
         );
-        $this->commandBus->convertAndSend(
+        $this->commandBus->sendWithRouting(
             "product.register",
-            MediaType::APPLICATION_X_PHP_ARRAY,
             ["productId" => 2, "cost" => 300]
         );
 
         $orderId = 100;
-        $this->commandBus->convertAndSend(
+        $this->commandBus->sendWithRouting(
             "order.place",
-            MediaType::APPLICATION_X_PHP_ARRAY,
             ["orderId" => $orderId, "productIds" => [1,2]]
         );
 
@@ -226,8 +215,8 @@ services:
         exclude: '../bootstrap/{Kernel.php}'
 
 # You need to have RabbitMQ instance running on your localhost, or change DSN
-    Enqueue\AmqpLib\AmqpConnectionFactory:
-        class: Enqueue\AmqpLib\AmqpConnectionFactory
+    Enqueue\AmqpExt\AmqpConnectionFactory:
+        class: Enqueue\AmqpExt\AmqpConnectionFactory
         arguments:
             - "amqp+lib://guest:guest@localhost:5672//"
 ```
@@ -250,8 +239,8 @@ services:
 
 # docker-compose.yml has RabbitMQ instance defined. It will be working without
 # addtional configuration
-    Enqueue\AmqpLib\AmqpConnectionFactory:
-        class: Enqueue\AmqpLib\AmqpConnectionFactory
+    Enqueue\AmqpExt\AmqpConnectionFactory:
+        class: Enqueue\AmqpExt\AmqpConnectionFactory
         arguments:
             - "amqp+lib://guest:guest@rabbitmq:5672//"
 ```
@@ -264,7 +253,7 @@ services:
 namespace Bootstrap;
 
 use Illuminate\Support\ServiceProvider;
-use Enqueue\AmqpLib\AmqpConnectionFactory;
+use Enqueue\AmqpExt\AmqpConnectionFactory;
 
 class QuickStartProvider extends ServiceProvider
 {
@@ -285,7 +274,7 @@ class QuickStartProvider extends ServiceProvider
 namespace Bootstrap;
 
 use Illuminate\Support\ServiceProvider;
-use Enqueue\AmqpLib\AmqpConnectionFactory;
+use Enqueue\AmqpExt\AmqpConnectionFactory;
 
 class QuickStartProvider extends ServiceProvider
 {
@@ -299,23 +288,23 @@ class QuickStartProvider extends ServiceProvider
 ```
 {% endtab %}
 
-{% tab title="No Framework - Local" %}
+{% tab title="Lite - Local" %}
 ```php
 # Add AmqpConnectionFactory in bin/console.php after // add additional service comment
 
 // add additional services
-$container->set(Enqueue\AmqpLib\AmqpConnectionFactory::class, new Enqueue\AmqpLib\AmqpConnectionFactory("amqp+lib://guest:guest@localhost:5672//"));
+$container->set(Enqueue\AmqpExt\AmqpConnectionFactory::class, new Enqueue\AmqpExt\AmqpConnectionFactory("amqp+lib://guest:guest@localhost:5672//"));
 
 
 ```
 {% endtab %}
 
-{% tab title="No Framework - Docker" %}
+{% tab title="Lite - Docker" %}
 ```php
 # Add AmqpConnectionFactory in bin/console.php after // add additional service comment
 
 // add additional services
-$container->set(Enqueue\AmqpLib\AmqpConnectionFactory::class, new Enqueue\AmqpLib\AmqpConnectionFactory("amqp+lib://guest:guest@rabbitmq:5672//"));
+$container->set(Enqueue\AmqpExt\AmqpConnectionFactory::class, new Enqueue\AmqpExt\AmqpConnectionFactory("amqp+lib://guest:guest@rabbitmq:5672//"));
 ```
 {% endtab %}
 {% endtabs %}
@@ -331,18 +320,9 @@ Let's create new class `App\Infrastructure\MessagingConfiguration.`
 ```php
 namespace App\Infrastructure;
 
-use Ecotone\Amqp\AmqpBackedMessageChannelBuilder;
-use Ecotone\Messaging\Annotation\ApplicationContext;
-use Ecotone\Messaging\Annotation\Extension;
-
-/**
- * @ApplicationContext()
- */
 class MessagingConfiguration
 {
-    /**
-     * @Extension()
-     */
+    #[ServiceContext]
     public function orderChannel()
     {
         return [
@@ -352,8 +332,7 @@ class MessagingConfiguration
 }
 ```
 
-`@ApplicationContext` - Tells `Ecotone` that this is Application configuration class  
-`@Extension` - Tell that this method returns configuration. It can return array of objects or a single object.
+`ServiceContext` - Tell that this method returns configuration. It can return array of objects or a single object.
 
 Now we need to tell our `order.place` Command Handler, that it should run asynchronously using our new`orders` channel. 
 
@@ -362,15 +341,13 @@ use Ecotone\Messaging\Annotation\Asynchronous;
 
 (...)
 
-/**
- * @Asynchronous(channelName="orders")
- * @CommandHandler(endpointId="place_order_endpoint", inputChannelName="order.place")
- */
+#[Asynchronous("orders")]
+#[CommandHandler("order.place", endpointId: "place_order_endpoint")]
 public static function placeOrder(PlaceOrderCommand $command, array $metadata, QueryBus $queryBus) : self
 {
     $orderedProducts = [];
     foreach ($command->getProductIds() as $productId) {
-        $productCost = $queryBus->convertAndSend("product.getCost", MediaType::APPLICATION_X_PHP_ARRAY, ["productId" => $productId]);
+        $productCost = $queryBus->sendWithRouting("product.getCost", ["productId" => $productId]);
         $orderedProducts[] = new OrderedProduct($productId, $productCost->getAmount());
     }
 
@@ -378,11 +355,11 @@ public static function placeOrder(PlaceOrderCommand $command, array $metadata, Q
 }
 ```
 
-We do it by adding `@Asynchronous` annotation with `channelName` used for asynchronous endpoint.   
-Endpoints using `@Asynchronous` are required to have `endpointId` defined, the name can be anything as long as it's not the same as `inputChannelName`. 
+We do it by adding `Asynchronous` annotation with `channelName` used for asynchronous endpoint.   
+Endpoints using `Asynchronous` are required to have `endpointId` defined, the name can be anything as long as it's not the same as `routing key (order.place)`. 
 
 ```php
-@CommandHandler(endpointId="place_order_endpoint" (...)
+#[CommandHandler("order.place", endpointId: "place_order_endpoint")]
 ```
 
 {% hint style="success" %}
@@ -390,12 +367,11 @@ Let's run our command which will tell us what asynchronous endpoints we have def
 {% endhint %}
 
 ```php
-bin/console ecotone:list-all-asynchronous-endpoints
+bin/console ecotone:list
 +--------------------+
 | Endpoint Names     |
 +--------------------+
 | orders             |
-| currency_exchanger |
 +--------------------+
 ```
 
@@ -407,25 +383,22 @@ Let's change `orderId` in our testing command, so we can place new order.
 ```php
 public function run() : void
 {
-    $this->commandBus->convertAndSend(
+    $this->commandBus->sendWithRouting(
         "product.register",
-        MediaType::APPLICATION_X_PHP_ARRAY,
         ["productId" => 1, "cost" => 100]
     );
-    $this->commandBus->convertAndSend(
+    $this->commandBus->sendWithRouting(
         "product.register",
-        MediaType::APPLICATION_X_PHP_ARRAY,
         ["productId" => 2, "cost" => 300]
     );
 
     $orderId = 990;
-    $this->commandBus->convertAndSend(
+    $this->commandBus->sendWithRouting(
         "order.place",
-        MediaType::APPLICATION_X_PHP_ARRAY,
         ["orderId" => $orderId, "productIds" => [1,2]]
     );
 
-    echo $this->queryBus->convertAndSend("order.getTotalPrice", MediaType::APPLICATION_X_PHP_ARRAY, ["orderId" => $orderId]);
+    echo $this->queryBus->sendWithRouting("order.getTotalPrice", ["orderId" => $orderId]);
 }
 ```
 
@@ -443,7 +416,7 @@ That's fine, we have registered `order.place` Command Handler to run asynchronou
 Let's run our asynchronous endpoint
 
 ```php
-bin/console ecotone:run-endpoint orders -vvv
+bin/console ecotone:run orders -vvv
 [info] {"orderId":990,"productIds":[1,2]}
 ```
 
@@ -466,7 +439,7 @@ class EcotoneQuickstart
     {
         $orderId = 990;
 
-        echo $this->queryBus->convertAndSend("order.getTotalPrice", MediaType::APPLICATION_X_PHP_ARRAY, ["orderId" => $orderId]);
+        echo $this->queryBus->sendWithRouting("order.getTotalPrice", ["orderId" => $orderId]);
     }
 }
 ```
@@ -479,28 +452,16 @@ Good job, scenario ran with success!
 ```
 
 There is one thing we can change.   
-As we don't always have access to the context of executor, which calling the command after the Message goes asynchronous, we can change our `AddUserIdService Interceptor.`  
+As in asynchronous scenario we may not have access to the context of executor to enrich the message,, we can change our `AddUserIdService Interceptor` to perform the action before sending it to asynchronous channel.  
 This Interceptor is registered as `Before Interceptor` which is before execution of our Command Handler, but what we want to achieve is, to call this interceptor before message will be send to the asynchronous channel. For this there is `Presend` Interceptor available.  
-Change `@Before` annotation to `@Presend` annotation and we are done.
+Change `Before` annotation to `Presend` annotation and we are done.
 
 ```php
 namespace App\Infrastructure\AddUserId;
 
-use Ecotone\Messaging\Annotation\Interceptor\Presend;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-
-/**
- * @MethodInterceptor()
- */
 class AddUserIdService
 {
-    /**
-     * @Presend(
-     *     pointcut="@(App\Infrastructure\AddUserId\AddUserId)",
-     *     changeHeaders=true,
-     *     precedence=0
-     * )
-     */
+   #[Presend(0, AddUserId::class, true)]
     public function add() : array
     {
         return ["userId" => 1];
@@ -508,12 +469,11 @@ class AddUserIdService
 }
 ```
 
-{% hint style="info" %}
-As long as headers are scalar types, Ecotone will handle serialization and deserialization.   
-Keep them simple and you can be sure, that asynchronous endpoints will work, just as they would be synchronous. 
+{% hint style="success" %}
+Ecotone will do it best to handle serialization and deserialization of your headers. 
 {% endhint %}
 
-If we would do the same with administrator requirement, exception will be thrown, before the Message will be put to the asynchronous channel. Thanks to `Presend` interceptor, we can validate messages, before they will be send for handling. Try it, if you want. 
+Now if non-administrator will try to execute this, exception will be thrown, before the Message will be put to the asynchronous channel. Thanks to `Presend` interceptor, we can validate messages, before they will go asynchronous, to prevent sending incorrect messages.
 
 {% hint style="info" %}
 The final code is available as lesson-7:  
