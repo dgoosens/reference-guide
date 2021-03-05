@@ -4,11 +4,16 @@
 
 ## About
 
-[_Ecotone Framework_](https://github.com/ecotoneframework/ecotone) __isolates business logic from complex integration responsibilities.  
-`Ecotone` achieve that by implementing well known [Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com/) \(EIP\) and enabling message driven architecture in PHP. On top of that follow an architectural pattern which is based on the principles of Domain-Driven Design \(DDD\) and Command Query Responsibility Segregation \(CQRS\).  
+[_Ecotone Framework_](https://github.com/ecotoneframework/ecotone) _is Service Bus Implementation for PHP._   
+`Ecotone` enables true  message driven architecture in PHP, using [Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com/) \(EIP\). On top of that follow an architectural patterns which are based on the principles of Domain-Driven Design \(DDD\), Command Query Responsibility Segregation \(CQRS\) and Event Sourcing \(ES\).
 
+{% hint style="success" %}
+Ecotone provides PHP with Command Bus, Query Bus, Event Bus, Interceptors, Aggregates, Sagas, Event Sourcing built on solutions that are message driven at the fundamental levels, and using integration with well known and stable solutions like [Prooph](https://github.com/prooph/event-store) for Event Sourcing and [Enqueue](https://github.com/php-enqueue/enqueue) for asynchronous communication.
+{% endhint %}
 
-One of the central tenets of the _`Ecotone`_ is the idea that you should not be forced to introduce framework-specific classes and interfaces into your business/domain model. However, in some places the `Ecotone` does give you the option to introduce _Ecotone-specific dependencies_ as it might be just plain easier to read or code some specific piece of functionality in such a way. The _Ecotone_ \(almost\) always offers you the choice though.
+  
+With all of this in mind, one of the central tenets of the _`Ecotone`_ is the idea that you should not be forced to introduce framework-specific classes and interfaces into your business/domain model.   
+To keep your business code clean from technical problems and integrations. 
 
 ## Support Ecotone
 
