@@ -426,7 +426,7 @@ public function register(RegisterProductCommand $command, EventBus $eventBus) : 
 {
     $this->registeredProducts[$command->getProductId()] = $command->getCost();
 
-    $eventBus->send(new ProductWasRegisteredEvent($command->getProductId()));
+    $eventBus->publish(new ProductWasRegisteredEvent($command->getProductId()));
 }
 ```
 
@@ -452,7 +452,7 @@ class ProductNotifier
 }
 ```
 
-1. `@EventHandler` tells `Ecotone` to handle specific event based on declaration type hint, just like with `@CommandHandler.` 
+1. `EventHandler` tells `Ecotone` to handle specific event based on declaration type hint, just like with `CommandHandler.` As Commands are point to point, which means they are targeting one Handler, Events on other side are publish subscribe, which means, there may be multiple Handlers for specific event.
 
 {% hint style="info" %}
 You may use interfaces or abstract classes for your first parameter type hint.   
