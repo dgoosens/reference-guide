@@ -7,7 +7,7 @@ Not having code for _Lesson 5?_
 {% endhint %}
 
 `Ecotone` provide us with possibility to handle [cross cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern) via `Interceptors`.   
-`Interceptor` as name the suggest, intercepts the process of handling the message.   
+`Interceptor` as name suggest, intercepts the process of handling the message.   
 You may enrich the [message](../messaging/messaging-concepts/message.md), stop or modify usual processing cycle, call some shared functionality, add additional behavior to existing code without modifying the code itself. 
 
 {% hint style="info" %}
@@ -27,35 +27,19 @@ Let's start by creating `Annotation` called `RequireAdministrator` in new namepa
 ```php
 namespace App\Infrastructure\RequireAdministrator;
 
-/**
- * @Annotation
- */
+#[\Attribute]
 class RequireAdministrator {}
 ```
-
-{% hint style="info" %}
-Ecotone does use Doctrine Annotations. If you are not familiar with the concept of annotation, you may take a brew introduction [on their website](https://www.doctrine-project.org/projects/doctrine-annotations/en/1.6/index.html).
-{% endhint %}
 
 Let's create our first `Before Interceptor.` Start by removing old `UserService` and create new one in different namespace `App\Infrastructure\RequireAdministrator`. Remember to mark return type as `void`, we will see why it is so important soon.
 
 ```php
 namespace App\Infrastructure\RequireAdministrator;
 
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Parameter\Header;
-
 class UserService
 {
-    /**
-     * @Before(
-     *     pointcut="@(App\Infrastructure\RequireAdministrator\RequireAdministrator)",
-     *     parameterConverters={
-     *         @Header(parameterName="userId", headerName="userId", isRequired=false)
-     *     }
-     * )
-     */
-    public function isAdmin(?string $userId) : void
+    #[Before(pointcut: RequireAdministrator::class)]
+    public function isAdmin(#[Header("userId")] ?string $userId) : void
     {
         if ($userId != 1) {
             throw new \InvalidArgumentException("You need to be administrator to perform this action");
@@ -64,33 +48,18 @@ class UserService
 }
 ```
 
-`@Before`- marks method as `Interceptor`, so it can be be found by `Ecotone.`
+`Before`- marks method as `Interceptor`, so it can be be found by `Ecotone.`
 
 `Pointcut` - describes what should be intercepted. 
 
-* `CLASS_NAME` - indicates specific class which should be intercepted 
+* `CLASS_NAME` - indicates what should be intercepted using specific `Class Name` or `Attribute Name` annotated at the level of method or class
 
   ```php
   pointcut="App\Domain\Product\Product"
   ```
 
-* `@(CLASS_NAME)` - Indicating all [Endpoints](../messaging/messaging-concepts/message-endpoint/) having annotation of specific `CLASS_NAME` on method or class level will be intercepted 
-
-  ```php
-  pointcut="@(App\Infrastructure\RequireAdministrator\RequireAdministrator)",
-  ```
-
 * `NAMESPACE*` - Indicating all [Endpoints](../messaging/messaging-concepts/message-endpoint/) starting with namespace e.g. `App\Domain\Product\*`
-* `expression||expression` - Indicating one expression or another e.g. `Product\*||Order\*`  
-
-```php
-@Header(parameterName="userId", headerName="userId", isRequired=false)
-```
-
-We already know `@Header` from [Lesson 4](lesson-4-method-invocation-and-metadata.md#default-converters) but we had no chance to meet `isRequired` attribute.   
-If `isRequired` is `true,` then if header was not found, then exception will be thrown.   
-If `isRequired` is `false,`then in case header was not found, null is given  
-
+* `expression||expression` - Indicating one expression or another e.g. `Product\*||Order\*` 
 
 Now we need to annotate our Command Handlers:
 
@@ -98,32 +67,28 @@ Now we need to annotate our Command Handlers:
 use App\Infrastructure\RequireAdministrator\RequireAdministrator;
 (...)
 
-/**
- * @CommandHandler(inputChannelName="product.register")
- * @RequireAdministrator()
- */
+#[CommandHandler("product.register")]
+#[RequireAdministrator]
 public static function register(RegisterProductCommand $command, array $metadata) : self
 {
     return new self($command->getProductId(), $command->getCost(), $metadata["userId"]);
 }
 
-/**
- * @CommandHandler(inputChannelName="product.changePrice")
- * @RequireAdministrator()
- */
+#[CommandHandler("product.changePrice")]
+#[RequireAdministrator]
 public function changePrice(ChangePriceCommand $command) : void
 {
     $this->cost = $command->getCost();
 }
 ```
 
-We told our `Before Interceptor` that it should intercept all endpoints with annotation `RequireAdministrator.`  
+We told `Before Interceptor` that it should intercept all endpoints with annotation `RequireAdministrator.`  
 Now, whenever we will call our command handlers, they will be intercepted by `UserService`.  
 You can try it out, by providing different `userId`.
 
 #### Enrich Message
 
-`@Before` and `@After` interceptors depending on the return type, decides if they should modify [Message](../messaging/messaging-concepts/message.md) or pass it through.  
+`Before` and `After` interceptors are depending on the return type, to decide if they should modify [Message](../messaging/messaging-concepts/message.md) or pass it through.  
 If return type is **different than void**, Message payload or headers can be enriched with data.   
 If return type is **void** then message will be passed through and the process of message flow can be interrupted by throwing exception only.
 
@@ -134,45 +99,35 @@ Let's change our testing class to remove metadata and add the `Interceptor`.
 ```php
 public function run() : void
 {
-    $this->commandBus->convertAndSend(
+    $this->commandBus->sendWithRouting(
         "product.register",
-        MediaType::APPLICATION_JSON,
-        \json_encode(["productId" => 1, "cost" => 100])
+        \json_encode(["productId" => 1, "cost" => 100]),
+        "application/json"
     );
 
-    $this->commandBus->convertAndSend(
+    $this->commandBus->sendWithRouting(
         "product.changePrice",
-        MediaType::APPLICATION_JSON,
-        \json_encode(["productId" => 1, "cost" => 110])
+        \json_encode(["productId" => 1, "cost" => 110]),
+        "application/json"
     );
 
-    echo $this->queryBus->convertAndSend("product.getCost", MediaType::APPLICATION_JSON, \json_encode(["productId" => 1]));
+    echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1]), "application/json");
 }
 ```
 
 ```php
 namespace App\Infrastructure\AddUserId;
 
-/**
- * @Annotation
- */
+#[\Attribute]
 class AddUserId {}
 ```
 
 ```php
 namespace App\Infrastructure\AddUserId;
 
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-
 class AddUserIdService
 {
-    /**
-     * @Before(
-     *     pointcut="@(App\Infrastructure\AddUserId\AddUserId)",
-     *     changeHeaders=true,
-     *     precedence=0
-     * )
-     */
+    #[Before(precedence: 0, pointcut: AddUserId::class, changeHeaders: true)]
     public function add() : array
     {
         return ["userId" => 1];
@@ -193,16 +148,8 @@ We want to call `AddUserId Interceptor` before `RequireAdministrator Interceptor
 ```php
 class UserService
 {
-    /**
-     * @Before(
-     *     pointcut="@(App\Infrastructure\RequireAdministrator\RequireAdministrator)",
-     *     parameterConverters={
-     *         @Header(parameterName="userId", headerName="userId", isRequired=false)
-     *     },
-     *     precedence=1
-     * )
-     */
-    public function isAdmin(?string $userId) : void
+    #[Before(precedence: 1,pointcut: RequireAdministrator::class)]
+    public function isAdmin(#[Header("userId")] ?string $userId) : void
     {
         if ($userId != 1) {
             throw new \InvalidArgumentException("You need to be administrator in order to register new product");
@@ -216,10 +163,8 @@ Let's annotate `Product` aggregate
 ```php
 use App\Infrastructure\AddUserId\AddUserId;
 
-/**
- * @Aggregate()
- * @AddUserId()
- */
+#[Aggregate]
+#[AddUserId]
 class Product
 {
 ```
@@ -247,7 +192,7 @@ Null can not be returned in header changing interceptor, it does work only for p
 
 ### Around Interceptor
 
-The `Around Interceptor` is closet to actual endpoint's method call. Because of it, it has access to `Method Invocation.`This does allow for starting some procedure and ending after the invocation is done.  
+The `Around Interceptor` is closet to actual endpoint's method call. Thanks to that, it has access to `Method Invocation.`This does allow for starting some procedure and ending after the invocation is done.  
 
 {% hint style="warning" %}
 We will add real database to our example using [`sqlite`](https://www.sqlite.org/index.html) if you do not have extension installed, then  you will need to install it first. Yet if you are using `Quickstart's Docker` container, then you are ready to go.
@@ -270,14 +215,11 @@ namespace App\Infrastructure\Persistence;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use Ecotone\Messaging\Conversion\MediaType;
 use Ecotone\Messaging\Gateway\Converter\Serializer;
-use Ecotone\Modelling\Annotation\Repository;
+use Ecotone\Modelling\Attribute\Repository;
 use Ecotone\Modelling\StandardRepository;
 
-/**
- * @Repository()
- */
+#[Repository]
 class DbalRepository implements StandardRepository
 {
     const TABLE_NAME = "aggregate";
@@ -311,7 +253,7 @@ SQL, ["id" => $this->getFirstId($identifiers), "class" => $aggregateClassName])-
         }
 
         // 4
-        return $this->serializer->convertToPHP($record["data"], MediaType::APPLICATION_JSON, $aggregateClassName);
+        return $this->serializer->convertToPHP($record["data"],  "application/json", $aggregateClassName);
     }
 
     public function save(array $identifiers, object $aggregate, array $metadata, ?int $expectedVersion): void
@@ -320,7 +262,7 @@ SQL, ["id" => $this->getFirstId($identifiers), "class" => $aggregateClassName])-
 
         $aggregateClass = get_class($aggregate);
         // 5
-        $data = $this->serializer->convertFromPHP($aggregate, MediaType::APPLICATION_JSON);
+        $data = $this->serializer->convertFromPHP($aggregate, "application/json");
 
         if ($this->findBy($aggregateClass, $identifiers)) {
             $this->connection->update(self::TABLE_NAME,
@@ -386,19 +328,11 @@ We want to intercept `Command Bus Gateway` with transaction. So whenever we call
 ```php
 namespace App\Infrastructure\Persistence;
 
-/**
- * @Annotation
- */
-class WithDbalTransaction {}
-```
-
-```php
-namespace App\Infrastructure\Persistence;
-
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Ecotone\Messaging\Annotation\Interceptor\Around;
 use Ecotone\Messaging\Handler\Processor\MethodInvoker\MethodInvocation;
+use Ecotone\Modelling\CommandBus;
 
 class TransactionInterceptor
 {
@@ -409,9 +343,7 @@ class TransactionInterceptor
         $this->connection = DriverManager::getConnection(array('url' => DbalRepository::CONNECTION_DSN));
     }
 
-    /**
-     * @Around(pointcut="Ecotone\Modelling\CommandBus")
-     */
+    #[Around(pointcut: CommandBus::class)]
     public function transactional(MethodInvocation $methodInvocation)
     {
         echo "Start transaction\n";
@@ -460,9 +392,9 @@ We do have two transactions started, because we call the Command Bus twice.
 
 ### Parameter Converters for Interceptors
 
-Each of interceptors, can inject annotation, which was used for pointcut. Just type hint for it in method declaration.   
+Each of interceptors, can inject attribute, which was used for pointcut. Just type hint for it in method declaration.   
 Around interceptors can inject intercepted class instance. In above example it would be `Command Bus.`  
-In case of Command Bus it may seems not needed, but if we would intercept Aggregate, then it really useful.   
+In case of Command Bus it may seems not needed, but if we would intercept Aggregate, then it really useful as for example you may verify if executing user have access to it.   
 You may read more about interceptors in [dedicated section](../messaging/interceptors.md).
 
 {% hint style="success" %}
