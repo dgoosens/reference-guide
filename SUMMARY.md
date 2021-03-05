@@ -6,10 +6,10 @@
   * [Before we start tutorial](tutorial/before-we-start-tutorial.md)
   * [Lesson 1: Messaging Concepts](tutorial/lesson-1-messaging-concepts.md)
   * [Lesson 2: Tactical DDD](tutorial/lesson-2-tactical-ddd.md)
-  * [Lesson 3: Converters](tutorial/lesson-3-converters.md)
-  * [Lesson 4: Metadata and Method Invocation](tutorial/lesson-4-method-invocation-and-metadata.md)
-  * [Lesson 5: Interceptors](tutorial/lesson-5-cross-cutting-concerns.md)
-  * [Lesson 6: Scheduling And Asynchronous](tutorial/lesson-6-scheduling-and-asynchronous.md)
+  * [Lesson 3: Converters](tutorial/lesson-3.md)
+  * [Lesson 4: Metadata and Method Invocation](tutorial/lesson-4-metadata-and-invocation.md)
+  * [Lesson 5: Interceptors](tutorial/lesson-5-interceptors.md)
+  * [Lesson 6: Asynchronous Handling](tutorial/lesson-6-asynchronous-handling.md)
 
 ## Modelling
 
