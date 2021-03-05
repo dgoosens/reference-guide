@@ -2,26 +2,26 @@
 
 ## Writing Query Handler
 
-In `Ecotone`, an object may declare a number of query handler methods, by annotating them with the `@QueryHandler` annotation. 
+In `Ecotone`, an object may declare a number of query handler methods, by annotating them with the `#[QueryHandler]` attribute. 
 
 ### Class Routing
 
 For a query handler method, the first declared parameter defines which query message object it will receive.
 
 ```php
-use Ecotone\Modelling\Annotation\QueryHandler;
-
 class OrderSummary
 {
-    /**
-     * @QueryHandler()
-     */
+    #[QueryHandler] 
     public function getOrders(GetOrdersQuery $query) : array
     {
         //return orders
     }
 }
 ```
+
+{% hint style="info" %}
+How to publish queries, you may see in [Dispatching Queries section](dispatching-queries.md)
+{% endhint %}
 
 ### Name Routing
 
@@ -33,9 +33,7 @@ use Ecotone\Modelling\Annotation\QueryHandler;
 
 class OrderSummary
 {
-    /**
-     * @QueryHandler("order.getOrders")
-     */
+    #[QueryHandler("order.getOrders")] 
     public function getOrders(GetOrdersQuery $query) : array
     {
         //return orders
@@ -44,7 +42,7 @@ class OrderSummary
 ```
 
 {% hint style="info" %}
-Query can be anything `class/scalar/array` as long as Ecotone does know how to convert it.   
+Query can be anything `class/scalar/array` as long as Ecotone does know how to convert it if there is a need.   
 Read more in [Method Invocation and Conversion](../../messaging/conversion/)
 {% endhint %}
 

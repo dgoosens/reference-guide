@@ -513,7 +513,7 @@ bin/console ecotone:list-all-asynchronous-endpoints
 ```
 
 We have new asynchronous endpoint available `orders.` Name comes from the message channel name.  
-You may wonder why it is not `place_order_endpoint,` it's because via single asynchronous channel we can handle multiple endpoints, if needed. This is further explained in [asynchronous section](../messaging/asynchronous.md).
+You may wonder why it is not `place_order_endpoint,` it's because via single asynchronous channel we can handle multiple endpoints, if needed. This is further explained in [asynchronous section](../messaging/scheduling.md).
 
 Let's change `orderId` in our testing command, so we can place new order.
 

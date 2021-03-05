@@ -26,8 +26,10 @@
   * [Converting Query Handler Result](modelling/query-handling/converting-query-handler-result.md)
 * [Event Handling](modelling/event-handling/README.md)
   * [Handling Events](modelling/event-handling/handling-events.md)
-  * [Saga](modelling/event-handling/saga.md)
   * [Dispatching Events](modelling/event-handling/dispatching-events.md)
+  * [Advanced Usage of Event Handlers](modelling/event-handling/advanced-usage-of-event-handlers.md)
+* [Saga](modelling/saga.md)
+* [Asynchronous Handling](modelling/asynchronous-handling.md)
 
 ## Messaging
 
@@ -45,7 +47,7 @@
   * [Method Invocation](messaging/conversion/method-invocation.md)
   * [Conversion](messaging/conversion/conversion.md)
 * [Interceptors](messaging/interceptors.md)
-* [Scheduling and Asynchronous](messaging/asynchronous.md)
+* [Scheduling](messaging/scheduling.md)
 
 ## Modules
 

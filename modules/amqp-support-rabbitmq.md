@@ -44,21 +44,12 @@ We register our AmqpConnection under the class name `Enqueue\AmqpLib\AmqpConnect
 
 ## Message Channel
 
-To create `AMQP Backed Channel` \(RabbitMQ Channel\), we need to create `Application Context.` 
+To create `AMQP Backed Channel` \(RabbitMQ Channel\), we need to create Service Context. 
 
 ```php
-use Ecotone\Amqp\AmqpBackedMessageChannelBuilder;
-use Ecotone\Messaging\Annotation\ApplicationContext;
-use Ecotone\Messaging\Annotation\Extension;
-
-/**
- * @ApplicationContext()
- */
 class MessagingConfiguration
 {
-    /**
-     * @Extension()
-     */
+    #[ServiceContext] 
     public function orderChannel()
     {
         return AmqpBackedMessageChannelBuilder::create("orders");
@@ -73,11 +64,7 @@ Now `orders` channel will be available in our Messaging System.
 ### Available actions
 
 ```php
-namespace Ecotone\Messaging;
-
-use Ecotone\Messaging\Conversion\MediaType;
-
-interface Publisher
+interface MessagePublisher
 {
 
     // 1
@@ -87,18 +74,11 @@ interface Publisher
     public function sendWithMetadata(string $data, array $metadata, string $sourceMediaType = MediaType::TEXT_PLAIN) : void;
 
     // 3
-    /**
-     * @param object|array $data
-     */
-    public function convertAndSend($data) : void;
+    public function convertAndSend(object|array $data) : void;
 
 
     // 4
-    /**
-     * @param object|array $data
-     * @param array  $metadata
-     */
-    public function convertAndSendWithMetadata($data, array $metadata) : void;
+    public function convertAndSendWithMetadata(object|array $data, array $metadata) : void;
 }
 ```
 
@@ -112,16 +92,9 @@ interface Publisher
 If you want to publish Message directly to Exchange, you may use of `Publisher.`
 
 ```php
-use Ecotone\Messaging\Publisher;
-
-/**
- * @ApplicationContext()
- */
 class AMQPConfiguration
 {
-    /**
-     * @Extension()
-     */
+    #[ServiceContext] 
     public function registerAmqpConfig()
     {
         return 
@@ -143,9 +116,7 @@ It will be available in your Dependency Container under passed `Reference name.`
 In case interface name `Publisher:class` is used, it will be available using auto-wire.
 
 ```php
-/**
- * @EventHandler()
- */
+#[EventHandler] 
 public function whenOrderWasPlaced(OrderWasPlaced $event, Publisher $publisher) : void
 {
     $publisher->convertAndSendWithMetadata(
@@ -180,18 +151,9 @@ RegisterAmqpPublisher::create(
 To connect consumer directly to a AMQP Queue, we need to provide `Ecotone` with information, how the Queue is configured. 
 
 ```php
-use Ecotone\Amqp\AmqpBinding;
-use Ecotone\Amqp\AmqpExchange;
-use Ecotone\Amqp\AmqpQueue;
-
-/**
- * @ApplicationContext()
- */
 class AmqpConfiguration
 {
-    /**
-     * @Extension()
-     */
+    #[ServiceContext] 
     public function registerAmqpConfig(): array
     {
         return [
@@ -210,18 +172,13 @@ class AmqpConfiguration
 When we do have registered configuration, we can register Consumer for specific queue.
 
 ```php
-/**
- * @MessageEndpoint()
- */
 class Consumer
 {
-    /**
-     * @AmqpChannelAdapter(
-     *     endpointId="amqp_consumer",  // 1
-     *     queueName="queue_name",  // 2
-     *     headerMapper="application.*" // 3 
-     * )
-     */
+    #[AmqpChannelAdapter(
+        endpointId: "amqp_consumer",  // 1
+        queueName: "queue_name",  // 2
+        headerMapper: "application.*" // 3 
+    )] 
     public function execute(string $message) : void
     {
         // do something with Message
@@ -233,7 +190,7 @@ class Consumer
 1. `endpointId` - Defines identifier for this consumer. It will be available under this name to run
 
 ```php
-ecotone:list-all-asynchronous-endpoints
+ecotone:list
 +--------------------+
 | Endpoint Names     |
 +--------------------+
@@ -250,44 +207,33 @@ ecotone:list-all-asynchronous-endpoints
 To enable transactions on specific endpoint, mark it with `Ecotone\Amqp\AmqpTransaction\AmqpTransaction` annotation.
 
 ```php
-    /**
-     * @AmqpChannelAdapter(endpointId="amqp_consumer",queueName="queue_name")
-     * @AmqpTransaction()
-     */
+    #[AmqpChannelAdapter(endpointId: "amqp_consumer",queueName: "queue_name") 
+    #[AmqpTransaction)
     public function execute(string $message) : void
     {
         // do something with Message
     }
 ```
 
-If you want to enable for all [Asynchronous Endpoints](../tutorial/lesson-6-scheduling-and-asynchronous.md) or specific for Command Bus. You may use of `ApplicationContext.`
+If you want to enable/disable for all [Asynchronous Endpoints](../tutorial/lesson-6-scheduling-and-asynchronous.md) or specific for Command Bus. You may use of `ServiceContext.` 
+
+{% hint style="info" %}
+By default all transactions are enabled
+{% endhint %}
 
 ```php
-use Ecotone\Amqp\Configuration\AmqpConfiguration;
-use Ecotone\Messaging\Annotation\ApplicationContext;
-use Ecotone\Messaging\Annotation\Extension;
-
-/**
- * @ApplicationContext()
- */
 class ChannelConfiguration
 {
-    /**
-     * @Extension()
-     */
+    #[ServiceContext]
     public function registerTransactions() : array
     {
         return [
             AmqpConfiguration::createWithDefaults()
-                ->withTransactionOnAsynchronousEndpoints(true)
-                ->withTransactionOnCommandBus(true)
+                ->withTransactionOnAsynchronousEndpoints(false)
+                ->withTransactionOnCommandBus(false)
         ];
     }
 
 }
 ```
-
-## Examples
-
-Examples can be [find here](https://github.com/ecotoneframework/examples/tree/master/src/Amqp).
 

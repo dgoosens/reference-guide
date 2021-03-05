@@ -17,7 +17,7 @@ The Polling Consumer is created, when Endpoint is connected to `Pollable Channel
 Polling Consumer is running in separate process. 
 
 {% hint style="info" %}
-You will see how easily they are connected in [Asynchronous section](../asynchronous.md).
+You will see how easily they are connected in [Asynchronous section](../scheduling.md).
 {% endhint %}
 
 ## Consumer Abstraction

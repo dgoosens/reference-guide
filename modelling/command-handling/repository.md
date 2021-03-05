@@ -28,9 +28,7 @@ class CloseTicketHandler
 {
     private TicketRepository $ticketRepository;
 
-    /**
-    * @CommandHandler()
-    */
+    #[CommandHandler]
     public function handle(CreateTicketCommand $command) : void
     {
        $ticket = $this->ticketRepository->findBy($command->getTicketId());
@@ -48,7 +46,7 @@ class Ticket
 }
 ```
 
-_Ecotone_ provides possibility to mark Ticket Aggregate [methods as `@CommandHandler` directly.](state-stored-aggregate.md)   
+_Ecotone_ provides possibility to mark Ticket Aggregate [methods as `CommandHandler` directly.](state-stored-aggregate.md)   
 In that situation, Ecotone retrievies identifiers from Command message, pass them to `Repository`, calls the method on aggregate instance and saves it. In short it does code from \#31 to \#33 for you. 
 
 {% hint style="info" %}
@@ -105,14 +103,14 @@ interface EventSourcedRepository
 {
     public function canHandle(string $aggregateClassName): bool;
     
-    1 public function findBy(string $aggregateClassName, array $identifiers) : ?array;
+    1 public function findBy(string $aggregateClassName, array $identifiers) :  EventStream;
 
-    2 public function save(array $identifiers, array $events, array $metadata, ?int $expectedVersion): void;
+    2 public function save(array $identifiers, string $aggregateClassName, array $events, array $metadata, int $versionBeforeHandling): void;
 }
 ```
 
-The only difference between State-Stored Repository and Event Sourced is, that instead of working with aggregate instance, we work with events. 
+Event Sourced Repository  instead of working with aggregate instance, works with events. 
 
 1. `findBy method` returns previously created events for given aggregate. 
-2. `save method` gets array of events to save returned by `@CommandHandler` after performing an action
+2. `save method` gets array of events to save returned by `CommandHandler` after performing an action
 

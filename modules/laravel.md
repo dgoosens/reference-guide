@@ -51,7 +51,7 @@ Describes default serialization type within application. If not configured defau
 
 ### defaultErrorChannel
 
-Provides default [Poller configuration](../messaging/asynchronous.md#polling-metadata) with error channel for all asynchronous endpoints.
+Provides default [Poller configuration](../messaging/scheduling.md#polling-metadata) with error channel for all asynchronous endpoints.
 
 ### defaultMemoryLimit
 

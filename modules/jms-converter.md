@@ -8,6 +8,10 @@
 
 Ecotone comes with integration with [JMS Serializer](https://jmsyst.com/libs/serializer) and extending it with extra features.
 
+## Module Powered By
+
+Great library, which allow for advanced conversion between types [JMS/Serializer](https://github.com/schmittjoh/serializer).
+
 ## Conversion Table
 
   

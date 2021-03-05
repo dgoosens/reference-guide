@@ -4,12 +4,8 @@ If you have registered [Converter](../../messaging/conversion/) for specific Med
 In order to do this, we need to make use of `Metadata`and `replyContentType` header.
 
 {% tabs %}
-{% tab title="Symfony" %}
+{% tab title="Symfony / Laravel" %}
 ```php
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Ecotone\Modelling\QueryBus;
-
 class TicketController
 {
    private QueryBus $queryBus;
@@ -34,8 +30,6 @@ class TicketController
 
 {% tab title="Lite" %}
 ```php
-use Ecotone\Modelling\QueryBus;
-
 $queryBus = $messagingSystem->getGatewayByName(QueryBus::class);
 
 // result will be in json
@@ -50,13 +44,9 @@ $result = $queryBus->sendWithMetadata(
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Modelling\Annotation\QueryHandler;
-
 class GetTicketStatusQueryHandler
 {   
-    /**
-    * @QueryHandler()
-    */
+    #[QueryHandler]
     public function getTicketStatus(GetTicketStatusQuery $query)
     {
         return ["ticketId" => $query->getTicketId(), "status" => "inProgress"];

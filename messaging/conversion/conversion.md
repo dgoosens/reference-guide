@@ -11,16 +11,7 @@ Moving from one format to another requires conversion. `Ecotone` does it automat
 We need to define class for it which implements `Converter` and is marked by annotation `@MediaTypeConverter.`  
 
 ```php
-<?php
-
-use Ecotone\Messaging\Annotation\MediaTypeConverter;
-use Ecotone\Messaging\Conversion\Converter;
-use Ecotone\Messaging\Conversion\MediaType;
-use Ecotone\Messaging\Handler\TypeDescriptor;
-
-/**
- * @MediaTypeConverter()
- */
+#[MediaTypeConverter] 
 class CustomConverter implements Converter
 {
     public function matches(TypeDescriptor $sourceType, MediaType $sourceMediaType, TypeDescriptor $targetType, MediaType $targetMediaType): bool
@@ -48,9 +39,7 @@ There are two methods `matches` and `convert.`
 Suppose we have `Command Handler` endpoint, which expects `PlaceOrderCommand` class.
 
 ```php
-/**
-*  @CommandHandler("place.order")
-*/
+#[CommandHandler]
 public function placeOrder(PlaceOrderCommand $command)
 {
    // do something
@@ -60,10 +49,10 @@ public function placeOrder(PlaceOrderCommand $command)
 In our HTTP Controller, we receive `JSON` and we want to send it to Command Bus:
 
 ```php
-$this->commandBus->convertAndSend(
+$this->commandBus->sendWithRouting(
    "order.place", 
-   "application/json", 
-   '{"productIds": [1,2]}'
+   '{"productIds": [1,2]}',
+   "application/json"
 )
 ```
 
@@ -110,17 +99,15 @@ public function convert($source, TypeDescriptor $sourceType, MediaType $sourceMe
 `Ecotone` does come with simplication for PHP level conversion. Suppose we want to send Query as scalar type. 
 
 ```php
-$this->queryBus->convertAndSend(
+$this->queryBus->sendWithRouting(
    "order.getDetails", 
-   MediaType::APPLICATION_X_PHP, 
-   "61cfc7ea-928f-420f-a8e1-656ae2968254"
+   "61cfc7ea-928f-420f-a8e1-656ae2968254",
+   MediaType::APPLICATION_X_PHP
 )
 ```
 
 ```php
-/**
-*  @QueryHandler(inputChannelName="order.getDetails")
-*/
+#[QueryHandler("order.getDetails")]
 public function getOrderDetails(Uuid $orderId)
 {
    // do something
@@ -134,17 +121,9 @@ As you can see `query` neither, `command` needs to be class. It can be simple ar
 Let's add PHP Conversion:e
 
 ```php
-use Ecotone\Messaging\Annotation\Converter;
-use Ecotone\Messaging\Annotation\ConverterClass;
-
-/**
- * @ConverterClass()
- */
 class ExampleConverterService
 {
-    /**
-     * @Converter()
-     */
+    #[Converter] 
     public function convert(string $data) : Uuid
     {
         return Uuid::fromString($data);
@@ -159,17 +138,9 @@ Conversion does work with more complicated objects, expecting more than one para
 In that case array can be used in order to construct the object.
 
 ```php
-use Ecotone\Messaging\Annotation\Converter;
-use Ecotone\Messaging\Annotation\ConverterClass;
-
-/**
- * @ConverterClass()
- */
 class ExampleConverterService
 {
-    /**
-     * @Converter()
-     */
+    #[Converter] 
     public function convert(array $data) : Coordinates
     {
         return Coordinates::create($data["latitude"], $data["longitude"]);
@@ -182,18 +153,18 @@ class ExampleConverterService
 Suppose we expect array of UUID's. 
 
 ```php
-$this->queryBus->convertAndSend(
+$this->queryBus->sendWithRouting(
    "order.getDetails", 
-   MediaType::APPLICATION_X_PHP, 
-   ["61cfc7ea-928f-420f-a8e1-656ae2968254", "d32ee0cc-fd01-474d-b69f-2d2489433f3d"]
+   ["61cfc7ea-928f-420f-a8e1-656ae2968254", "d32ee0cc-fd01-474d-b69f-2d2489433f3d"],
+   MediaType::APPLICATION_X_PHP
 )
 ```
 
 ```php
 /**
-*  @QueryHandler(inputChannelName="order.getDetails")
 *  @param Uuid[] $orderIds
 */
+#[QueryHandler("order.getDetails")]
 public function getOrders(array $orderIds)
 {
    // do something

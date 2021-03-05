@@ -6,17 +6,9 @@ Alternatively, an output producing service may be located at the end of a proces
 ### How to register
 
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
-use Ecotone\Messaging\Annotation\ServiceActivator;
-
-/**
- * @MessageEndpoint()
- */
 class Shop
 {
-    /**
-     * @ServiceActivator(inputChannelName="buyProduct")
-     */
+    #[ServiceActivator("buyProduct")] 
     public function buyProduct(int $productId) : void
     {
         echo "Product with id {$productId} was bought";
@@ -28,8 +20,6 @@ class Shop
 
 * `endpointId` - Endpoint identifier 
 * `inputChannnelName` - Required option, defines to which channel endpoint should be connected
-* `parameterConverters` - Manual configured [parameter converters]()
-* `poller` - [Pollable Metadata]() configuration for pollable input channel
 * `outputChannelName` - Channel where result of method invocation will be 
 * `requiredInterceptorNames` - List of [interceptor](../../interceptors.md) names, which should intercept the endpoint
 

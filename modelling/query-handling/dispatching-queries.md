@@ -11,29 +11,19 @@ namespace Ecotone\Modelling;
 
 interface QueryBus
 {
-    1 public function send(object $query);
+    public function send(object $query, array $metadata = []) : mixed;
 
-    2 public function sendWithMetadata(object $query, array $metadata);
-
-    3 public function convertAndSend(string $name, string $sourceMediaType, $queryData);
-
-    4 public function convertAndSendWithMetadata(string $name, string $sourceMediaType, $queryData, array $metadata);
+    public function sendWithRouting(string $routingKey, mixed $query, string $queryMediaType = MediaType::APPLICATION_X_PHP, array $metadata = []) : mixed;
 }
 ```
 
-### Send method
+## Send method
 
 Query is routed to the Handler by class type.
 
 {% tabs %}
-{% tab title="Symfony" %}
+{% tab title="Symfony / Laravel" %}
 ```php
-// Query Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Ecotone\Modelling\QueryBus;
-
 class TicketController
 {
    private QueryBus $queryBus;
@@ -55,8 +45,6 @@ class TicketController
 
 {% tab title="Lite" %}
 ```php
-use Ecotone\Modelling\QueryBus;
-
 $queryBus = $messagingSystem->getGatewayByName(QueryBus::class);
 
 $result = $queryBus->send(new GetTicketStatusQuery($ticketId));
@@ -67,13 +55,9 @@ $result = $queryBus->send(new GetTicketStatusQuery($ticketId));
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Modelling\Annotation\QueryHandler;
-
 class GetTicketStatusQueryHandler
 {   
-    /**
-    * @QueryHandler()
-    */
+    #[QueryHandler]
     public function getTicketStatus(GetTicketStatusQuery $query)
     {
 //        handle retrieving ticket status
@@ -83,20 +67,13 @@ class GetTicketStatusQueryHandler
 {% endtab %}
 {% endtabs %}
 
-### SendWithMetadata
+## Sending With Metadata
 
 Does allow for passing `extra meta information`, that can be used on targeted `Query Handler`.
 
 {% tabs %}
-{% tab title="Symfony" %}
+{% tab title="Symfony / Laravel" %}
 ```php
-// Query Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Ecotone\Modelling\QueryBus;
-
 class TicketController
 {
    private QueryBus $queryBus;
@@ -119,8 +96,6 @@ class TicketController
 
 {% tab title="Lite" %}
 ```php
-use Ecotone\Modelling\QueryBus;
-
 $queryBus = $messagingSystem->getGatewayByName(QueryBus::class);
 
 $result = $queryBus->sendWithMetadata(
@@ -134,13 +109,9 @@ $result = $queryBus->sendWithMetadata(
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Modelling\Annotation\QueryHandler;
-
 class GetTicketStatusQueryHandler
 {   
-    /**
-    * @QueryHandler()
-    */
+    #[QueryHandler]
     public function getTicketStatus(GetTicketStatusQuery $query, array $metadata)
     {
           $ticket = ; // get Ticket using query
@@ -155,19 +126,13 @@ class GetTicketStatusQueryHandler
 {% endtab %}
 {% endtabs %}
 
-### ConvertAndSend
+## Send With Routing
 
-Is used with `Query Handlers,` routed by name and converted using [Converter](../../messaging/conversion/) if needed.
+Is used with `Query Handlers`routed by name and converted using [Converter](../../messaging/conversion/) if needed.
 
 {% tabs %}
-{% tab title="Symfony" %}
+{% tab title="Symfony / Laravel" %}
 ```php
-// Query Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Ecotone\Modelling\QueryBus;
-
 class TicketController
 {
    private QueryBus $queryBus;
@@ -179,7 +144,11 @@ class TicketController
    
    public function getTicketStatusAction(Request $request) : Response
    {
-      $result = $queryBus->convertAndSend("getTicketStatus", "application/json", '{"ticketId": 123}');
+      $result = $queryBus->convertAndSend(
+         "getTicketStatus", 
+         "application/json", 
+         '{"ticketId": 123}'
+      );
    }
 }
 ```
@@ -187,8 +156,6 @@ class TicketController
 
 {% tab title="Lite" %}
 ```php
-use Ecotone\Modelling\QueryBus;
-
 $queryBus = $messagingSystem->getGatewayByName(QueryBus::class);
 
 $result = $queryBus->convertAndSend(
@@ -203,88 +170,11 @@ $result = $queryBus->convertAndSend(
 {% tabs %}
 {% tab title="Handler" %}
 ```php
-use Ecotone\Modelling\Annotation\QueryHandler;
-
 class GetTicketStatusQueryHandler
 {   
-    /**
-    * @QueryHandler(inputChannelName="getTicketStatus")
-    */
+    #[QueryHandler("getTicketStatus")]
     public function getTicketStatus(GetTicketStatusQuery $query)
     {
-//        handle retrieving ticket status
-    }   
-}
-```
-{% endtab %}
-{% endtabs %}
-
-### ConvertAndSendWithMetadata
-
-{% tabs %}
-{% tab title="Symfony" %}
-```php
-// Query Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Ecotone\Modelling\QueryBus;
-
-class TicketController
-{
-   private QueryBus $queryBus;
-
-   public function __construct(QueryBus $queryBus)
-   {
-       $this->queryBus = $queryBus;   
-   }
-   
-   public function getTicketStatusAction(Request $request) : Response
-   {
-      $result = $queryBus->convertAndSendWithMetadata(
-         "getTicketStatus", 
-         "application/json", 
-         '{"ticketId": 123}', 
-         ["executorUsername" => $executorUsername]
-      );
-   }
-}
-```
-{% endtab %}
-
-{% tab title="Lite" %}
-```php
-use Ecotone\Modelling\QueryBus;
-
-$queryBus = $messagingSystem->getGatewayByName(QueryBus::class);
-
-$result = $queryBus->convertAndSendWithMetadata(
-    "getTicketStatus", 
-    "application/json", 
-    '{"ticketId": 123}',
-    ["executorUsername" => "someUsername"]
-);
-```
-{% endtab %}
-{% endtabs %}
-
-{% tabs %}
-{% tab title="Handler" %}
-```php
-use Ecotone\Modelling\Annotation\QueryHandler;
-
-class GetTicketStatusQueryHandler
-{   
-    /**
-    * @QueryHandler(inputChannelName="getTicketStatus")
-    */
-    public function getTicketStatus(GetTicketStatusQuery $query, array $metadata)
-    {
-          $ticket = ; // get Ticket using query
-    
-          if ($metadata["executorUsername"] !== $ticket->getOwner()) {
-             throw new \InvalidArgumentException("Insufficient permissions")
-          }
 //        handle retrieving ticket status
     }   
 }

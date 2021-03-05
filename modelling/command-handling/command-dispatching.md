@@ -11,29 +11,22 @@ namespace Ecotone\Modelling;
 
 interface CommandBus
 {
-    1 public function send(object $command);
+    // 1
+    public function send(object $command, array $metadata = []) : mixed;
 
-    2 public function sendWithMetadata(object $command, array $metadata);
-
-    3 public function convertAndSend(string $name, string $sourceMediaType, $commandData);
-
-    4 public function convertAndSendWithMetadata(string $name, string $sourceMediaType, $commandData, array $metadata);
+    // 2
+    public function sendWithRouting(string $routingKey, mixed $command, string $commandMediaType = MediaType::APPLICATION_X_PHP, array $metadata = []) : mixed;
 }
 ```
 
-### Send method
+## Send method
 
 Command is routed to the Handler by class type.
 
 {% tabs %}
-{% tab title="Symfony" %}
+{% tab title="Symfony / Laravel" %}
 ```php
 // Command Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Ecotone\Modelling\CommandBus;
-
 class TicketController
 {
    private CommandBus $commandBus;
@@ -55,8 +48,6 @@ class TicketController
 
 {% tab title="Lite" %}
 ```php
-use Ecotone\Modelling\CommandBus;
-
 $commandBus = $messagingSystem->getGatewayByName(CommandBus::class);
 
 $commandBus->send(new CloseTicketCommand($ticketId));
@@ -67,13 +58,9 @@ $commandBus->send(new CloseTicketCommand($ticketId));
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Modelling\Annotation\CommandHandler;
-
 class CloseTicketCommandHandler
 {   
-    /**
-    * @CommandHandler()
-    */
+    #[CommandHandler]
     public function closeTicket(CloseTicketCommand $command)
     {
 //        handle closing ticket
@@ -83,20 +70,13 @@ class CloseTicketCommandHandler
 {% endtab %}
 {% endtabs %}
 
-### SendWithMetadata
+## Send With Metadata
 
 Does allow for passing `extra meta information`, that can be used on targeted `Command Handler`.
 
 {% tabs %}
-{% tab title="Symfony" %}
+{% tab title="Symfony / Laravel" %}
 ```php
-// Command Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Ecotone\Modelling\CommandBus;
-
 class TicketController
 {
    private CommandBus $commandBus;
@@ -119,8 +99,6 @@ class TicketController
 
 {% tab title="Lite" %}
 ```php
-use Ecotone\Modelling\CommandBus;
-
 $commandBus = $messagingSystem->getGatewayByName(CommandBus::class);
 
 $commandBus->sendWithMetadata(
@@ -134,14 +112,9 @@ $commandBus->sendWithMetadata(
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Messaging\Annotation\MessageEndpoint;
-use Ecotone\Modelling\Annotation\CommandHandler;
-
 class CloseTicketCommandHandler
 {   
-    /**
-    * @CommandHandler()
-    */
+    #[CommandHandler]
     public function closeTicket(CloseTicketCommand $command, array $metadata)
     {
           $ticket = ; // get Ticket using command
@@ -156,19 +129,13 @@ class CloseTicketCommandHandler
 {% endtab %}
 {% endtabs %}
 
-### ConvertAndSend
+## Send With Routing
 
 Is used with `Command Handlers,` routed by name and converted using [Converter](../../messaging/conversion/) if needed.
 
 {% tabs %}
-{% tab title="Symfony" %}
+{% tab title="Symfony / Laravel" %}
 ```php
-// Command Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Ecotone\Modelling\CommandBus;
-
 class TicketController
 {
    private CommandBus $commandBus;
@@ -188,8 +155,6 @@ class TicketController
 
 {% tab title="Lite" %}
 ```php
-use Ecotone\Modelling\CommandBus;
-
 $commandBus = $messagingSystem->getGatewayByName(CommandBus::class);
 
 $commandBus->convertAndSend(
@@ -204,88 +169,11 @@ $commandBus->convertAndSend(
 {% tabs %}
 {% tab title="Command Handler" %}
 ```php
-use Ecotone\Modelling\Annotation\CommandHandler;
-
 class CloseTicketCommandHandler
 {   
-    /**
-    * @CommandHandler("closeTicket")
-    */
+    #[CommandHandler]
     public function closeTicket(CloseTicketCommand $command)
     {
-//        handle closing ticket
-    }   
-}
-```
-{% endtab %}
-{% endtabs %}
-
-### ConvertAndSendWithMetadata
-
-{% tabs %}
-{% tab title="Symfony" %}
-```php
-// Command Bus will be auto registered in Depedency Container.
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Ecotone\Modelling\CommandBus;
-
-class TicketController
-{
-   private CommandBus $commandBus;
-
-   public function __construct(CommandBus $commandBus)
-   {
-       $this->commandBus = $commandBus;   
-   }
-   
-   public function closeTicketAction(Request $request) : Response
-   {
-      $commandBus->convertAndSendWithMetadata(
-         "closeTicket", 
-         "application/json", 
-         '{"ticketId": 123}', 
-         ["executorUsername" => $executorUsername]
-      );
-   }
-}
-```
-{% endtab %}
-
-{% tab title="Lite" %}
-```php
-use Ecotone\Modelling\CommandBus;
-
-$commandBus = $messagingSystem->getGatewayByName(CommandBus::class);
-
-$commandBus->convertAndSendWithMetadata(
-   "closeTicket", 
-   "application/json", 
-   '{"ticketId": 123}',
-   ["executorUsername" => "someUsername"]
-);
-```
-{% endtab %}
-{% endtabs %}
-
-{% tabs %}
-{% tab title="Command Handler" %}
-```php
-use Ecotone\Modelling\Annotation\CommandHandler;
-
-class CloseTicketCommandHandler
-{   
-    /**
-    * @CommandHandler()
-    */
-    public function closeTicket(CloseTicketCommand $command, array $metadata)
-    {
-          $ticket = ; // get Ticket using command
-    
-          if ($metadata["executorUsername"] !== $ticket->getOwner()) {
-             throw new \InvalidArgumentException("Insufficient permissions")
-          }
 //        handle closing ticket
     }   
 }

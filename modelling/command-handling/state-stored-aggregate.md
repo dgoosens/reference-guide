@@ -8,14 +8,10 @@ An Aggregate is a regular object, which contains state and methods to alter that
 When creating the Aggregate object, you are creating the _Aggregate Root_. 
 
 ```php
-/**
- * @Aggregate() //1
- */
+ #[Aggregate] // 1
 class Product
 {
-    /**
-     * @AggregateIdentifier() //2
-     */
+    #[AggregateIdentifier] // 2
     private string $productId;
 
     private string $name;
@@ -29,9 +25,7 @@ class Product
         $this->priceAmount = $priceAmount;
     }
 
-    /**
-     * @CommandHandler() //3
-     */
+    #[CommandHandler]  //3
     public static function register(RegisterProductCommand $command) : self
     {
         return new self(
@@ -41,9 +35,7 @@ class Product
         );
     }
     
-   /**
-    * @CommandHandler //4
-    */
+    #[CommandHandler] // 4
     public function changePrice(ChangePriceCommand $command) : void
     {
         $this->priceAmount = $command->getPriceAmount();
@@ -51,11 +43,11 @@ class Product
 }
 ```
 
-1. `@Aggregate` tells Ecotone, that this class should be registered as Aggregate Root.
-2. `@AggregateIdentifier` is the external reference point Aggregate. 
+1. `Aggregate` tells Ecotone, that this class should be registered as Aggregate Root.
+2. `AggregateIdentifier` is the external reference point Aggregate. 
 
    This field tells Ecotone to which Aggregate a given Command is targeted.
 
-3. `@CommandHandler` defined on static method acts as _factory method_. Given command it should return _new instance_ of specific aggregate, in that case new Product.
-4. `@CommandHandler` defined on non static class method is place where you would put business logic and state changes
+3. `CommandHandler` defined on static method acts as _factory method_. Given command it should return _new instance_ of specific aggregate, in that case new Product.
+4. `CommandHandler` defined on non static class method is place where you would put business logic and state changes
 

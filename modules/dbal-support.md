@@ -6,6 +6,10 @@
 composer require ecotone/dbal
 ```
 
+## Module Powered By
+
+Powered by powerful database abstraction layer [Doctrine/Dbal](https://github.com/doctrine/dbal).
+
 ## Configuration
 
 In order to use `Dbal Support` we need to add `ConnectionFactory` to our `Dependency Container.` 

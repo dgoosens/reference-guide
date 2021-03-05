@@ -11,20 +11,9 @@ If you are familiar with [Aspect Oriented Programming](https://en.wikipedia.org/
 ## Interceptor
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-
-/**
- * @MethodInterceptor()
- */
 class AdminVerificator
 {
-    /**
-     * @Before(
-     *     precedence=0,  
-     *     pointcut="Order\Domain\*"
-     * )
-     */
+    #[Before(precedence: 0, pointcut: "Order\Domain\*")]
     public function isAdmin(array $payload, array $headers) : void
     {
         if ($headers["executorId"] != 1) {
@@ -34,9 +23,7 @@ class AdminVerificator
 }
 ```
 
-`@MethodInterceptor`- marks class as `Interceptor`, to be found by `Ecotone.`
-
-`@Before` - Type of Interceptor more about it [Interceptor Types section](interceptors.md#interceptor-types)
+`Before` - Type of Interceptor more about it [Interceptor Types section](interceptors.md#interceptor-types)
 
 ### Precedence
 
@@ -47,24 +34,19 @@ The precedence is done within a specific [interceptor type](interceptors.md#inte
 
 Every interceptor has `Pointcut` attribute, which describes for specific interceptor, which endpoints it should intercept.
 
-* `CLASS_NAME` - indicates specific class or interface which should be intercepted
-* `@(CLASS_NAME)` - Indicating all [Endpoints](messaging-concepts/message-endpoint/) having `CLASS_NAME` annotation on method or class level 
+* `CLASS_NAME` - indicates intercepting specific class or interface or class containing attribute on method or class level
 * `NAMESPACE*` - Indicating all [Endpoints](messaging-concepts/message-endpoint/) starting with namespace prefix e.g. `App\Domain\*`
 * `expression||expression` - Indicating one expression or another e.g. `Product\*||Order\*` 
-
-### Parameter Converters
-
-You may pass optional parameter converters, if needed. If you want to read about parameter converters go to [Method Invocation section](conversion/method-invocation.md#parameter-converter-types).
 
 ## Interceptor Types
 
 There are four types of interceptors. Each interceptor has it role and possibilities.   
 Interceptors are called in following order:
 
-* Presend 
 * Before
 * Around
 * After
+* Presend 
 
 ## Before Interceptor
 
@@ -75,33 +57,19 @@ Before interceptors can used in order to `stop the flow`, `throw an exception` o
   
 We will intercept Command Handler with verification if executor is an administrator.
 
-Let's start by creating `Annotation` called `IsAdministrator` in new namepace.
+Let's start by creating `Attribute` called `IsAdministrator` in new namepace.
 
 ```php
-/**
- * @Annotation
- */
+#[\Attribute]
 class RequireAdministrator {}
 ```
-
-{% hint style="info" %}
-Ecotone does use Doctrine Annotations. If you are not familiar with the concept of annotation, you may take a brew introduction [on their website](https://www.doctrine-project.org/projects/doctrine-annotations/en/1.6/index.html).
-{% endhint %}
 
 Let's create our first `Before Interceptor.` 
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-
-/**
- * @MethodInterceptor()
- */
 class AdminVerificator
 {
-    /**
-     * @Before(pointcut="@(RequireAdministrator)")
-     */
+    #[Before(pointcut: RequireAdministrator::class)]
     public function isAdmin(array $payload, array $headers) : void
     {
         if ($headers["executorId"] != 1) {
@@ -111,16 +79,14 @@ class AdminVerificator
 }
 ```
 
-We are using in here [Pointcut](interceptors.md#pointcut) here which is looking for `@RequireAdministrator` annotation in each of registered [Endpoints](messaging-concepts/message-endpoint/).  
+We are using in here [Pointcut](interceptors.md#pointcut) here which is looking for `#[RequireAdministrator]` annotation in each of registered [Endpoints](messaging-concepts/message-endpoint/).  
 The `void return type` is expected in here. It tells `Ecotone`that, this Before Interceptor is not modifying the Message and message will be passed through. The message flow however can be interrupted by throwing exception.
 
 Now we need to annotate our Command Handler:
 
 ```php
-/**
- * @CommandHandler()
- * @RequireAdministrator()
- */
+#[CommandHandler]
+#[RequireAdministrator] 
 public function changePrice(ChangePriceCommand $command) : void
 {
    // do something with $command
@@ -136,24 +102,14 @@ If return type is `not void` ****new modified based on previous Message will be 
 We will enrich [Message](messaging-concepts/message.md) payload with timestamp.
 
 ```php
-/**
- * @Annotation
- */
+#[\Attribute]
 class AddTimestamp {}
 ```
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-
-/**
- * @MethodInterceptor()
- */
 class TimestampService
 {
-    /**
-     * @Before(pointcut="@(AddTimestamp)")
-     */
+    #[Before(pointcut: AddTimestamp::class)] 
     public function add(array $payload) : array
     {
         return array_merge($payload, ["timestamp" => time()]);
@@ -169,10 +125,8 @@ class ChangePriceCommand
     private int $timestamp;
 }
 
-/**
- * @CommandHandler()
- * @AddTimestamp()
- */
+#[CommandHandler]
+#[AddTimestamp]
 public function changePrice(ChangePriceCommand $command) : void
 {
    // do something with $command and timestamp
@@ -184,27 +138,14 @@ public function changePrice(ChangePriceCommand $command) : void
 Suppose we want to add executor Id, but as this is not part of our Command, we want add it to our [Message](messaging-concepts/message.md) Headers.
 
 ```php
-/**
- * @Annotation
- */
+#[\Attribute]
 class AddExecutor {}
 ```
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-
-/**
- * @MethodInterceptor()
- */
 class TimestampService
 {
-    /**
-     * @Before(
-     *  pointcut="@(AddExecutor)",
-     *  changeHeaders=true
-     * )
-     */
+    #[Before(pointcut: AddExecutor::class, changeHeaders: true)] 
     public function add() : array
     {
         return ["executorId" => 1];
@@ -212,13 +153,11 @@ class TimestampService
 }
 ```
 
-If return type is `not void` ****new modified based on previous Message will be created from the returned type. If we additionally add `changeHeaders=true`it will tell Ecotone, that we we want to modify Message headers instead of payload. 
+If return type is `not void` ****new modified based on previous Message will be created from the returned type. If we additionally add `changeHeaders: true`it will tell Ecotone, that we we want to modify Message headers instead of payload. 
 
 ```php
-/**
- * @CommandHandler()
- * @AddExecutor()
- */
+#[CommandHandler]
+#[AddExecutor] 
 public function changePrice(ChangePriceCommand $command, array $metadata) : void
 {
    // do something with $command and executor id $metadata["executorId"]
@@ -231,27 +170,14 @@ Use `Message Filter`, to eliminate undesired messages based on a set of criteria
 This can be done by returning null from interceptor, if the flow should proceed, then payload should be returned.
 
 ```php
-/**
- * @Annotation
- */
+#[\Attribute]
 class SendNotificationOnlyIfInterested {}
 ```
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-
-/**
- * @MethodInterceptor()
- */
 class NotificationFilter
 {
-    /**
-     * @Before(
-     *  pointcut="@(SendNotificationOnlyIfInterested)",
-     *  changeHeaders=true
-     * )
-     */
+    #[Before(pointcut: SendNotificationOnlyIfInterested::class, changeHeaders: true)] 
     public function filter(PriceWasChanged $event) : ?array
     {
         if ($this->isInterested($event) {
@@ -260,21 +186,14 @@ class NotificationFilter
         
         return null;  // message is eliminated, flow stops.
     }
-    
-    private function isInterested(PriceWasChanged $event) : bool
-    {
-       // some logic which decides, if X is interested in notification
-    }
 }
 ```
 
 If return type is `not void` ****new modified based on previous Message will be created from the returned type. If we additionally add `changeHeaders=true`it will tell Ecotone, that we we want to modify Message headers instead of payload. 
 
 ```php
-/**
- * @EventHandler()
- * @SendNotificationOnlyIfInterested()
- */
+#[EventHandler]
+#[SendNotificationOnlyIfInterested] 
 public function sendNewPriceNotification(ChangePriceCommand $event) : void
 {
    // do something with $event
@@ -288,18 +207,9 @@ The `Around Interceptor` have access to actual `Method Invocation.`This does all
 `Around interceptor`is a good place for handling transactions or logic shared between different endpoints, that need to access invoked object. 
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Around;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-use Ecotone\Messaging\Handler\Processor\MethodInvoker\MethodInvocation;
-
-/**
- * @MethodInterceptor()
- */
 class TransactionInterceptor
 {
-    /**
-     * @Around(pointcut="Ecotone\Modelling\CommandBus")
-     */
+    #[Around(pointcut: Ecotone\Modelling\CommandBus::class)]
     public function transactional(MethodInvocation $methodInvocation)
     {
         $this->connection->beginTransaction();
@@ -324,17 +234,13 @@ The other powerful use case for Around Interceptor is intercepting Aggregate.
 Suppose we want to verify, if executing user has access to the Aggregate.
 
 ```php
-/**
- * @Aggregate()
- * @IsOwnerOfPerson
- */
+#[Aggregate]
+#[IsOwnedByExecutor] 
 class Person
 {
    private string $personId;
 
-   /**
-   *  @CommandHandler()
-   */
+   #[CommandHandler]
    public function changeAddress(ChangeAddress $command) : void
    {
       // change address
@@ -350,25 +256,14 @@ class Person
 We have placed `@IsOwnerOfPerson` annotation as the top of class. For interceptor pointcut it means, that each endpoint defined in this class should be intercepted. No need to add it on each Command Handler now.
 
 ```php
-/**
- * @Annotation
- */
-class IsOwnerOfPerson {}
+#[\Attribute]
+class IsOwnedByExecutor {}
 ```
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Around;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-use Ecotone\Messaging\Handler\Processor\MethodInvoker\MethodInvocation;
-
-/**
- * @MethodInterceptor()
- */
 class IsOwnerVerificator
 {
-    /**
-     * @Around(pointcut="@(IsOwnerOfPerson)")
-     */
+    #[Around(pointcut: IsOwnedByExecutor::class)] 
     public function isOwner(MethodInvocation $methodInvocation, Person $person, array $metadata)
     {
         if (!$person->hasPersonId($metadata["executoId"]) {
@@ -390,10 +285,7 @@ namespace Order\ReadModel;
 
 class OrderService
 {
-
-   /**
-   * @QueryHandler()
-   */
+   #[QueryHandler]
    public function getOrderDetails(GetOrderDetailsQuery $query) : array
    {
       return ["orderId" => $query->getOrderId()]
@@ -402,19 +294,9 @@ class OrderService
 ```
 
 ```php
-use Ecotone\Messaging\Annotation\Interceptor\Before;
-use Ecotone\Messaging\Annotation\Interceptor\MethodInterceptor;
-
-/**
- * @MethodInterceptor()
- */
 class AddResultSet
 {
-    /**
-     * @After(
-     *  pointcut="Order\ReadModel\*"
-     * )
-     */
+    #[After(pointcut: "Order\ReadModel\*") 
     public function add(array $payload) : array
     {
         return ["result" => $payload];
@@ -424,11 +306,55 @@ class AddResultSet
 
 We will intercept all endpoints within Order\ReadModel namespace, by adding result coming from the endpoint under `result` key.
 
+### Access attribute from interceptor
+
+You may access attribute from the intercepted endpoint in order to perform specific action
+
+```php
+#[\Attribute]
+class Cache 
+{
+    public string $cacheKey;
+    public int $timeToLive;
+    
+    public function __construct(string $cacheKey, int $timeToLive)
+    {
+        $this->cacheKey = $cacheKey;
+        $this->timeToLive = $timeToLive;
+    }
+}
+```
+
+```php
+class NotificationFilter
+{
+    #[After] 
+    public function filter($result, Cache $cache) : ?array
+    {
+        $this->cachingSystem($cache->cacheKey, $result, $cache->timeToLive);
+    }
+}
+```
+
+If you type hint for specific attribute, you do not need to add pointcut, as it will resolve it automatically. 
+
+```php
+class ProductsService
+{
+   #[QueryHandler]
+   #[Cache("hotestProducts", 120)]
+   public function getHotestProducts(GetOrderDetailsQuery $query) : array
+   {
+      return ["orderId" => $query->getOrderId()]
+   }
+}   
+```
+
 ## Presend Interceptor
 
-`Before Send Interceptor`  is called before Message is actually send to the channel.  
-In synchronous channel there is no difference between `Before` and `Before Send.`   
-The difference is seen when the channel is [asynchronous](asynchronous.md).
+`Presend Interceptor`  is called before Message is actually send to the channel.  
+In synchronous channel there is no difference between `Before` and `Presend.`   
+The difference is seen when the channel is [asynchronous](scheduling.md).
 
 ####  Before Interceptor
 
@@ -443,9 +369,19 @@ Before Interceptor is called after message is sent to the channel, before execut
 Presend Interceptor is called exactly before message is sent to the channel.   
   
 `Presend Interceptor` can be used for example, when Command Bus is called from HTTP Controller.   
-Then we may want to verify if data is correct and if not filter out the Message, or we may want to check, if user has enough permissions to do the action and throw an exception before message will go asynchronous. 
+Then we may want to verify if data is correct and if not filter out the Message, or we may want to check, if user has enough permissions to do the action or the payload is actually correct.  
+This will keep our asynchronous channel free of incorrect messages.
 
-## Examples
-
-Examples can be [find here](https://github.com/ecotoneframework/examples/tree/master/src/Modelling/Intercepting).
+```php
+class VerifyIfAuthenticated
+{
+    #[Presend(pointcut: Ecotone\Modelling\Attribute\CommandHandler::class)] 
+    public function verify(#[Header("executorId")] ?string $executorId) : void
+    {
+        if (!$executorId) {
+            throw new \InvalidArgumentException("User must be logged");
+        }
+    }
+}
+```
 

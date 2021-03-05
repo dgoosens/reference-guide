@@ -44,10 +44,10 @@ We will do it, using `Meta Data`. Let's get back to our Testing Class `EcotoneQu
 ```php
 public function run() : void
 {
-    $this->commandBus->convertAndSendWithMetadata(
+    $this->commandBus->sendWithRouting(
         "product.register",
-        MediaType::APPLICATION_JSON,
         \json_encode(["productId" => 1, "cost" => 100]),
+        MediaType::APPLICATION_JSON,        
         [
             "userId" => 5
         ]
