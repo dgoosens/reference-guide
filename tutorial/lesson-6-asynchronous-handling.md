@@ -6,11 +6,11 @@ Not having code for _Lesson 6?_
 `git checkout lesson-6`
 {% endhint %}
 
-`Ecotone` provides abstractions for asynchronous execution and scheduling.
+`Ecotone` provides abstractions for asynchronous execution.
 
 ### Asynchronous
 
-Let's move aside our `currency_exchanger` and turn it off.   
+  
 We got new requirement:  
 `User should be able to place order for different products.` 
 

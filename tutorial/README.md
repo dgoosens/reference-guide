@@ -20,7 +20,7 @@ The tutorial is divided into several lessons:
 * [Lesson 3](lesson-3.md), we will learn **how to use Converters**
 * [Lesson 4](lesson-4-metadata-and-invocation.md), we will learn about **Metadata and Method Invocation**
 * [Lesson 5](lesson-5-interceptors.md), we will learn about **Interceptors**, to handle cross cutting concerns
-* [Lesson 6](lesson-6-asynchronous-handling.md), we we will learn about **Scheduling And Asynchronous** Endpoints
+* [Lesson 6](lesson-6-asynchronous-handling.md), we we will learn about **Asynchronous** Endpoints
 
 You don’t have to complete all of the lessons at once to get the value out of this tutorial.   
 You may start benefit from the tutorial even if it’s one or two lessons.
