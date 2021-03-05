@@ -62,16 +62,12 @@ So it's good place, to enrich the message with extra information, which we will 
 Now we can change our `Product` aggregate: 
 
 ```php
-/**
- * @Aggregate()
- */
+#[Aggregate]
 class Product
 {
     use WithAggregateEvents;
 
-    /**
-     * @AggregateIdentifier()
-     */
+    #[AggregateIdentifier]
     private int $productId;
 
     private Cost $cost;
@@ -84,12 +80,10 @@ class Product
         $this->cost = $cost;
         $this->userId = $userId;
 
-        $this->record(new ProductWasRegisteredEvent($productId));
+        $this->recordThat(new ProductWasRegisteredEvent($productId));
     }
 
-    /**
-     * @CommandHandler("product.register")
-     */
+    #[CommandHandler("product.register")]
     public static function register(RegisterProductCommand $command, array $metadata) : self
     {
         return new self($command->getProductId(), $command->getCost(), $metadata["userId"]);
@@ -101,9 +95,7 @@ We have added second parameter `$metadata` to our `@CommandHandler`. `Ecotone` d
 We can add `changePrice` method now.
 
 ```php
-/**
- * @CommandHandler("product.changePrice")
- */
+#[CommandHandler("product.changePrice")]
 public function changePrice(ChangePriceCommand $command, array $metadata) : void
 {
     if ($metadata["userId"] !== $this->userId) {
@@ -119,19 +111,19 @@ And let's call it with incorrect `userId` and see, if we get the exception.
 ```php
 public function run() : void
 {
-    $this->commandBus->convertAndSendWithMetadata(
+    $this->commandBus->sendWithRouting(
         "product.register",
-        MediaType::APPLICATION_JSON,
         \json_encode(["productId" => 1, "cost" => 100]),
+        "application/json",
         [
             "userId" => 5
         ]
     );
 
-    $this->commandBus->convertAndSendWithMetadata(
+    $this->commandBus->sendWithRouting(
         "product.changePrice",
-        MediaType::APPLICATION_JSON,
         \json_encode(["productId" => 1, "cost" => 110]),
+        "application/json",
         [
             "userId" => 3
         ]
@@ -178,9 +170,7 @@ The good place for it, would not allow for any invocation of `product.register c
 `Ecotone` does allow for auto-wire like injection for endpoints. All services registered in Depedency Container are available.
 
 ```php
-/**
- * @CommandHandler("product.register")
- */
+#[CommandHandler("product.register")]
 public static function register(RegisterProductCommand $command, array $metadata, UserService $userService) : self
 {
     $userId = $metadata["userId"];
@@ -199,25 +189,25 @@ Let's correct our testing class.
 ```php
 public function run() : void
 {
-    $this->commandBus->convertAndSendWithMetadata(
+    $this->commandBus->sendWithRouting(
         "product.register",
-        MediaType::APPLICATION_JSON,
         \json_encode(["productId" => 1, "cost" => 100]),
+        "application/json",
         [
             "userId" => 1
         ]
     );
 
-    $this->commandBus->convertAndSendWithMetadata(
+    $this->commandBus->sendWithRouting(
         "product.changePrice",
-        MediaType::APPLICATION_JSON,
         \json_encode(["productId" => 1, "cost" => 110]),
+        "application/json",
         [
             "userId" => 1
         ]
     );
 
-    echo $this->queryBus->convertAndSend("product.getCost", MediaType::APPLICATION_JSON, \json_encode(["productId" => 1]));
+    echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1]), "application/json");
 }
 ```
 
@@ -235,32 +225,28 @@ Good job, scenario ran with success!
 
 ### Injecting arguments
 
-`Ecotone` inject arguments based on `parameter converters`.  
-Parameter converters , tells `Ecotone` how to resolve specific parameter and what kind of argument it is expecting.  The one used for injecting services like the `UserService` is `@Reference` converter.  
+`Ecotone` inject arguments based on `Parameter Converters`.  
+Parameter converters , tells `Ecotone` how to resolve specific parameter and what kind of argument it is expecting.  The one used for injecting services like `UserService` is `Reference` parameter converter.  
 Let's see how could we use it in our `product.register` command handler. 
 
-Let's suppose UserService is registered under `user-service` in Dependency Container. Then we would need to set up the `@CommandHandler`like below.
+Let's suppose UserService is registered under `user-service` in Dependency Container. Then we would need to set up the `CommandHandler`like below.
 
 ```php
-use Ecotone\Messaging\Annotation\Parameter\Reference;
-
-@CommandHandler(
-   inputChannelName="product.register", 
-   parameterConverters={
-      @Reference(parameterName="userService", referenceName="user-service")
-   }
-)
+#[CommandHandler("product.register")]
+public static function register(
+    RegisterProductCommand $command, 
+    array $metadata, 
+    #[Reference("user-service")] UserService $userService
+) : self
 ```
 
-`parameterName` - Is used widely between different converters. It does tell `Ecotone` to which parameter name from the called method this converter is related.
+`Reference`- Does inject service from Dependency Container. If `referenceName,` which is name of the service in the container is not given, then it will take the class name as default.
 
-`@Reference`- Does inject service from Dependency Container. If `referenceName,` which is name of the service in the container is not given, then it will take the class name as default.
+`Payload` - Does inject payload of the [message](../messaging/messaging-concepts/message.md). In our case it will be the command itself
 
-`@Payload` - Does inject payload of the [message](../messaging/messaging-concepts/message.md). In our case it will be the command itself
+`Headers` - Does inject all headers as array.
 
-`@Headers` - Does inject all headers as array.
-
-`@Header` - Does inject single header from the [message](../messaging/messaging-concepts/message.md).    
+`Header` - Does inject single header from the [message](../messaging/messaging-concepts/message.md).    
   
 There is more to be said about this, but at this very moment, it will be enough for us to know that such possibility exists in order to continue.  
 You may read more detailed description in [Method Invocation section.](../messaging/conversion/method-invocation.md)   
@@ -274,17 +260,12 @@ The second parameter, if is `array` then `@Headers` converter is taken, otherwis
 If we would want to manually configure parameters for `product.register` Command Handler, then it would look like this:
 
 ```php
-/**
- * @CommandHandler(
- *     inputChannelName="product.register",
- *     parameterConverters={
- *          @Payload(parameterName="command"),
- *          @Headers(parameterName="metadata"),
- *          @Reference(parameterName="userService")
- *     }
- * )
- */
-public static function register(RegisterProductCommand $command, array $metadata, UserService $userService) : self
+#[CommandHandler("product.register")]
+public static function register(
+    #[Payload] RegisterProductCommand $command, 
+    #[Headers] array $metadata, 
+    #[Reference] UserService $userService
+) : self
 {
     $userId = $metadata["userId"];
     if (!$userService->isAdmin($userId)) {
