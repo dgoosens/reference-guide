@@ -290,10 +290,14 @@ class QuickStartProvider extends ServiceProvider
 
 {% tab title="Lite - Local" %}
 ```php
-# Add AmqpConnectionFactory in bin/console.php after // add additional service comment
+# Add AmqpConnectionFactory in bin/console.php
 
-// add additional services
-$container->set(Enqueue\AmqpExt\AmqpConnectionFactory::class, new Enqueue\AmqpExt\AmqpConnectionFactory("amqp+lib://guest:guest@localhost:5672//"));
+// add additional service in container
+public function __construct()
+{
+   $this->container = new Container();
+   $this->container->set(Enqueue\AmqpExt\AmqpConnectionFactory::class, new Enqueue\AmqpExt\AmqpConnectionFactory("amqp+lib://guest:guest@localhost:5672//"));
+}
 
 
 ```
@@ -301,10 +305,14 @@ $container->set(Enqueue\AmqpExt\AmqpConnectionFactory::class, new Enqueue\AmqpEx
 
 {% tab title="Lite - Docker" %}
 ```php
-# Add AmqpConnectionFactory in bin/console.php after // add additional service comment
+# Add AmqpConnectionFactory in bin/console.php 
 
-// add additional services
-$container->set(Enqueue\AmqpExt\AmqpConnectionFactory::class, new Enqueue\AmqpExt\AmqpConnectionFactory("amqp+lib://guest:guest@rabbitmq:5672//"));
+// add additional service in container
+public function __construct()
+{
+   $this->container = new Container();
+   $this->container->set(Enqueue\AmqpExt\AmqpConnectionFactory::class, new Enqueue\AmqpExt\AmqpConnectionFactory("amqp+lib://guest:guest@rabbitmq:5672//"));
+}
 ```
 {% endtab %}
 {% endtabs %}
