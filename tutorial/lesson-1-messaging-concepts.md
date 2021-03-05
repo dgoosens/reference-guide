@@ -456,7 +456,8 @@ class ProductNotifier
 
 {% hint style="info" %}
 You may use interfaces or abstract classes for your first parameter type hint.   
-You may even type hint using [`Union Types`](https://wiki.php.net/rfc/union_types_v2) `(ProductWasRegistered|ProductWasSent)` in order to listen for more than one event within specific method.
+You may even type hint using [`Union Types`](https://wiki.php.net/rfc/union_types_v2) `(ProductWasRegistered|ProductWasSent).`   
+This allows for listening to more than one event within specific method, which in result decrease boilerplate in the business code.
 
 Ecotone will resolve connection between published event and Event Handler.
 {% endhint %}
