@@ -40,7 +40,7 @@ bin/console ecotone:list
 
 {% tab title="Lite" %}
 ```php
-$consumers = $messagingSystem->getListOfAsynchronouslyRunningConsumers()
+$consumers = $messagingSystem->list()
 ```
 {% endtab %}
 {% endtabs %}

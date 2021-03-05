@@ -38,7 +38,7 @@ console ecotone:list
 
 {% tab title="Lite" %}
 ```php
-$consumers = $messagingSystem->getListOfAsynchronouslyRunningConsumers()
+$consumers = $messagingSystem->list()
 ```
 {% endtab %}
 {% endtabs %}
@@ -54,7 +54,7 @@ console ecotone:run currencyExchanger -vvv
 
 {% tab title="Lite" %}
 ```php
-$messagingSystem->runAsynchronouslyRunningEndpoint("currencyExchanger");
+$messagingSystem->run("currencyExchanger");
 ```
 {% endtab %}
 {% endtabs %}
