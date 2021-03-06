@@ -10,18 +10,19 @@ If configuration will differ, there will be three tabs available, each with code
 {% tabs %}
 {% tab title="Symfony" %}
 ```
-git clone git@github.com:ecotoneframework/quickstart-symfony.git
-# Go to quickstart-symfony catalog
+git clone git@github.com:ecotoneframework/symfony-tutorial.git
+# Go to symfony-tutorial catalog
 ```
 {% endtab %}
 
 {% tab title="Laravel" %}
 ```bash
-git clone git@github.com:ecotoneframework/quickstart-laravel.git
-# Go to quickstart-laravel catalog
+git clone git@github.com:ecotoneframework/laravel-tutorial.git
+# Go to laravel-tutorial catalog
 
 # Normally you will use "php artisan" for running console commands
-# To reduce number of difference "artisan" is changed to "bin/console"
+# To reduce number of difference during the tutorial
+# "artisan" is changed to "bin/console"
 ```
 {% endtab %}
 
