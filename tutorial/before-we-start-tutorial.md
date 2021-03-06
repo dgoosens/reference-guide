@@ -28,8 +28,8 @@ git clone git@github.com:ecotoneframework/laravel-tutorial.git
 
 {% tab title="Lite" %}
 ```
-git clone git@github.com:ecotoneframework/quickstart-lite.git
-# Go to quickstart-symfony catalog
+git clone git@github.com:ecotoneframework/lite-tutorial.git
+# Go to lite-tutorial catalog
 ```
 {% endtab %}
 {% endtabs %}
