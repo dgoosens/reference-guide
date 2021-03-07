@@ -10,7 +10,6 @@
 
 `Command Handlers` are responsible for changing the state.   
 It's a place where we will put our business logic.   
-One `command` can target only one `handler`.   
   
 Let's first create `PlaceOrder` `Command` that will place an order in our system.
 
@@ -38,7 +37,7 @@ class PlaceOrder
 }
 ```
 
-And `Command Handler`
+And `Command Handler.`One `Command` can target only one `handler`. 
 
 ```php
 use Ecotone\Modelling\Attribute\CommandHandler;
@@ -57,8 +56,7 @@ class OrderService
 
 #### Registering Query Handlers
 
-`Query Handlers` are responsible for querying the state of the system.  
-One `query` can target only one `handler`.
+`Query Handlers` are responsible for querying the state of the system.
 
 Let's define `GetOrder` `Query` that will find our placed order.
 
@@ -79,7 +77,7 @@ class GetOrder
 }
 ```
 
-And `Query Handler`
+And `Query Handler.` One `query` can target only one `handler`.
 
 ```php
 use Ecotone\Modelling\Attribute\CommandHandler;

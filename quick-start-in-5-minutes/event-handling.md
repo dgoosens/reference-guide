@@ -2,8 +2,7 @@
 
 ## Description
 
-In order to notify that some event happened in the system, we may use `event publishing and handling.`   
-Multiple `handlers` can listen to specific `event`. 
+In order to notify that some event happened in the system, we may use `event publishing and handling.`  
 
 ## To The Code!
 
@@ -33,7 +32,8 @@ class OrderWasPlaced
 }
 ```
 
- And Event Handler that will be listening to the `OrderWasPlaced`.
+ And Event Handler that will be listening to the `OrderWasPlaced`.  
+Multiple `handlers` can listen to specific `event`.
 
 ```php
 class NotificationService
