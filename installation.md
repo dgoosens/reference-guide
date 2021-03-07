@@ -40,28 +40,64 @@ Provider should be automatically registered.
 
 ## Install Lite \(No framework\)
 
-1. Use composer in order to download `Ecotone`
+### Make use of prepared setup
+
+{% hint style="success" %}
+git clone [https://github.com/ecotoneframework/lite-setup](https://github.com/ecotoneframework/lite-setup)
+{% endhint %}
+
+### Wire manually
+
+1. In order to start we have to have composer.json with PSR-4 or PSR-0 autoload setup.  Create `composer.json` in root catalog with `autoload for src` catalog.  And add `Ecotone`
 
 {% hint style="success" %}
 composer require ecotone/ecotone
 {% endhint %}
 
-    2. Bootstrap `Ecotone`
+    2. As `Ecotone` require access to Dependency Container, you have to choose one in order to run the example. As `Ecotone` may register classes for easier usage, we will make our container implement `GatewayAwareContainer` to access them.
+
+{% hint style="success" %}
+Create `console.php` and set up your container \(look \#13 line\)
+{% endhint %}
 
 ```php
 use Ecotone\Lite\EcotoneLiteConfiguration;
-use Ecotone\Lite\InMemoryPSRContainer;
-use Ecotone\Messaging\Config\ApplicationConfiguration;
+use Ecotone\Lite\GatewayAwareContainer;
+use Ecotone\Messaging\Config\ServiceConfiguration;
 
-$rootCatalog = "/var/www/html"; // path to root of your project, where composer.json exists
-$namespacesToUse = ["Example\Modelling\EventSourcing"]; // list of namespaces, that should be boostraped by Ecotone
-$psr11CompatibleContainer = InMemoryPSRContainer::createFromObjects([TicketRepository::createEmpty()]); // you may use existing in memory implemantation for testing purposes
+$rootCatalog = __DIR__;
+require $rootCatalog . "/vendor/autoload.php";
+
+$container = new class() implements GatewayAwareContainer {
+    private Container $container;
+
+    public function __construct()
+    {
+        $this->container =  // @TODO set up your container here
+    }
+
+    public function get($id)
+    {
+        return $this->container->get($id);
+    }
+
+    public function has($id)
+    {
+        return $this->container->has($id);
+    }
+
+    public function addGateway(string $referenceName, object $gateway): void
+    {
+        $this->container->set($referenceName, $gateway);
+    }
+};
 
 $messagingSystem = EcotoneLiteConfiguration::createWithConfiguration(
     $rootCatalog,
-    $psr11CompatibleContainer,
-    ApplicationConfiguration::createWithDefaults()
-        ->withNamespaces($namespacesToUse)
+    $container,
+    ServiceConfiguration::createWithDefaults()
+        ->withLoadCatalog("src"),
+    []
 );
 ```
 
