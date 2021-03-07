@@ -97,7 +97,8 @@ $messagingSystem = EcotoneLiteConfiguration::createWithConfiguration(
     $container,
     ServiceConfiguration::createWithDefaults()
         ->withLoadCatalog("src"),
-    []
+    [],
+    false
 );
 ```
 
