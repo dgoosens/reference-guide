@@ -4,6 +4,7 @@
 * [Installation](installation.md)
 * [Quick Start In 5 Minutes](quick-start-in-5-minutes/README.md)
   * [CQRS](quick-start-in-5-minutes/cqrs.md)
+  * [Event Handling](quick-start-in-5-minutes/event-handling.md)
 * [Tutorial](tutorial/README.md)
   * [Before we start tutorial](tutorial/before-we-start-tutorial.md)
   * [Lesson 1: Messaging Concepts](tutorial/lesson-1-messaging-concepts.md)

@@ -1,7 +1,8 @@
 # Quick Start In 5 Minutes
 
-Below quick starts will teach you how to use specific Ecotone's modules in 5 minutes.  
-So you may quick start your existing project or build new one with ease.  
+Below quick starts will teach you how to use specific `Ecotone's` module in _5 minutes_.  
+So you may quick start integration with your existing project or build new one with ease.    
+If you want to to known in depth with `Ecotone`, consider going trough [Tutorial](../tutorial/).
 
 ### Before we start Quick start
 
