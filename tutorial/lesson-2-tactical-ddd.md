@@ -51,7 +51,7 @@ class Product
 
 1. `Aggregate` annotation marks class to be known as Aggregate
 2. `AggregateIdentififer` marks properties as identifiers of specific Aggregate instance. Each _Aggregate_ must contains at least one identifier. 
-3. `CommandHandler` enables command handling on specific method just as we did in [Lesson 1](lesson-1-messaging-concepts.md).  If method is static, it's treated as [factory method](https://en.wikipedia.org/wiki/Factory_method_pattern) and must return new aggregate instance. Rule applies as long as we use [State-Stored Aggregate](../modelling/command-handling/state-stored-aggregate.md#state-stored-aggregate) instead of [Event Sourcing Aggregate](../modelling/command-handling/event-sourcing-aggregate.md).
+3. `CommandHandler` enables command handling on specific method just as we did in [Lesson 1](lesson-1-messaging-concepts.md).  If method is static, it's treated as [factory method](https://en.wikipedia.org/wiki/Factory_method_pattern) and must return new aggregate instance. Rule applies as long as we use [State-Stored Aggregate](../modelling/command-handling/state-stored-aggregate.md#state-stored-aggregate) instead of [Event Sourcing Aggregate]().
 4. `QueryHandler` enables query handling on specific method just as we did in Lesson 1.
 
 {% hint style="info" %}

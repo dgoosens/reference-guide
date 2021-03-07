@@ -57,11 +57,9 @@ To get more details how to implement _Aggregate,_ go to previous pages:
 
 {% page-ref page="state-stored-aggregate.md" %}
 
-{% page-ref page="event-sourcing-aggregate.md" %}
-
 ### How to implement Repository
 
-There are two types of repositories. One for storing [`State-Stored Aggregate`](state-stored-aggregate.md) and another one for storing [`Event Sourcing Aggregate`](event-sourcing-aggregate.md).
+There are two types of repositories. One for storing [`State-Stored Aggregate`](state-stored-aggregate.md) and another one for storing [`Event Sourcing Aggregate`]().
 
 Based on which interface is implemented, `Ecotone` knows which Aggregate type was selected.  
 The interface informs, if specific `Repository` can handle given `Aggregate class.`  

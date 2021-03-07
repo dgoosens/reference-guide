@@ -49,10 +49,10 @@ class OrderFulfillment
 }
 ```
 
-`Aggregate` - Saga can stated-stored [Aggregate](command-handling/state-stored-aggregate.md) or [Event Sourced Aggregate](command-handling/event-sourcing-aggregate.md)  
+`Aggregate` - Saga can stated-stored [Aggregate](command-handling/state-stored-aggregate.md) or [Event Sourced Aggregate]()  
 `EventHandler` - We mark method to be called, when specific event happens. 
 
-* `start` - is `factory method`and should construct new instance `OrderFulfillment.`Depending on need you may construct differently as [Event Sourced Aggregate](command-handling/event-sourcing-aggregate.md).
+* `start` - is `factory method`and should construct new instance `OrderFulfillment.`Depending on need you may construct differently as [Event Sourced Aggregate]().
 * `paymentWasDone` - Is called when `PaymentWasFinishedEvent` event is published. We have injected `CommandBus` into the method in order to finish process by sending `ShipOrderCommand.`  We could also publish event instead.
 
 ### Event Correlation

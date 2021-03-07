@@ -368,7 +368,7 @@ Events will be automatically retrieved and published after handling current Comm
 
 ### Event Sourcing Aggregate
 
-When using [Event Sourcing Aggregate](../command-handling/event-sourcing-aggregate.md#event-sourcing-aggregate) you do not need to do anything extra. Each method should return events after handling, those events will automatically published using `Event Bus.`
+When using [Event Sourcing Aggregate]() you do not need to do anything extra. Each method should return events after handling, those events will automatically published using `Event Bus.`
 
 ```php
 public function assignWorker(AssignWorkerCommand $command) : array

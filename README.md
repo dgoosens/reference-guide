@@ -8,7 +8,7 @@
 `Ecotone` enables true  message driven architecture in PHP, using [Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com/) \(EIP\). On top of that follow an architectural patterns which are based on the principles of Domain-Driven Design \(DDD\), Command Query Responsibility Segregation \(CQRS\) and Event Sourcing \(ES\).
 
 {% hint style="success" %}
-Ecotone provides PHP with Command Bus, Query Bus, Event Bus, Interceptors, Aggregates, Sagas, Event Sourcing built on solutions that are message driven at the fundamental levels, and using integration with well known and stable solutions like [Enqueue](https://github.com/php-enqueue/enqueue) for asynchronous communication and [Prooph](https://github.com/prooph/event-store) for Event Sourcing.
+Ecotone provides PHP with Command Bus, Query Bus, Event Bus, Interceptors, Aggregates, Sagas, Event Sourcing built on solutions that are message driven at the fundamental levels, and using integration with well known and stable solutions like [Enqueue](https://php-enqueue.github.io/) for asynchronous communication and [Prooph](http://getprooph.org) for Event Store.
 {% endhint %}
 
   

@@ -20,8 +20,7 @@ In order to use `Dbal Support` we need to add `ConnectionFactory` to our `Depend
 # config/services.yaml
     Enqueue\Dbal\DbalConnectionFactory:
         class: Enqueue\Dbal\DbalConnectionFactory
-        arguments:
-            - "pgsql://user:password@host:5432/db_name"
+        arguments: ["pgsql://user:password@host:5432/db_name"]
 ```
 {% endtab %}
 
