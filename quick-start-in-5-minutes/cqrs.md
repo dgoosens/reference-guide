@@ -1,15 +1,16 @@
 # CQRS
 
-### Description
+## Description
 
 `Command Query Responsibility Segregation` \(CQRS\) is principle that help distinguish actions that change the state of the system from the actions that are responsible for queries it. 
 
-### To The Code!
+## To The Code!
 
 #### Registering Command Handlers
 
 `Command Handlers` are responsible for changing the state.   
 It's a place where we will put our business logic.   
+One `command` can target only one `handler`.   
   
 Let's first create `PlaceOrder` `Command` that will place an order in our system.
 
@@ -56,7 +57,8 @@ class OrderService
 
 #### Registering Query Handlers
 
-`Query Handlers` are responsible for querying the state of the system
+`Query Handlers` are responsible for querying the state of the system.  
+One `query` can target only one `handler`.
 
 Let's define `GetOrder` `Query` that will find our placed order.
 
@@ -105,7 +107,7 @@ class OrderService
 }
 ```
 
-### Running the example
+## Running The Example
 
 ```php
 $commandBus->send(new PlaceOrder(1, "Milk"));
@@ -113,7 +115,7 @@ $commandBus->send(new PlaceOrder(1, "Milk"));
 echo $queryBus->send(new GetOrder(1));
 ```
 
-### Implementation using Lite
+## Implementation Using Lite
 
 [https://github.com/ecotoneframework/quickstart-examples/tree/master/src/CQRS](https://github.com/ecotoneframework/quickstart-examples/tree/master/src/CQRS)
 

@@ -383,7 +383,7 @@ Running example...
 Good job, scenario ran with success!
 ```
 
-### Event Publishing
+### Event Handling
 
 We want to notify, when new product is registered in the system.   
 In order to do it, we will make use of `Event Bus Gateway` which can publish events.  
