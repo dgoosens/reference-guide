@@ -6,7 +6,7 @@
 composer require ecotone/dbal
 ```
 
-## Module Powered By
+### Module Powered By
 
 Powered by powerful database abstraction layer [Doctrine/Dbal](https://github.com/doctrine/dbal).
 

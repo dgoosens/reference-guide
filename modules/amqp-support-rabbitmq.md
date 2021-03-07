@@ -6,6 +6,10 @@
 composer require ecotone/amqp
 ```
 
+### Module Powered By
+
+[Enqueue](https://github.com/php-enqueue/enqueue-dev) solid and powerful abstraction over asynchronous queues.
+
 ## Configuration
 
 In order to use `AMQP Support` we need to add `ConnectionFactory` to our `Dependency Container.` 
