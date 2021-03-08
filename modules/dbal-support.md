@@ -8,7 +8,7 @@ composer require ecotone/dbal
 
 ### Module Powered By
 
-Powered by powerful database abstraction layer [Doctrine/Dbal](https://github.com/doctrine/dbal).
+Powered by powerful database abstraction layer [Doctrine/Dbal](https://github.com/doctrine/dbal) and [Enqueue](https://php-enqueue.github.io/) for asynchronous communication 
 
 ## Configuration
 
