@@ -2,7 +2,7 @@
 
 Below quick starts will teach you how to use specific `Ecotone's` module in _5 minutes_.  
 So you may quick start integration with your existing project or build new one with ease.    
-If you want to to known in depth with `Ecotone`, consider going trough [Tutorial](../tutorial/).
+If you want to know in depth with `Ecotone`, consider going through [Tutorial](../tutorial/).
 
 ### Before we start Quick start
 
