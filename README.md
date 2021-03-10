@@ -17,6 +17,12 @@ To keep your _business code clean from technical problems and integrations_.
 
 #### [I want to see examples take me to Quick Start!](quick-start-in-5-minutes/)
 
+## Contact
+
+* [**Twitter**](https://twitter.com/EcotonePHP)
+* **EcotoneFramework@Gmail.com**
+* [**Gitter**](https://gitter.im/EcotonePHP/community)
+
 ## Support Ecotone
 
 If you want to help building and improving `Ecotone` consider becoming a sponsor:
