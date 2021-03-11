@@ -52,6 +52,10 @@
 * [Interceptors](messaging/interceptors.md)
 * [Scheduling](messaging/scheduling.md)
 
+## Partners
+
+* [InspectIO](partners/inspectio.md)
+
 ## Modules
 
 * [Overview](modules/overview.md)
