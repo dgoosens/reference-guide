@@ -4,7 +4,15 @@ Below quick starts will teach you how to use specific `Ecotone's` module in _5 m
 So you may quick start integration with your existing project or build new one with ease.    
 If you want to know in depth with `Ecotone`, consider going through [Tutorial](../tutorial/).
 
-### Before we start Quick start
+## Show me examples!
+
+Do you want to see examples straight away?
+
+### - [CQRS](cqrs.md) \(Command Query Responsibility Segregation\)
+
+### [- Event Handling](event-handling.md)
+
+## Before we start Quick Start
 
 Choose your preferred platform `Symfony`  `Laravel` or `Lite (Only Ecotone)` and install accordingly with help of [Installation Section](../installation.md).
 
@@ -94,4 +102,6 @@ class SomethingUsingCommandBus
 ```
 {% endtab %}
 {% endtabs %}
+
+
 
