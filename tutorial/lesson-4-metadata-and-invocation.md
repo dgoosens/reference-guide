@@ -39,7 +39,7 @@ class ChangePriceCommand
 ```
 
 We will handle this `Command` in a minute. Let's first add user information for registering the product.  
-We will do it, using `Meta Data`. Let's get back to our Testing Class `EcotoneQuickstart` and 
+We will do it, using `Meta Data`. Let's get back to our Testing Class `EcotoneQuickstart` and add 4th argument to our `CommandBus` call.
 
 ```php
 public function run() : void
@@ -47,15 +47,18 @@ public function run() : void
     $this->commandBus->sendWithRouting(
         "product.register",
         \json_encode(["productId" => 1, "cost" => 100]),
-        "application/json"
+        "application/json",
+        [
+            "userId" => 1
+        ]
     );
             
     echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1]), "application/json");
 }
 ```
 
-We call a different method `convertAndSendWithMetadata,` it accepts 4th argument, which is `associative array.` Whatever we will place in here, will be available during message handling for us.  
-So it's good place, to enrich the message with extra information, which we will want to use or store, but are not part of the `command/query/event`.   
+We call `sendWithRouting`, it accepts 4th argument, which is `associative array.` Whatever we will place in here, will be available during message handling for us.  
+So it's good place, to enrich the message with extra information, which we will want to use or store, but are is not part of the `command/query/event`.   
 Now we can change our `Product` aggregate: 
 
 ```php
