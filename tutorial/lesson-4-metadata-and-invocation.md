@@ -90,7 +90,7 @@ class Product
     }
 ```
 
-We have added second parameter `$metadata` to our `@CommandHandler`. `Ecotone` does the job, by reading parameters and evaluating what should be injected. We will see soon, how can we take control of this process.   
+We have added second parameter `$metadata` to our `@CommandHandler`. `Ecotone` read parameters and evaluated what should be injected. We will see soon, how can we take control of this process.   
   
 We can add `changePrice` method now.
 
