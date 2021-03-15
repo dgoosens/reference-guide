@@ -39,7 +39,7 @@ class ChangePriceCommand
 ```
 
 We will handle this `Command` in a minute. Let's first add user information for registering the product.  
-We will do it, using `Meta Data`. Let's get back to our Testing Class `EcotoneQuickstart.`
+We will do it, using `Meta Data`. Let's get back to our Testing Class `EcotoneQuickstart` and 
 
 ```php
 public function run() : void
@@ -47,10 +47,7 @@ public function run() : void
     $this->commandBus->sendWithRouting(
         "product.register",
         \json_encode(["productId" => 1, "cost" => 100]),
-        "application/json",
-        [
-            "userId" => 5
-        ]
+        "application/json"
     );
             
     echo $this->queryBus->sendWithRouting("product.getCost", \json_encode(["productId" => 1]), "application/json");
