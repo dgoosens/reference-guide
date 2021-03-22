@@ -2,7 +2,7 @@
 
 `Ecotone` provide possibility to handle [cross cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern) via `Interceptors`.   
 `Interceptor` as name the suggest, intercepts the process of handling the message.   
-You may enrich the [message](messaging-concepts/message.md), stop or modify usual processing cycle, call some shared functionality, add additional behavior to existing code without modifying the code itself. 
+You may enrich the [message](../messaging/messaging-concepts/message.md), stop or modify usual processing cycle, call some shared functionality, add additional behavior to existing code without modifying the code itself. 
 
 {% hint style="info" %}
 If you are familiar with [Aspect Oriented Programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming) or Middleware pattern \(used in most of PHP CQRS frameworks\) you may find some similarities.
@@ -35,7 +35,7 @@ The precedence is done within a specific [interceptor type](interceptors.md#inte
 Every interceptor has `Pointcut` attribute, which describes for specific interceptor, which endpoints it should intercept.
 
 * `CLASS_NAME` - indicates intercepting specific class or interface or class containing attribute on method or class level
-* `NAMESPACE*` - Indicating all [Endpoints](messaging-concepts/message-endpoint/) starting with namespace prefix e.g. `App\Domain\*`
+* `NAMESPACE*` - Indicating all [Endpoints](../messaging/messaging-concepts/message-endpoint/) starting with namespace prefix e.g. `App\Domain\*`
 * `expression||expression` - Indicating one expression or another e.g. `Product\*||Order\*` 
 
 ## Interceptor Types
@@ -53,7 +53,7 @@ Interceptors are called in following order:
 ### Exceptional Interceptor 
 
 `Before interceptor` is called before endpoint is executed.   
-Before interceptors can used in order to `stop the flow`, `throw an exception` or `enrich the` [`Message.`](messaging-concepts/message.md)  
+Before interceptors can used in order to `stop the flow`, `throw an exception` or `enrich the` [`Message.`](../messaging/messaging-concepts/message.md)  
   
 We will intercept Command Handler with verification if executor is an administrator.
 
@@ -79,7 +79,7 @@ class AdminVerificator
 }
 ```
 
-We are using in here [Pointcut](interceptors.md#pointcut) here which is looking for `#[RequireAdministrator]` annotation in each of registered [Endpoints](messaging-concepts/message-endpoint/).  
+We are using in here [Pointcut](interceptors.md#pointcut) here which is looking for `#[RequireAdministrator]` annotation in each of registered [Endpoints](../messaging/messaging-concepts/message-endpoint/).  
 The `void return type` is expected in here. It tells `Ecotone`that, this Before Interceptor is not modifying the Message and message will be passed through. The message flow however can be interrupted by throwing exception.
 
 Now we need to annotate our Command Handler:
@@ -94,12 +94,12 @@ public function changePrice(ChangePriceCommand $command) : void
 ```
 
 Whenever we call our command handler, it will be intercepted by AdminVerificator now.  
-There is one thing worth to mention. Our `Command Handler` is using `ChangePriceCommand`class and our `AdminVerificator interceptor` is using `array $payload`. They are both the same payload of the [Message](messaging-concepts/message.md), but converted in the way [Endpoint](messaging-concepts/message-endpoint/) expected. 
+There is one thing worth to mention. Our `Command Handler` is using `ChangePriceCommand`class and our `AdminVerificator interceptor` is using `array $payload`. They are both the same payload of the [Message](../messaging/messaging-concepts/message.md), but converted in the way [Endpoint](../messaging/messaging-concepts/message-endpoint/) expected. 
 
 ### Payload Enriching Interceptor
 
 If return type is `not void` ****new modified based on previous Message will be created from the returned type.   
-We will enrich [Message](messaging-concepts/message.md) payload with timestamp.
+We will enrich [Message](../messaging/messaging-concepts/message.md) payload with timestamp.
 
 ```php
 #[\Attribute]
@@ -135,7 +135,7 @@ public function changePrice(ChangePriceCommand $command) : void
 
 ### Header Enriching Interceptor
 
-Suppose we want to add executor Id, but as this is not part of our Command, we want add it to our [Message](messaging-concepts/message.md) Headers.
+Suppose we want to add executor Id, but as this is not part of our Command, we want add it to our [Message](../messaging/messaging-concepts/message.md) Headers.
 
 ```php
 #[\Attribute]
@@ -354,7 +354,7 @@ class ProductsService
 
 `Presend Interceptor`  is called before Message is actually send to the channel.  
 In synchronous channel there is no difference between `Before` and `Presend.`   
-The difference is seen when the channel is [asynchronous](scheduling.md).
+The difference is seen when the channel is [asynchronous](../messaging/scheduling.md).
 
 ####  Before Interceptor
 

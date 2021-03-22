@@ -30,6 +30,7 @@
   * [Handling Events](modelling/event-handling/handling-events.md)
   * [Dispatching Events](modelling/event-handling/dispatching-events.md)
   * [Advanced Usage of Event Handlers](modelling/event-handling/advanced-usage-of-event-handlers.md)
+* [Interceptors](modelling/interceptors.md)
 * [Saga](modelling/saga.md)
 * [Event Sourcing](modelling/event-sourcing.md)
 * [Asynchronous Handling](modelling/asynchronous-handling.md)
@@ -49,7 +50,6 @@
 * [Method Invocation And Conversion](messaging/conversion/README.md)
   * [Method Invocation](messaging/conversion/method-invocation.md)
   * [Conversion](messaging/conversion/conversion.md)
-* [Interceptors](messaging/interceptors.md)
 * [Scheduling](messaging/scheduling.md)
 
 ## Partners

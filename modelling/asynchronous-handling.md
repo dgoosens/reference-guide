@@ -116,6 +116,6 @@ class Configuration
 ##  Intercepting asynchronous endpoint
 
 All asynchronous endpoints are marked with special annotation`Ecotone\Messaging\Annotation\PollableEndpoint`   
-If you want to intercept all polling endpoints you should make use of [annotation related point cut](../messaging/interceptors.md#pointcut).  
+If you want to intercept all polling endpoints you should make use of [annotation related point cut](interceptors.md#pointcut).  
  `Ecotone\Messaging\Annotation\PollableEndpoint`
 

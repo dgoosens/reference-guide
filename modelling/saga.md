@@ -79,7 +79,7 @@ class SomeEvent
 }
 ```
 
-In other scenario, when there is no property to correlate, we can make use of `Before` or `Presend` [Interceptors](../messaging/interceptors.md) to enrich event's metadata with required identifier.  
+In other scenario, when there is no property to correlate, we can make use of `Before` or `Presend` [Interceptors](interceptors.md) to enrich event's metadata with required identifier.  
 Suppose the orderId identifier is available in metadata under key orderNumber, then we can tell Endpoint to use the mapping.
 
 ```php

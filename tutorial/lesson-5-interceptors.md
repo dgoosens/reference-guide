@@ -395,7 +395,7 @@ We do have two transactions started, because we call the Command Bus twice.
 Each of interceptors, can inject attribute, which was used for pointcut. Just type hint for it in method declaration.   
 Around interceptors can inject intercepted class instance. In above example it would be `Command Bus.`  
 In case of Command Bus it may seems not needed, but if we would intercept Aggregate, then it really useful as for example you may verify if executing user have access to it.   
-You may read more about interceptors in [dedicated section](../messaging/interceptors.md).
+You may read more about interceptors in [dedicated section](../modelling/interceptors.md).
 
 {% hint style="success" %}
 Great, we have just finished Lesson 5!  
