@@ -14,7 +14,8 @@ Great library, which allow for advanced conversion between types [JMS/Serializer
 
 ## Native Conversion
 
-If we want to call bus with given JSON and deserialize `productIds` to `UUID`:
+Ecotone with JMS will do it's best to deserialize your classes without any additional configuration needed.  
+Suppose we have JSON like below: 
 
 ```javascript
 {
