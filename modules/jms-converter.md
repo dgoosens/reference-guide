@@ -10,7 +10,160 @@ Ecotone comes with integration with [JMS Serializer](https://jmsyst.com/libs/ser
 
 ### Module Powered By
 
-Great library, which allow for advanced conversion between types [JMS/Serializer](https://github.com/schmittjoh/serializer).
+Great library, which allow for advanced conversion between types [JMS/Serializer](https://github.com/schmittjoh/serializer). 
+
+## Native Conversion
+
+If we want to call bus with given JSON and deserialize `productIds` to `UUID`:
+
+```javascript
+{
+    "personName": "Johny",
+    "address": ["street": "A Good One", "houseNumber": 123
+}
+```
+
+```php
+$this->commandBus->convertAndSend(
+   "settings.change", 
+   "application/json", 
+   '{"personName": "Johny","address":["street":"A Good One","houseNumber":123}'
+)
+
+```
+
+Then, suppose we have `endpoint` with following Command:
+
+```php
+#[CommandHandler]
+public function changeSettings(ChangeSettings $command)
+{
+   // do something
+}
+```
+
+```php
+class ChangeSettings
+{
+    private string $personName;    
+    private Address $address;
+}
+
+class Address
+{
+    private string $street;
+    private string $houseNumber;
+}
+```
+
+You do not need to do any configuration. Deserialization and Serialization will be handled for you.
+
+## Custom Conversions To Classes
+
+The difference between Native Conversion is that you take control of deserialization mechanism for specific class. You may call factory method, which will validate correctness of the data or you may provide some default based on your business logic. 
+
+`JMS Converter`make use of Converters registered as Converters in order to provide all the conversion types described in [Conversion Table](jms-converter.md#conversion-table). You can read how to register new`Converter` in [Conversion section.](../messaging/conversion/conversion.md#conversions-on-php-level)
+
+### Example usage
+
+If we want to call bus with given JSON and deserialize `productIds` to `UUID`:
+
+```javascript
+{
+    "productIds": ["104c69ac-af3d-44d1-b2fa-3ecf6b7a3558"], 
+    "promotionCode": "33dab", 
+    "quickDelivery": false
+}
+```
+
+```php
+$this->commandBus->convertAndSend(
+   "order.place", 
+   "application/json", 
+   '{"productIds": ["104c69ac-af3d-44d1-b2fa-3ecf6b7a3558"], "promotionCode": "33dab", "quickDelivery": false}'
+)
+```
+
+Then, suppose we have endpoint with following Command:
+
+```php
+#[CommandHandler]
+public function placeOrder(PlaceOrder $command)
+{
+   // do something
+}
+```
+
+```php
+class PlaceOrder
+{
+    /**
+     * @var Uuid[]
+     */
+    private array $productIds;
+    
+    private ?string $promotionCode;
+    
+    private bool $quickDelivery;
+}
+```
+
+We do not need to add any metadata describing how to convert `JSON to PlaceOrder PHP class.` We already have it using type hints. 
+
+{% hint style="info" %}
+If use you're array, describe types using `DocBlocks`
+
+```php
+    /**
+     * @var Product[]
+     */
+    private array $products;
+```
+{% endhint %}
+
+The only thing, that we need is to add how to convert string to UUID. We do it using Converter:
+
+```php
+class ExampleConverterService
+{
+    #[Converter]
+    public function convert(string $data) : Uuid
+    {
+        return Uuid::fromString($data);
+    }
+}
+```
+
+And that's enough. Whenever we will use `string to UUID` conversion or `array of string to array of UUID`. This converter will be automatically used. 
+
+## Custom Conversions from Classes
+
+If you want to have custom conversions from classes to simple types or array you may register, converter from other way around.
+
+```php
+class ExampleConverterService
+{
+    #[Converter]
+    public function convert(Uuid $data) : string
+    {
+        return $data->toString();
+    }
+}
+```
+
+## Customization
+
+If you want to customize serialization or deserialization process, you may use of annotations on properties, just like it is describes in [Annotation section in JMS Serializer](https://jmsyst.com/libs/serializer/master/reference/annotations).
+
+```php
+class GetOrder
+{
+   /**
+   * @SerializedName("order_id")
+   */
+   private string $orderId;
+}
+```
 
 ## Conversion Table
 
@@ -36,91 +189,6 @@ application/x-php;type=array => application/json | {"productId": 1} => ["product
 // conversion from XML to PHP Array
 application/xml => application/x-php;type=array | <productId>1</productId> => ["productId": 1]
 // conversion from PHP Array to XML
-application/x-php;type=array => application/xml | ["productId": 1] => <productId>1</productId> 
-```
-
-## How to register Converter
-
-`JMS Converter`make use of Converters registered as `PHP to PHP` Converters in order to provide all the conversion types described in [Conversion Table](jms-converter.md#conversion-table). You can read how to register new `PHP to PHP Converter` in [Conversion section.](../messaging/conversion/conversion.md#conversions-on-php-level)
-
-## Example usage
-
-Suppose we have endpoint with following Command:
-
-```php
-/**
-*  @CommandHandler("order.place")
-*/
-public function placeOrder(PlaceOrder $orderId)
-{
-   // do something
-}
-```
-
-```php
-class PlaceOrder
-{
-    /**
-     * @var Uuid[]
-     */
-    private array $productIds;
-    
-    private ?string $promotionCode;
-    
-    private bool $quickDelivery;
-}
-```
-
-We do not need to add any metadata describing how to convert `JSON to PlaceOrder PHP class.` We already have it using type hints. 
-
-{% hint style="info" %}
-If use you PHP 7.3, you may describe types using docblocks. 
-{% endhint %}
-
-The only thing, that we need is to add how to convert string to UUID. We do it using PHP to PHP Converter:
-
-```php
-use Ecotone\Messaging\Annotation\Converter;
-use Ecotone\Messaging\Annotation\ConverterClass;
-
-/**
- * @ConverterClass()
- */
-class ExampleConverterService
-{
-    /**
-     * @Converter()
-     */
-    public function convert(string $data) : Uuid
-    {
-        return Uuid::fromString($data);
-    }
-}
-```
-
-And that's enough. Whenever we will use `string to UUID` conversion or `array of string to array of UUID`. This converter will be automatically used.   
-  
-Now we can call `Command Bus` with JSON.
-
-```php
-$this->commandBus->convertAndSend(
-   "order.place", 
-   "application/json", 
-   '{"productIds": ["104c69ac-af3d-44d1-b2fa-3ecf6b7a3558"], "promotionCode": "33dab", "quickDelivery": false}'
-)
-```
-
-## Customization
-
-If you want to customize serialization or deserialization process, you may use of annotations on properties, just like it is describes in [Annotation section in JMS Serializer](https://jmsyst.com/libs/serializer/master/reference/annotations).
-
-```php
-class GetOrder
-{
-   /**
-   * @SerializedName("order_id")
-   */
-   private string $orderId;
-}
+application/x-php;type=array => application/xml | ["productId": 1] => <productId>1</productId>
 ```
 
