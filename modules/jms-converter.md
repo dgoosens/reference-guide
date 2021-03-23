@@ -25,10 +25,10 @@ Suppose we have JSON like below:
 ```
 
 ```php
-$this->commandBus->convertAndSend(
+$this->commandBus->sendWithRouting(
    "settings.change", 
-   "application/json", 
-   '{"personName": "Johny","address":["street":"A Good One","houseNumber":123}'
+   '{"personName": "Johny","address":["street":"A Good One","houseNumber":123}',
+   "application/json"
 )
 
 ```
@@ -79,10 +79,10 @@ If we want to call bus with given JSON and deserialize `productIds` to `UUID`:
 ```
 
 ```php
-$this->commandBus->convertAndSend(
-   "order.place", 
-   "application/json", 
-   '{"productIds": ["104c69ac-af3d-44d1-b2fa-3ecf6b7a3558"], "promotionCode": "33dab", "quickDelivery": false}'
+$this->commandBus->sendWithRouting(
+   "order.place",  
+   '{"productIds": ["104c69ac-af3d-44d1-b2fa-3ecf6b7a3558"], "promotionCode": "33dab", "quickDelivery": false}',
+   "application/json"
 )
 ```
 
