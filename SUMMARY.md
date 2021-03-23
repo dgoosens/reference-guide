@@ -2,17 +2,17 @@
 
 * [Introduction](README.md)
 * [Installation](installation.md)
-* [Quick Start In 5 Minutes](quick-start-in-5-minutes/README.md)
-  * [CQRS](quick-start-in-5-minutes/cqrs.md)
-  * [Event Handling](quick-start-in-5-minutes/event-handling.md)
-* [Tutorial](tutorial/README.md)
-  * [Before we start tutorial](tutorial/before-we-start-tutorial.md)
-  * [Lesson 1: Messaging Concepts](tutorial/lesson-1-messaging-concepts.md)
-  * [Lesson 2: Tactical DDD](tutorial/lesson-2-tactical-ddd.md)
-  * [Lesson 3: Converters](tutorial/lesson-3.md)
-  * [Lesson 4: Metadata and Method Invocation](tutorial/lesson-4-metadata-and-invocation.md)
-  * [Lesson 5: Interceptors](tutorial/lesson-5-interceptors.md)
-  * [Lesson 6: Asynchronous Handling](tutorial/lesson-6-asynchronous-handling.md)
+* [Quick Start - DDD CQRS in PHP](quick-start-php-ddd-cqrs-event-sourcing/README.md)
+  * [CQRS in PHP](quick-start-php-ddd-cqrs-event-sourcing/php-cqrs.md)
+  * [Event Handling in PHP](quick-start-php-ddd-cqrs-event-sourcing/php-event-handling.md)
+* [Tutorial](tutorial-php-ddd-cqrs-event-sourcing/README.md)
+  * [Before we start tutorial](tutorial-php-ddd-cqrs-event-sourcing/before-we-start-tutorial.md)
+  * [Lesson 1: Messaging Concepts](tutorial-php-ddd-cqrs-event-sourcing/php-messaging-architecture.md)
+  * [Lesson 2: Tactical DDD](tutorial-php-ddd-cqrs-event-sourcing/php-domain-driven-design.md)
+  * [Lesson 3: Converters](tutorial-php-ddd-cqrs-event-sourcing/php-serialization-deserialization.md)
+  * [Lesson 4: Metadata and Method Invocation](tutorial-php-ddd-cqrs-event-sourcing/php-metadata-method-invocation.md)
+  * [Lesson 5: Interceptors](tutorial-php-ddd-cqrs-event-sourcing/php-interceptors-middlewares.md)
+  * [Lesson 6: Asynchronous Handling](tutorial-php-ddd-cqrs-event-sourcing/php-asynchronous-processing.md)
 
 ## Modelling
 
@@ -59,8 +59,8 @@
 ## Modules
 
 * [Overview](modules/overview.md)
-* [Symfony Bundle](modules/symfony-bundle.md)
-* [Laravel](modules/laravel.md)
+* [Symfony Bundle](modules/symfony-ddd-cqrs-event-sourcing.md)
+* [Laravel](modules/laravel-ddd-cqrs-event-sourcing.md)
 * [JMS Converter](modules/jms-converter.md)
 * [RabbitMQ Support](modules/amqp-support-rabbitmq.md)
 * [DBAL Support](modules/dbal-support.md)

@@ -1,3 +1,9 @@
+---
+description: >-
+  Enable asynchronous handling, dead letter queue, transactions in PHP using
+  DBAL
+---
+
 # DBAL Support
 
 ## Installation
@@ -108,7 +114,7 @@ To enable transactions on specific endpoint, mark it with `Ecotone\Dbal\DbalTran
     }
 ```
 
-By default `Ecotone`enables transactions for all [Asynchronous Endpoints](../tutorial/lesson-6-asynchronous-handling.md) and Command Bus. You may use of `ApplicationContext` to turn off this configuration. You may also add more connections to be handled.
+By default `Ecotone`enables transactions for all [Asynchronous Endpoints](../tutorial-php-ddd-cqrs-event-sourcing/php-asynchronous-processing.md) and Command Bus. You may use of `ApplicationContext` to turn off this configuration. You may also add more connections to be handled.
 
 ```php
 use Ecotone\Dbal\Configuration\DbalConfiguration;

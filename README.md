@@ -15,7 +15,7 @@ Ecotone provides PHP with Command Bus, Query Bus, Event Bus, Interceptors, Aggre
 With all of this in mind, one of the central tenets of the _`Ecotone`_ is the idea that you should not be forced to introduce framework-specific classes and interfaces into your business/domain model.   
 To keep your _business code clean from technical problems and integrations_. 
 
-#### [I want to see examples take me to Quick Start!](quick-start-in-5-minutes/)
+#### [I want to see examples take me to Quick Start!](quick-start-php-ddd-cqrs-event-sourcing/)
 
 ## Contact
 

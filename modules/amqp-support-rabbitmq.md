@@ -1,3 +1,7 @@
+---
+description: Enable asynchronous handling in PHP using RabbitMQ
+---
+
 # RabbitMQ Support
 
 ## Installation
@@ -87,9 +91,9 @@ interface MessagePublisher
 ```
 
 1. `send` - Send a `string type` via Publisher. It does not need any conversion, you may add additional `Media Type` of `$data`.
-2. `sendWithMetadata` - Does the same as `send,` allows for sending additional [Meta data](../tutorial/lesson-4-metadata-and-invocation.md#metadata).
+2. `sendWithMetadata` - Does the same as `send,` allows for sending additional [Meta data](../tutorial-php-ddd-cqrs-event-sourcing/php-metadata-method-invocation.md#metadata).
 3. `convertAndSend` - Allow for sending types, which needs conversion. Allow for sending objects and array, `Ecotone` make use of [Conversion system](../messaging/conversion/conversion.md) to convert `$data`.
-4. `convertAndSendWithMetadata` - Does the same as `convertAndSend,` allow for sending additional [Meta data](../tutorial/lesson-4-metadata-and-invocation.md#metadata).
+4. `convertAndSendWithMetadata` - Does the same as `convertAndSend,` allow for sending additional [Meta data](../tutorial-php-ddd-cqrs-event-sourcing/php-metadata-method-invocation.md#metadata).
 
 ### Configuration
 
@@ -219,7 +223,7 @@ To enable transactions on specific endpoint, mark it with `Ecotone\Amqp\AmqpTran
     }
 ```
 
-If you want to enable/disable for all [Asynchronous Endpoints](../tutorial/lesson-6-asynchronous-handling.md) or specific for Command Bus. You may use of `ServiceContext.` 
+If you want to enable/disable for all [Asynchronous Endpoints](../tutorial-php-ddd-cqrs-event-sourcing/php-asynchronous-processing.md) or specific for Command Bus. You may use of `ServiceContext.` 
 
 {% hint style="info" %}
 By default all transactions are enabled
