@@ -213,11 +213,6 @@ private int $productId => int
 private string $data => string
 
 private \stdClass $data => \stdClass
-
-/**
-* @var int 
-*/
-private $data => int
  
 /**
 * @var \stdClass[] 
@@ -225,7 +220,7 @@ private $data => int
 private array $data => array<\stdClass>
 ```
 
-### 
+
 
 Let's imagine we found out, that we have bug in our software. Our system users have registered product with negative price, which in result lowered the bill. 
 
@@ -360,6 +355,12 @@ Product with id 1 was registered!
 100
 Good job, scenario ran with success!
 ```
+
+{% hint style="info" %}
+We have used Converter in order to construct the Cost object using constructor from string, to validate correctness of the incoming data.   
+However you may find Native Conversion enough in your case without the need to create conversion methods.  
+To get more information, read [Native Conversion](../modules/jms-converter.md#native-conversion)
+{% endhint %}
 
 {% hint style="success" %}
 The command which we send from outside \(to the Command Bus\) is still the same, as before.   

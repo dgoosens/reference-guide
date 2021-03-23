@@ -61,7 +61,8 @@ You do not need to do any configuration. Deserialization and Serialization will 
 
 ## Custom Conversions To Classes
 
-The difference between Native Conversion is that you take control of deserialization mechanism for specific class. You may call factory method, which will validate correctness of the data or you may provide some default based on your business logic. 
+The difference between Native Conversion is that you take control of deserialization mechanism for specific class. You may call factory method, which will validate correctness of the data or you may provide some default based on your business logic.   
+Besides that you, you may find it useful if you want to make conversion from `class` to simple type like `string` or `int`.
 
 `JMS Converter`make use of Converters registered as Converters in order to provide all the conversion types described in [Conversion Table](jms-converter.md#conversion-table). You can read how to register new`Converter` in [Conversion section.](../messaging/conversion/conversion.md#conversions-on-php-level)
 
