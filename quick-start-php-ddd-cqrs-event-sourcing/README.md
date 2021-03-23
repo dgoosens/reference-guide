@@ -14,7 +14,7 @@ Do you want to see examples straight away?
 
 ## Before we start Quick Start
 
-Choose your preferred platform `Symfony`  `Laravel` or `Lite (Only Ecotone)` and install accordingly with help of [Installation Section](../installation.md).
+Choose your preferred platform `Symfony`  `Laravel` or `Lite (Only Ecotone)` and install accordingly with help of [Installation Section](../install-php-service-bus.md).
 
 ### Access To Buses
 

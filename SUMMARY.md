@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Installation](installation.md)
+* [Installation](install-php-service-bus.md)
 * [Quick Start - DDD CQRS in PHP](quick-start-php-ddd-cqrs-event-sourcing/README.md)
   * [CQRS in PHP](quick-start-php-ddd-cqrs-event-sourcing/php-cqrs.md)
   * [Event Handling in PHP](quick-start-php-ddd-cqrs-event-sourcing/php-event-handling.md)
