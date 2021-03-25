@@ -375,7 +375,7 @@ Endpoints using `Asynchronous` are required to have `endpointId` defined, the na
 ```
 
 {% hint style="success" %}
-Let's run our command which will tell us what asynchronous endpoints we have defined in our system: `ecotone:list-all-asynchronous-endpoints`
+Let's run our command which will tell us what asynchronous endpoints we have defined in our system: `ecotone:list`
 {% endhint %}
 
 ```php
