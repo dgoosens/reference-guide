@@ -374,6 +374,10 @@ Endpoints using `Asynchronous` are required to have `endpointId` defined, the na
 #[CommandHandler("order.place", endpointId: "place_order_endpoint")]
 ```
 
+{% hint style="info" %}
+You may mark [`Event Handler`](../modelling/event-handling/) as asynchronous the same way.
+{% endhint %}
+
 {% hint style="success" %}
 Let's run our command which will tell us what asynchronous endpoints we have defined in our system: `ecotone:list`
 {% endhint %}

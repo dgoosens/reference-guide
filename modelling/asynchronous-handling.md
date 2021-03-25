@@ -19,7 +19,16 @@ public function placeOrder(PlaceOrderCommand $command) : void
 }
 ```
 
-We need to add endpointId on our endpoint's annotation, in this case in `CommandHandler.`   
+```php
+#[Asynchronous("orders")]
+#[EventHandler(endpointId: "place_order_endpoint")
+public function when(OrderWasPlaced $event) : void
+{
+   // do something with $command
+}
+```
+
+We need to add `endpointId` on our endpoint's annotation, in this case in `CommandHandler.`   
 `Asynchronous` has channel name defined as `orders` we need to register such channel. In order to do it, we need to use one of the Modules, that provides pollable channels.   
 At this moment following modules with pollable channels are available:
 
