@@ -1,4 +1,4 @@
-# Event Handling in PHP
+# Event Handling PHP
 
 ## Description
 
