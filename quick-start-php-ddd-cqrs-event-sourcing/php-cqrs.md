@@ -1,4 +1,4 @@
-# CQRS in PHP
+# CQRS PHP
 
 ## Description
 

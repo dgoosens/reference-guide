@@ -1,4 +1,4 @@
-# Quick Start - DDD CQRS in PHP
+# Quick Start - DDD CQRS PHP
 
 Below quick starts will teach you how to use specific `Ecotone's` module in _5 minutes_.  
 So you may quick start integration with your existing project or build new one with ease.    

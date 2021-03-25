@@ -2,8 +2,8 @@
 
 * [Introduction](README.md)
 * [Installation](install-php-service-bus.md)
-* [Quick Start - DDD CQRS in PHP](quick-start-php-ddd-cqrs-event-sourcing/README.md)
-  * [CQRS in PHP](quick-start-php-ddd-cqrs-event-sourcing/php-cqrs.md)
+* [Quick Start - DDD CQRS PHP](quick-start-php-ddd-cqrs-event-sourcing/README.md)
+  * [CQRS PHP](quick-start-php-ddd-cqrs-event-sourcing/php-cqrs.md)
   * [Event Handling in PHP](quick-start-php-ddd-cqrs-event-sourcing/php-event-handling.md)
 * [Tutorial](tutorial-php-ddd-cqrs-event-sourcing/README.md)
   * [Before we start tutorial](tutorial-php-ddd-cqrs-event-sourcing/before-we-start-tutorial.md)
