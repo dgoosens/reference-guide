@@ -1,3 +1,7 @@
+---
+description: Enable DDD PHP
+---
+
 # Lesson 2: Tactical DDD
 
 {% hint style="info" %}
