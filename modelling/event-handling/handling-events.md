@@ -1,3 +1,7 @@
+---
+description: Events PHP
+---
+
 # Handling Events
 
 ## Registering Class Based Event Handler
