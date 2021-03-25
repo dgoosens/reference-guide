@@ -1,3 +1,7 @@
+---
+description: PHP Metadata and Method Invocation
+---
+
 # Lesson 4: Metadata and Method Invocation
 
 {% hint style="info" %}

@@ -1,5 +1,5 @@
 ---
-description: 'Enable DDD, CQRS and Event Sourcing in Symfony PHP application'
+description: Event Sourcing DDD CQRS Symfony PHP
 ---
 
 # Symfony Bundle

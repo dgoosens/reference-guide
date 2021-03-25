@@ -1,3 +1,7 @@
+---
+description: Asynchronous PHP Workers
+---
+
 # Lesson 6: Asynchronous Handling
 
 {% hint style="info" %}

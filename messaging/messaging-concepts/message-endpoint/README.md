@@ -1,3 +1,7 @@
+---
+description: Enterprise Integration Patterns PHP
+---
+
 # Message Endpoint
 
 ![](../../../.gitbook/assets/endpoint-1.jpg)

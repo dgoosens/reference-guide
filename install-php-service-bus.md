@@ -1,5 +1,5 @@
 ---
-description: 'Installing Ecotone Service Bus for Symfony, Laravel or stand alone'
+description: 'Installing Ecotone Service Bus for Symfony, Laravel or stand alone PHP'
 ---
 
 # Installation

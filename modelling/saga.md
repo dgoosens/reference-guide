@@ -1,3 +1,7 @@
+---
+description: Saga PHP Process Manager
+---
+
 # Saga
 
 Saga is responsible for coordination of long running processes. It can store information about what happened and make a decision what to do in the right time.

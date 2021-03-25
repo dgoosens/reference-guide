@@ -1,3 +1,7 @@
+---
+description: Command Query Responsibility Segregation PHP
+---
+
 # CQRS PHP
 
 ## Description

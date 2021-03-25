@@ -1,3 +1,7 @@
+---
+description: Enterprise Integration Patterns PHP
+---
+
 # Messaging Gateway
 
 ![](../../.gitbook/assets/gateway_execution.svg)

@@ -1,3 +1,7 @@
+---
+description: PHP Interceptors
+---
+
 # Interceptors
 
 `Ecotone` provide possibility to handle [cross cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern) via `Interceptors`.   

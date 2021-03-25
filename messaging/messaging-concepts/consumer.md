@@ -1,3 +1,7 @@
+---
+description: Enterprise Integration Patterns PHP
+---
+
 # Consumer
 
 When [Message Endpoints](message-endpoint/) are connected to channels and instantiated, they produce one of the following instances:

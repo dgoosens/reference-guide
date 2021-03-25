@@ -1,3 +1,7 @@
+---
+description: Enterprise Integration Patterns PHP
+---
+
 # Message Channel
 
 ![](../../.gitbook/assets/message-channel-connection.svg)

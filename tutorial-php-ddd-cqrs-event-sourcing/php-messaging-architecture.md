@@ -1,3 +1,7 @@
+---
+description: PHP Messages
+---
+
 # Lesson 1: Messaging Concepts
 
 {% hint style="info" %}

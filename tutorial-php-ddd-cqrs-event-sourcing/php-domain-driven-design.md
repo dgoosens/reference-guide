@@ -1,5 +1,5 @@
 ---
-description: Enable DDD PHP
+description: DDD PHP
 ---
 
 # Lesson 2: Tactical DDD

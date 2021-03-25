@@ -1,5 +1,5 @@
 ---
-description: 'Enable DDD, CQRS and Event Sourcing in Laravel PHP application'
+description: Event Sourcing DDD CQRS Symfony Laravel
 ---
 
 # Laravel

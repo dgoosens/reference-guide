@@ -1,5 +1,5 @@
 ---
-description: Focus on implementing domain logic
+description: Domain Driven Design PHP
 ---
 
 # Overview

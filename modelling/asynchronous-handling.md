@@ -1,3 +1,7 @@
+---
+description: Asynchronous PHP
+---
+
 # Asynchronous Handling
 
 ## Asynchronous

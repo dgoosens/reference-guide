@@ -1,3 +1,7 @@
+---
+description: Domain Driven Design Command Query Responsibility Segregation PHP
+---
+
 # Quick Start - DDD CQRS PHP
 
 Below quick starts will teach you how to use specific `Ecotone's` module in _5 minutes_.  

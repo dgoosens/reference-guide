@@ -1,3 +1,7 @@
+---
+description: Event Sourcing PHP
+---
+
 # Event Sourcing
 
 `Ecotone` comes with [Prooph Event Store](http://getprooph.org/) integration. This is well known and stable solution providing event storage over databases like `Postgres`, `MySQL` or `MariaDB`.   

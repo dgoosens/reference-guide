@@ -1,5 +1,5 @@
 ---
-description: Start using Ecotone
+description: Ecotone PHP Framework
 ---
 
 # Tutorial
