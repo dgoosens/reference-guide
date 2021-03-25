@@ -1,3 +1,7 @@
+---
+description: Queries PHP
+---
+
 # Dispatching Queries
 
 Previous pages provide the background on how to handle query messages in your application. The dispatching process is the starting point for query message.

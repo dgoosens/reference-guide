@@ -1,3 +1,7 @@
+---
+description: Commands PHP
+---
+
 # Dispatching Commands
 
 Previous pages provide the background on how to handle command messages in your application. The dispatching process is the starting point for command message.

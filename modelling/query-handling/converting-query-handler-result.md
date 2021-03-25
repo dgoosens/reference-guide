@@ -1,3 +1,7 @@
+---
+description: Query Result PHP
+---
+
 # Converting Query Handler Result
 
 If you have registered [Converter](../../messaging/conversion/) for specific Media Type, then you can tell `Ecotone` to convert result of any [Gateway](../../messaging/messaging-concepts/messaging-gateway.md) to specific format. This is especially useful, when we are dealing with `QueryBus`, when we want to return the result to the caller of the request.   

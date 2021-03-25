@@ -1,5 +1,5 @@
 ---
-description: PHP Interceptors
+description: PHP Interceptors Middlewares
 ---
 
 # Interceptors

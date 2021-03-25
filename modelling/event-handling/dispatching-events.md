@@ -1,3 +1,7 @@
+---
+description: Events PHP
+---
+
 # Dispatching Events
 
 Previous pages provide the background on how to handle event messages in your application. The dispatching process is the starting point for event message.  

@@ -1,3 +1,7 @@
+---
+description: Aggregate PHP
+---
+
 # State-Stored Aggregate
 
 This chapter will cover the basics on how to implement an [Aggregate](../modelling-1.md#aggregates). For more details on what an Aggregate is read the [DDD and CQRS concepts](../modelling-1.md#ddd-and-cqrs-concepts) page.
