@@ -1,7 +1,5 @@
 ---
-description: >-
-  Enable asynchronous handling, dead letter queue, transactions in PHP using
-  DBAL
+description: 'Transactions, Asynchronous, Dead Letter Queue PHP DBAL'
 ---
 
 # DBAL Support

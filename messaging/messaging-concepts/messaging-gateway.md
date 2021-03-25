@@ -1,5 +1,5 @@
 ---
-description: Enterprise Integration Patterns PHP
+description: Message Gateway PHP
 ---
 
 # Messaging Gateway

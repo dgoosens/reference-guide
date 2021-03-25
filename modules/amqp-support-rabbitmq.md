@@ -1,5 +1,5 @@
 ---
-description: Enable asynchronous handling in PHP using RabbitMQ
+description: Asynchronous PHP RabbitMQ
 ---
 
 # RabbitMQ Support

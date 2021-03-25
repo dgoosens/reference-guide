@@ -1,5 +1,5 @@
 ---
-description: Enterprise Integration Patterns PHP
+description: Consumer PHP
 ---
 
 # Consumer

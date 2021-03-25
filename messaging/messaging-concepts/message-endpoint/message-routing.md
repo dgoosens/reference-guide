@@ -1,3 +1,7 @@
+---
+description: Message Router PHP
+---
+
 # Message Router
 
 Routers consume messages from a message channel and forward each consumed message to one or more different message channels depending on a defined conditions.

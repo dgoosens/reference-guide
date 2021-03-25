@@ -1,3 +1,7 @@
+---
+description: Service Activator PHP
+---
+
 # Service Activator
 
 The Service Activator connecting any service available in Depedency Container to an input channel so that it may play the role of a [Endpoint](./). If the service produces output, it may also be connected to an output channel.   

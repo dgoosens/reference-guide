@@ -1,5 +1,5 @@
 ---
-description: Enterprise Integration Patterns PHP
+description: Message Endpoint PHP
 ---
 
 # Message Endpoint

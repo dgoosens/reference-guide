@@ -1,3 +1,7 @@
+---
+description: Conversion PHP
+---
+
 # Conversion
 
 Command, queries and events are not always objects. When they travel via different channels, coming from outside, they are mostly converted to simplified format, like `JSON` or `XML`.    

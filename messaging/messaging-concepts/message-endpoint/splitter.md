@@ -1,3 +1,7 @@
+---
+description: Splitter PHP
+---
+
 # Splitter
 
 The Splitter is endpoint where message can be splitted in several parts and be sent to be processed indepedently. 
