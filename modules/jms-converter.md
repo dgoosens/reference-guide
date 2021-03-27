@@ -61,18 +61,18 @@ class Address
 }
 ```
 
-You do not need to do any configuration. Deserialization and Serialization will be handled for you.
+No need for any configuration, deserialization and serialization will be handled for you.
 
 ## Custom Conversions To Classes
 
 The difference between Native Conversion is that you take control of deserialization mechanism for specific class. You may call factory method, which will validate correctness of the data or you may provide some default based on your business logic.   
-Besides that you, you may find it useful if you want to make conversion from `class` to simple type like `string` or `int`.
+Besides you may find it useful when there is a need to make conversion from `class` to simple type like `string` or `int`.
 
 `JMS Converter`make use of Converters registered as Converters in order to provide all the conversion types described in [Conversion Table](jms-converter.md#conversion-table). You can read how to register new`Converter` in [Conversion section.](../messaging/conversion/conversion.md#conversions-on-php-level)
 
 ### Example usage
 
-If we want to call bus with given JSON and deserialize `productIds` to `UUID`:
+If we want to call bus with given `JSON` and deserialize `productIds` to `UUID`:
 
 ```javascript
 {
@@ -117,7 +117,7 @@ class PlaceOrder
 We do not need to add any metadata describing how to convert `JSON to PlaceOrder PHP class.` We already have it using type hints. 
 
 {% hint style="info" %}
-If use you're array, describe types using `DocBlocks`
+For deserialization of array without any extra configuration, simply describe it using `DocBlock`
 
 ```php
     /**
@@ -140,11 +140,11 @@ class ExampleConverterService
 }
 ```
 
-And that's enough. Whenever we will use `string to UUID` conversion or `array of string to array of UUID`. This converter will be automatically used. 
+And that's enough. Whenever we will use `string to UUID` conversion or `string[] to UUID[]`. This converter will be automatically used. 
 
 ## Custom Conversions from Classes
 
-If you want to have custom conversions from classes to simple types or array you may register, converter from other way around.
+Above example was for deserialization, however if you want to make use of serialization, then Converter from `UUID` to `string` is needed. 
 
 ```php
 class ExampleConverterService
