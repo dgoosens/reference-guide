@@ -157,7 +157,7 @@ class ExampleConverterService
 }
 ```
 
-## Customization
+## Serialization Customization
 
 If you want to customize serialization or deserialization process, you may use of annotations on properties, just like it is describes in [Annotation section in JMS Serializer](https://jmsyst.com/libs/serializer/master/reference/annotations).
 
@@ -170,6 +170,14 @@ class GetOrder
    private string $orderId;
 }
 ```
+
+## Configuration
+
+
+
+## Call Conversion Manually
+
+
 
 ## Conversion Table
 

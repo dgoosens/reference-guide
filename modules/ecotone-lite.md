@@ -1,57 +1,68 @@
----
-description: Event Sourcing DDD CQRS Symfony PHP
----
-
-# Symfony Bundle
+# Ecotone Lite
 
 ## Installation
 
-Follow Installation from [Installation menu](../install-php-service-bus.md#install-for-symfony).
+Follow Installation from [Installation menu](../install-php-service-bus.md#install-lite-no-framework).
 
 ## Configuration
 
 ```php
-ecotone:
-    loadSrcNamespaces: bool (default: true)
-    failFast: bool (default: true, production: false)
-    namespaces: string[] (default: [])
-    defaultSerializationMediaType: string (default: application/x-php-serialized) [application/json, application/xml]
-    defaultErrorChannel: string (default: null)
-    defaultMemoryLimit: string (default: 1024)
-    defaultConnectionExceptionRetry: 
-       initialDelay: int (default: 100, production: 1000)
-       maxAttempts: int (default: 3, production: 5)
-       multiplier: int (default: 3)
+$messagingSystem = EcotoneLiteConfiguration::createWithConfiguration(
+    $rootCatalog,
+    $container,
+    ServiceConfiguration::createWithDefaults()
+        ->withEnvironment("prod")
+        ->withLoadCatalog("src")
+        ->withFailFast(false)
+        ->withNamespaces(["App"])
+        ->withDefaultSerializationMediaType("application/json")                
+        ->withDefaultErrorChannel("errorChannel")
+        ->withConsumerMemoryLimit(512)
+        ->withCacheDirectoryPath("/var/www/cache")
+        ->withConnectionRetryTemplate(RetryTemplateBuilder::fixedBackOff(100))
+    [],
+    $useCachedVersion
+);
     
 ```
 
-### loadSrcNamespaces
+`$rootCatalog` - Path to root catalog of the project  
+`$container` - PSR compatible container   
+`$useCachedVersion` - Should Ecotone use cached version of Ecotone Lite, if available
 
-Tells Ecotone, if should automatically load all namespaces defined for `src` catalog
+## ServiceConfiguration
 
-### failFast
+### withEnvironment
+
+Tells Ecotone what kind of environment type is currently running
+
+### withLoadCatalog
+
+Tells Ecotone, if to automatically load all namespaces defined for given catalog.
+
+### withFailFast
 
 Describes if Ecotone should fail fast.   
 If `true`, then Ecotone will boot all endpoints during each request, so it can inform, if configuration is incorrect immediately, it provides fast feedback for the developer.  
 if `false,` then Ecotone will not boot up any endpoints at each request, which will increase performance, but will results in slower feedback for the developer.
 
-### namespaces
+### withNamespaces
 
 List of namespace prefixes, that should be loaded aby Ecotone 
 
-### defaultSerializationMediaType
+### withDefaultSerializationMediaType
 
 Describes default serialization type within application. If not configured default serialization will be `application/x-php-serialized,`which is serialized PHP class.
 
-### defaultErrorChannel
+### withDefaultErrorChannel
 
 Provides default [Poller configuration](../messaging/scheduling.md#polling-metadata) with error channel for all [asynchronous consumers](../messaging/messaging-concepts/consumer.md#polling-consumer).
 
-### defaultMemoryLimit
+### withDefaultMemoryLimit
 
 Provides default memory limit in megabytes for all [asynchronous consumers](../messaging/messaging-concepts/consumer.md#polling-consumer).
 
-### defaultConnectionExceptionRetry
+### withDefaultConnectionExceptionRetry
 
 Provides default connection retry strategy for [asynchronous consumers](../messaging/messaging-concepts/consumer.md#polling-consumer) in case of connection failure. 
 

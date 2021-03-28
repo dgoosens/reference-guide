@@ -6,19 +6,7 @@ description: Event Sourcing DDD CQRS Symfony Laravel
 
 ## Installation
 
-{% hint style="success" %}
-`composer require ecotone/laravel`
-{% endhint %}
-
-Provider should be automatically registered.
-
-2. Register provider, if needed
-
-```php
-'providers' => [
-    \Ecotone\Laravel\EcotoneProvider::class
-],
-```
+Follow Installation from [Installation menu](../install-php-service-bus.md#install-for-laravel).
 
 ## Configuration
 
@@ -26,7 +14,7 @@ Provider should be automatically registered.
 loadAppNamespaces: bool (default: true)
 cacheConfiguration: bool (default: false, production: true)
 namespaces: string[] (default: [])
-serializationMediaType: string (default: application/x-php-serialized) [application/json, application/xml]
+defaultSerializationMediaType: string (default: application/x-php-serialized) [application/json, application/xml]
 defaultErrorChannel: string (default: null)
 defaultMemoryLimit: string (default: null)
 defaultChannelPollRetry: 
@@ -49,21 +37,21 @@ if `false,` then Ecotone will not cache configuration this will decrease applica
 
 List of namespace prefixes, that should be loaded aby Ecotone 
 
-### serializationMediaType
+### defaultSerializationMediaType
 
 Describes default serialization type within application. If not configured default serialization will be `application/x-php-serialized,`which is serialized PHP class.
 
 ### defaultErrorChannel
 
-Provides default [Poller configuration](../messaging/scheduling.md#polling-metadata) with error channel for all asynchronous endpoints.
+Provides default [Poller configuration](../messaging/scheduling.md#polling-metadata) with error channel for all [asynchronous consumers](../messaging/messaging-concepts/consumer.md#polling-consumer).
 
 ### defaultMemoryLimit
 
 Provides default memory limit in megabytes for all asynchronous endpoints
 
-### defaultChannelPollRetry
+### defaultConnectionExceptionRetry
 
-Provides default channel poll retry template. It's responsible for connection retry for asynchronous endpoints.
+Provides default connection retry strategy for [asynchronous consumers](../messaging/messaging-concepts/consumer.md#polling-consumer) in case of connection failure. 
 
 `initialDelay` - delay after first retry in milliseconds  
 `multiplier` - how much initialDelay should be multipled with each try  

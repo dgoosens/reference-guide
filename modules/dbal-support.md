@@ -72,21 +72,12 @@ Otherwise you will need to tell Message Channel, Transactions the name of `Conne
 
 ## Message Channel
 
-To create `Dbal Backed Channel`, we need to create `Application Context.` 
+To create `Dbal Backed Channel`, we need to create [Service Context](../messaging/service-application-configuration.md). 
 
 ```php
-use Ecotone\Amqp\AmqpBackedMessageChannelBuilder;
-use Ecotone\Messaging\Annotation\ApplicationContext;
-use Ecotone\Messaging\Annotation\Extension;
-
-/**
- * @ApplicationContext()
- */
 class MessagingConfiguration
 {
-    /**
-     * @Extension()
-     */
+    #[ServiceContext] 
     public function orderChannel()
     {
         return DbalBackedMessageChannelBuilder::create("orders");
@@ -102,31 +93,20 @@ Now `orders` channel will be available in our Messaging System.
 To enable transactions on specific endpoint, mark it with `Ecotone\Dbal\DbalTransaction\DbalTransaction` annotation.
 
 ```php
-    /**
-     * @CommandHandler()
-     * @DbalTransaction()
-     */
+    #[CommandHandler]
+    #[DbalTransaction] 
     public function sellProduct(SellProduct $command) : void
     {
         // do something with $command
     }
 ```
 
-By default `Ecotone`enables transactions for all [Asynchronous Endpoints](../tutorial-php-ddd-cqrs-event-sourcing/php-asynchronous-processing.md) and Command Bus. You may use of `ApplicationContext` to turn off this configuration. You may also add more connections to be handled.
+By default `Ecotone`enables transactions for all [Asynchronous Endpoints](../tutorial-php-ddd-cqrs-event-sourcing/php-asynchronous-processing.md) and Command Bus. You may use of [`Service Context`](../messaging/service-application-configuration.md) to turn off this configuration. You may also add more connections to be handled.
 
 ```php
-use Ecotone\Dbal\Configuration\DbalConfiguration;
-use Ecotone\Messaging\Annotation\ApplicationContext;
-use Ecotone\Messaging\Annotation\Extension;
-
-/**
- * @ApplicationContext()
- */
-class ChannelConfiguration
+class DbalConfiguration
 {
-    /**
-     * @Extension()
-     */
+    #[ServiceContext]
     public function registerTransactions() : array
     {
         return [
@@ -142,8 +122,4 @@ class ChannelConfiguration
 
 }
 ```
-
-## Examples
-
-Examples can be [find here](https://github.com/ecotoneframework/examples/tree/master/src/Dbal/Async).
 

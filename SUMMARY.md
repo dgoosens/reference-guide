@@ -51,6 +51,7 @@
   * [Method Invocation](messaging/conversion/method-invocation.md)
   * [Conversion](messaging/conversion/conversion.md)
 * [Scheduling](messaging/scheduling.md)
+* [Service \(Application\) Configuration](messaging/service-application-configuration.md)
 
 ## Partners
 
@@ -61,6 +62,7 @@
 * [Overview](modules/overview.md)
 * [Symfony Bundle](modules/symfony-ddd-cqrs-event-sourcing.md)
 * [Laravel](modules/laravel-ddd-cqrs-event-sourcing.md)
+* [Ecotone Lite](modules/ecotone-lite.md)
 * [JMS Converter](modules/jms-converter.md)
 * [RabbitMQ Support](modules/amqp-support-rabbitmq.md)
 * [DBAL Support](modules/dbal-support.md)
