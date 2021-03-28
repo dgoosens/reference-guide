@@ -173,11 +173,44 @@ class GetOrder
 
 ## Configuration
 
+Register [Module Conversion](../messaging/service-application-configuration.md#module-configuration)
 
+```php
+class Configuration
+{
+    #[ServiceContext]
+    public function getJmsConfiguration()
+    {
+        return JMSConverterConfiguration::createWithDefaults()
+                ->withDefaultNullSerialization(false) // 1
+                ->withNamingStrategy("identicalPropertyNamingStrategy"); // 2
+    }
+}
+```
 
-## Call Conversion Manually
+### withDefaultNullSerialization
 
+Should nulls be serialized \(`bool, default: false`\)
 
+### withNamingStrategy
+
+Serialization naming strategy \(`string "identicalPropertyNamingStrategy" || "camelCasePropertyNamingStrategy",   
+default: "identicalPropertyNamingStrategy"`\) 
+
+## Serialize Nulls for specific conversion
+
+If you want to make convert nulls for [given conversion](../messaging/conversion/conversion.md#serializer), then you can provide Media Type parameters 
+
+```php
+$this->serializer->convertFromPHP(
+    ["id" => 1,"name" => null], 
+    "application/json;serializeNull=true"
+)
+
+=>
+
+{"id":1,"name":null}
+```
 
 ## Conversion Table
 
