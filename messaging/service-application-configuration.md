@@ -16,7 +16,9 @@ Depending on the provider you choose, you can follow configuration in specific m
 
 ## Module Configuration
 
-As example we will take [Dbal](../modules/dbal-support.md) configuration. 
+Module configuration is configuration for specific module. It's class based configuration.  
+  
+Let's take a look on [Dbal](../modules/dbal-support.md) module configuration as example: 
 
 ```php
 class MyConfiguration // 1
