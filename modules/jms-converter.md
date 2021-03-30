@@ -63,6 +63,17 @@ class Address
 
 No need for any configuration, deserialization and serialization will be handled for you.
 
+{% hint style="info" %}
+For deserialization of array without any extra configuration, simply describe it using `DocBlock`
+
+```php
+    /**
+     * @var Product[]
+     */
+    private array $products;
+```
+{% endhint %}
+
 ## Custom Conversions To Classes
 
 The difference between Native Conversion is that you take control of deserialization mechanism for specific class. You may call factory method, which will validate correctness of the data or you may provide some default based on your business logic.   
@@ -116,17 +127,6 @@ class PlaceOrder
 
 We do not need to add any metadata describing how to convert `JSON to PlaceOrder PHP class.` We already have it using type hints. 
 
-{% hint style="info" %}
-For deserialization of array without any extra configuration, simply describe it using `DocBlock`
-
-```php
-    /**
-     * @var Product[]
-     */
-    private array $products;
-```
-{% endhint %}
-
 The only thing, that we need is to add how to convert string to UUID. We do it using Converter:
 
 ```php
@@ -155,6 +155,29 @@ class ExampleConverterService
         return $data->toString();
     }
 }
+```
+
+```php
+class PlaceOrder
+{
+    /**
+     * @var Uuid[]
+     */
+    private array $productIds;
+    
+    private ?string $promotionCode;
+    
+    private bool $quickDelivery;
+}
+
+$this->serializer->convertFromPHP(
+    new PlaceOrder(//construct), 
+    "application/json"
+)
+
+=>
+
+{"productIds": ["104c69ac-af3d-44d1-b2fa-3ecf6b7a3558"], "promotionCode": "33dab", "quickDelivery": false}
 ```
 
 ## Serialization Customization

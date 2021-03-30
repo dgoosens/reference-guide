@@ -51,8 +51,19 @@ bin/console ecotone:list
 ```
 {% endtab %}
 
-{% tab title="Lite" %}
+{% tab title="Laravel" %}
 ```php
+artisan ecotone:list
++--------------------+
+| Endpoint Names     |
++--------------------+
+| orders             |
++--------------------+
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```
 $consumers = $messagingSystem->list()
 ```
 {% endtab %}
@@ -64,6 +75,12 @@ After setting up Pollable Channel we can run the endpoint:
 {% tab title="Symfony" %}
 ```php
 bin/console ecotone:run orders -vvv
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```
+artisan ecotone:run orders -vvv
 ```
 {% endtab %}
 
@@ -89,7 +106,7 @@ This allow for registering single asynchronous channel for whole Aggregate or gr
 
 ### Polling Metadata for Asynchronous
 
-As asynchronous channel can have multiple endpoints, we can't define [Polling Metadata](../messaging/scheduling.md#polling-metadata) on the specific Endpoint. That's why we need to make use of `Application Context Configuration`.  
+As asynchronous channel can have multiple endpoints, we can't define [Polling Metadata](scheduling.md#polling-metadata) on the specific Endpoint. That's why we need to make use of `Application Context Configuration`.  
 `Application Context Configuration`is configuration done on PHP Level.  
 
 ```php

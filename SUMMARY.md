@@ -34,8 +34,9 @@
 * [Saga](modelling/saga.md)
 * [Event Sourcing](modelling/event-sourcing.md)
 * [Asynchronous Handling](modelling/asynchronous-handling.md)
+* [Scheduling](modelling/scheduling.md)
 
-## Messaging
+## Messaging and Ecotone In Depth <a id="messaging"></a>
 
 * [Overview](messaging/overview.md)
 * [Messaging concepts](messaging/messaging-concepts/README.md)
@@ -50,7 +51,6 @@
 * [Method Invocation And Conversion](messaging/conversion/README.md)
   * [Method Invocation](messaging/conversion/method-invocation.md)
   * [Conversion](messaging/conversion/conversion.md)
-* [Scheduling](messaging/scheduling.md)
 * [Service \(Application\) Configuration](messaging/service-application-configuration.md)
 
 ## Partners

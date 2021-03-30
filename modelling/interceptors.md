@@ -358,7 +358,7 @@ class ProductsService
 
 `Presend Interceptor`  is called before Message is actually send to the channel.  
 In synchronous channel there is no difference between `Before` and `Presend.`   
-The difference is seen when the channel is [asynchronous](../messaging/scheduling.md).
+The difference is seen when the channel is [asynchronous](scheduling.md).
 
 ####  Before Interceptor
 
@@ -373,7 +373,7 @@ Before Interceptor is called after message is sent to the channel, before execut
 Presend Interceptor is called exactly before message is sent to the channel.   
   
 `Presend Interceptor` can be used for example, when Command Bus is called from HTTP Controller.   
-Then we may want to verify if data is correct and if not filter out the Message, or we may want to check, if user has enough permissions to do the action or the payload is actually correct.  
+Then we may want to verify if data is correct and if not filter out the Message, or we may want to check, if user has enough permissions to do the action or validate payload.  
 This will keep our asynchronous channel free of incorrect messages.
 
 ```php
