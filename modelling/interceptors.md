@@ -387,5 +387,22 @@ class VerifyIfAuthenticated
         }
     }
 }
+
+
+
+class IsActionAlreadyHandled
+{
+    private Storage $storage;
+
+    #[Presend(pointcut: Ecotone\Modelling\Attribute\CommandHandler::class)] 
+    public function verify($payload, #[Header("messageId")] string $messageId)
+    {
+        if ($this->storage->isHandled($messageId)) {
+            return null;
+        }
+        
+        return $payload;
+    }
+}
 ```
 
