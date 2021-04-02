@@ -390,11 +390,11 @@ class VerifyIfAuthenticated
 
 
 
-class IsActionAlreadyHandled
+class IsEventAlreadyHandled
 {
     private Storage $storage;
 
-    #[Presend(pointcut: Ecotone\Modelling\Attribute\CommandHandler::class)] 
+    #[Presend(pointcut: Ecotone\Modelling\Attribute\EventHandler::class)] 
     public function verify($payload, #[Header("messageId")] string $messageId)
     {
         if ($this->storage->isHandled($messageId)) {
