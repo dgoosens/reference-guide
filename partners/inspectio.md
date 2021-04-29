@@ -7,5 +7,5 @@ The event storming approach reduces the time it takes to create a comprehensive 
 
 With `InspectIO` you can `digitize your storming`. Model together in a \(remote\) team. 
 
-[Try us out now!](https://github.com/event-engine/inspectio/wiki)
+[Try it out now!](https://github.com/event-engine/inspectio/wiki)
 
