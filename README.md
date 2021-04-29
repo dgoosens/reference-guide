@@ -4,7 +4,7 @@
 
 ## About
 
-[_Ecotone Framework_](https://github.com/ecotoneframework/ecotone) _is `Service Bus`_ based on architectural principles of _Domain-Driven Design_ \(`DDD`\), _Command Query Responsibility Segregation_ \(`CQRS`\) and _Event Sourcing_ \(`ES`\) and __provides you with building blocks to create _scalable_ and _extensible_ applications.   
+[_Ecotone Framework_](https://github.com/ecotoneframework/ecotone) _is `Service Bus`_ for __PHP __based on architectural principles of _Domain-Driven Design_ \(`DDD`\), _Command Query Responsibility Segregation_ \(`CQRS`\) and _Event Sourcing_ \(`ES`\) and __provides you with building blocks to create _scalable_ and _extensible_ applications.   
 `Ecotone` supports building consistent distributed systems \(`Microservices`\) in PHP. 
 
 {% hint style="success" %}
