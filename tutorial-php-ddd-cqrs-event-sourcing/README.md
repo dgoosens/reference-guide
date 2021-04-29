@@ -9,7 +9,7 @@ description: Ecotone PHP Framework
 The best way to get started with `Ecotone` is to use it to build something realistic.  
 We will build a small back-end for shopping system during this tutorial. The techniques you’ll learn in the tutorial are fundamental to building any application using `Ecotone`. 
 
-In doing so, you'll learn the architectural concepts behind the software and start to learn its capabilities.  You will learn how to build types of applications that may have seemed impossible or really, really hard to make prior to learning _Ecotone_.
+In doing so, you'll learn the architectural concepts behind the software and start to learn its capabilities.  You will learn how to build types of applications that may have seemed impossible or really hard to make, prior to learning _Ecotone_.
 
 ### Lessons
 
