@@ -130,7 +130,7 @@ Configuration can be done for specific environment.
 ```php
 class Configuration
 {
-    #[Extension]
+    #[ServiceContext]
     #[Environment(["test"]) 
     public function registerAsyncChannelPollingMetadata() : array
     {
