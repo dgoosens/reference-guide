@@ -22,7 +22,7 @@ Choose your preferred platform `Symfony`  `Laravel` or `Lite (Only Ecotone)` and
 
 ### Access To Buses
 
-In tutorial we will be using Command/Query/Event buses. It's important to know, how to access them depending on chosen platform. 
+We will be using Command/Query/Event buses. check how access them depending on chosen platform:
 
 {% tabs %}
 {% tab title="Symfony" %}
