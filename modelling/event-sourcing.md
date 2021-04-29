@@ -15,8 +15,7 @@ Do you want to find out, how to apply Event Sourcing in your business? Try out [
 {% endhint %}
 
 {% hint style="danger" %}
-This module is in experimental stage. Gathering feedback about improvements and waiting for pdo event store [becomes integrated with PHP 8](https://github.com/prooph/pdo-event-store/pull/228).   
-Right now [fork of pdo-event-store](https://github.com/ecotoneframework/pdo-event-store) is used. 
+This module is in experimental stage. Gathering feedback
 {% endhint %}
 
 ## Installation
