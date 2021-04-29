@@ -51,7 +51,7 @@ class Ticket
 ```
 
 _Ecotone_ provides possibility to mark Ticket Aggregate [methods as `CommandHandler` directly.](state-stored-aggregate.md)   
-In that situation, Ecotone retrievies identifiers from Command message, pass them to `Repository`, calls the method on aggregate instance and saves it. In short it does code from \#31 to \#33 for you. 
+In that situation, Ecotone retrievies identifiers from Command message, pass them to `Repository`, calls the method on aggregate instance and saves it. In short it does code from `CreateTicketCommand Handler` for you. 
 
 {% hint style="info" %}
 As Ecotone does not try to impose specific solutions, you are free to choose, which fits you best in specific context. Above example is based on [External Command Handlers](external-command-handlers.md).
