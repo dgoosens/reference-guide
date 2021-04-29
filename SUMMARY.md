@@ -20,6 +20,7 @@
 * [Command Handling](modelling/command-handling/README.md)
   * [External Command Handlers](modelling/command-handling/external-command-handlers.md)
   * [State-Stored Aggregate](modelling/command-handling/state-stored-aggregate.md)
+  * [Event Sourcing Aggregate](modelling/command-handling/event-sourcing-aggregate.md)
   * [Repository](modelling/command-handling/repository.md)
   * [Dispatching Commands](modelling/command-handling/command-dispatching.md)
 * [Query Handling](modelling/query-handling/README.md)
