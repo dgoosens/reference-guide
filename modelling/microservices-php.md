@@ -145,7 +145,7 @@ $messagingSystem->run("billing");
 * `routingKey` - is a routing key under which event will be published
 
 ```php
-public function changeBillingDetails(#[Reference] DistributedBus $eventBus)
+public function changeBillingDetails(DistributedBus $eventBus)
 {
     $eventBus->publishEvent(
         "billing.detailsWereChanged", // routingKey
@@ -158,12 +158,12 @@ public function changeBillingDetails(#[Reference] DistributedBus $eventBus)
 ## Consuming Distributed Events
 
 ```php
-    #[Distributed]
-    #[EventHandler("billing.detailsWereChanged")]
-    public function registerTicket(BillingDetailsWereChanged $event) : void
-    {
-        // do something with event
-    }
+#[Distributed]
+#[EventHandler("billing.detailsWereChanged")]
+public function registerTicket(BillingDetailsWereChanged $event) : void
+{
+    // do something with event
+}
 ```
 
 {% hint style="info" %}
