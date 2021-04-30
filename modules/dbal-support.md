@@ -72,7 +72,7 @@ Otherwise you will need to tell Message Channel, Transactions the name of `Conne
 
 ## Message Channel
 
-To create `Dbal Backed Channel`, we need to create [Service Context](../messaging/service-application-configuration.md). 
+To create Dbal Backed [Message Channel](../modelling/asynchronous-handling.md), we need to create [Service Context](../messaging/service-application-configuration.md). 
 
 ```php
 class MessagingConfiguration

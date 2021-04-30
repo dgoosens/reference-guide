@@ -21,6 +21,7 @@ defaultChannelPollRetry:
    initialDelay: int (default: 100, production: 1000)
    maxAttempts: int (default: 3, production: 5)
    multiplier: int (default: 3)
+serviceName: string (default: null)
 ```
 
 ### loadAppNamespaces
@@ -56,4 +57,8 @@ Provides default connection retry strategy for [asynchronous consumers](../messa
 `initialDelay` - delay after first retry in milliseconds  
 `multiplier` - how much initialDelay should be multipled with each try  
 `maxAttempts` - How many attemps should be done, before closing closing endpoint
+
+### serviceName
+
+If you're running distributed services \(microservices\) and want to use Ecotone's [capabilities for integration](../modelling/microservices-php.md), then provide name for the service \(application\). 
 

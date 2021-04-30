@@ -52,7 +52,7 @@ We register our AmqpConnection under the class name `Enqueue\AmqpLib\AmqpConnect
 
 ## Message Channel
 
-To create `AMQP Backed Channel` \(RabbitMQ Channel\), we need to create [Service Context](../messaging/service-application-configuration.md). 
+To create AMQP Backed [Message Channel](../modelling/asynchronous-handling.md) \(RabbitMQ Channel\), we need to create [Service Context](../messaging/service-application-configuration.md). 
 
 ```php
 class MessagingConfiguration
@@ -66,6 +66,36 @@ class MessagingConfiguration
 ```
 
 Now `orders` channel will be available in our Messaging System. 
+
+## Distributed Publisher and Consumer
+
+To create [distributed publisher or consumer](../modelling/microservices-php.md) provide [Service Context](../messaging/service-application-configuration.md).
+
+### Distributed Publisher
+
+```php
+class MessagingConfiguration
+{
+    #[ServiceContext] 
+    public function distributedPublisher()
+    {
+        return AmqpDistributedBusConfiguration::createPublisher();
+    }
+}
+```
+
+### Distributed Consumer
+
+```php
+class MessagingConfiguration
+{
+    #[ServiceContext] 
+    public function distributedPublisher()
+    {
+        return AmqpDistributedBusConfiguration::createConsumer();
+    }
+}
+```
 
 ## Publisher
 

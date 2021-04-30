@@ -20,6 +20,7 @@ $messagingSystem = EcotoneLiteConfiguration::createWithConfiguration(
         ->withConsumerMemoryLimit(512)
         ->withCacheDirectoryPath("/var/www/cache")
         ->withConnectionRetryTemplate(RetryTemplateBuilder::fixedBackOff(100))
+        ->withServiceName("banking")
     [],
     $useCachedVersion
 );
@@ -69,4 +70,8 @@ Provides default connection retry strategy for [asynchronous consumers](../messa
 `initialDelay` - delay after first retry in milliseconds  
 `multiplier` - how much initialDelay should be multipled with each try  
 `maxAttempts` - How many attemps should be done, before closing closing endpoint
+
+### serviceName
+
+If you're running distributed services \(microservices\) and want to use Ecotone's [capabilities for integration](../modelling/microservices-php.md), then provide name for the service \(application\). 
 

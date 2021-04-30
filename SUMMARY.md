@@ -36,6 +36,7 @@
 * [Event Sourcing](modelling/event-sourcing.md)
 * [Asynchronous Handling](modelling/asynchronous-handling.md)
 * [Scheduling](modelling/scheduling.md)
+* [Microservices PHP](modelling/microservices-php.md)
 
 ## Messaging and Ecotone In Depth <a id="messaging"></a>
 

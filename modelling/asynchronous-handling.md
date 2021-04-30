@@ -86,7 +86,7 @@ artisan ecotone:run orders -vvv
 
 {% tab title="Lite" %}
 ```php
-$messagingSystem->runAsynchronouslyRunningEndpoint("orders");
+$messagingSystem->run("orders");
 ```
 {% endtab %}
 {% endtabs %}
