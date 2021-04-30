@@ -99,15 +99,15 @@ You may put `Asynchronous` on the class, level so all the endpoints within a cla
 
 `Query Handler` endpoints are never registered as asynchronous.
 
-### Multiple Asynchronous Endpoints
+## Multiple Asynchronous Endpoints
 
 Using single asynchronous channel we may register multiple endpoints.   
-This allow for registering single asynchronous channel for whole Aggregate or group of related Command Handlers, that should be done in order. 
+This allow for registering single asynchronous channel for whole Aggregate or group of related Command/Event Handlers. 
 
-### Polling Metadata for Asynchronous
+## Polling Metadata for Asynchronous
 
-As asynchronous channel can have multiple endpoints, we can't define [Polling Metadata](scheduling.md#polling-metadata) on the specific Endpoint. That's why we need to make use of `Application Context Configuration`.  
-`Application Context Configuration`is configuration done on PHP Level.  
+Polling Metadata describes how consumer should behave.   
+As asynchronous channel can have multiple endpoints, we can define [Polling Metadata](scheduling.md#polling-metadata) on the specific Endpoint. For that we can use [Service Configuration](../messaging/service-application-configuration.md)
 
 ```php
 class Configuration
@@ -123,29 +123,40 @@ class Configuration
 }
 ```
 
-`@Extension` - Marks method that extends Ecotone with specific configuration. Can return object or array of configurations.   
-  
-Configuration can be done for specific environment. 
+##  Intercepting asynchronous endpoint
+
+All asynchronous endpoints are marked with special attribute`Ecotone\Messaging\Attribute\AsynchronousRunningEndpoint`   
+If you want to intercept all polling endpoints you should make use of [annotation related point cut](interceptors.md#pointcut) on this.
+
+## Running synchronously
+
+You may register channel to be synchronously in order to run whenever the event is published.  
+This can be useful in testing scenarios, where we want to test whole flow in simple manner.
 
 ```php
-class Configuration
+class MessagingConfiguration
 {
-    #[ServiceContext]
-    #[Environment(["test"]) 
-    public function registerAsyncChannelPollingMetadata() : array
+    #[ServiceContext] 
+    public function orderChannel()
     {
-        return [
-            PollingMetadata::create("orders")
-                ->setExecutionTimeLimitInMilliseconds(1)
-                ->setHandledMessageLimit(1)
-        ];
+        return SimpleMessageChannelBuilder::createPublishSubscribeChannel("orders");
     }
 }
 ```
 
-##  Intercepting asynchronous endpoint
+## Dropping messages coming to the channel
 
-All asynchronous endpoints are marked with special annotation`Ecotone\Messaging\Annotation\PollableEndpoint`   
-If you want to intercept all polling endpoints you should make use of [annotation related point cut](interceptors.md#pointcut).  
- `Ecotone\Messaging\Annotation\PollableEndpoint`
+You may register channel to be `null channel` which means it will drop the any message it receive.  
+This can be useful in testing scenarios, if we want to turn off specific functionality.
+
+```php
+class MessagingConfiguration
+{
+    #[ServiceContext] 
+    public function orderChannel()
+    {
+        return SimpleMessageChannelBuilder::createNullableChannel("orders");
+    }
+}
+```
 

@@ -52,7 +52,7 @@ We register our AmqpConnection under the class name `Enqueue\AmqpLib\AmqpConnect
 
 ## Message Channel
 
-To create `AMQP Backed Channel` \(RabbitMQ Channel\), we need to create Service Context. 
+To create `AMQP Backed Channel` \(RabbitMQ Channel\), we need to create [Service Context](../messaging/service-application-configuration.md). 
 
 ```php
 class MessagingConfiguration
