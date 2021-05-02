@@ -394,3 +394,8 @@ Consider using [Dbal Message Channels](../modules/dbal-support.md#message-channe
 Thanks to that `Ecotone` will store events and publish them within same transaction. The solution is based on [Outbox Pattern](https://microservices.io/patterns/data/transactional-outbox.html). 
 {% endhint %}
 
+{% hint style="info" %}
+With Event Driven projections, your projections will not be created on startup, as they will be called when event happens.  
+If this is problem, you may consider starting with `Polling Projection` and then switching to `Event Driven Projection`.
+{% endhint %}
+
