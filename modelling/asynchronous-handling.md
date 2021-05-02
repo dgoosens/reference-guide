@@ -4,7 +4,7 @@ description: Asynchronous PHP
 
 # Asynchronous Handling
 
-## Asynchronous
+## Running Asynchronously
 
 `Ecotone` does allow for easy change endpoint to be running synchronously or asynchronously according to current running process.
 
@@ -79,7 +79,7 @@ bin/console ecotone:run orders -vvv
 {% endtab %}
 
 {% tab title="Laravel" %}
-```
+```php
 artisan ecotone:run orders -vvv
 ```
 {% endtab %}
@@ -91,37 +91,98 @@ $messagingSystem->run("orders");
 {% endtab %}
 {% endtabs %}
 
-### Asynchronous Class
+## Running configuration
 
-You may put `Asynchronous` on the class, level so all the endpoints within a class will becomes asynchronous.
+### Dynamic Configuration  You may set up running configuration for given consumer while running it.
 
-### Query Handler
+* `handledMessageLimit` - Amount of messages to be handled before stopping consumer
+* `executionTimeLimit` - How long consumer should run before stopping \(milliseconds\)
+* `memoryLimit` - How much memory can be consumed by before stopping consumer \(Megabytes\)
+* `stopOnFailure` - Stop consumer in case of exception
 
-`Query Handler` endpoints are never registered as asynchronous.
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:run orders 
+    --handledMessageLimit=5 
+    --executionTimeLimit=1000 
+    --memoryLimit=512
+    --stopOnFailure
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+artisan ecotone:run orders
+    --handledMessageLimit=5 
+    --executionTimeLimit=1000 
+    --memoryLimit=512
+    --stopOnFailure
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+$messagingSystem->run(
+    "orders", 
+    ExecutionPollingMetadata::createWithDefault()
+        ->withHandledMessageLimit(5)
+        ->withMemoryLimitInMegabytes(100)
+        ->withExecutionTimeLimitInMilliseconds(1000)
+        ->withStopOnError(true)
+);
+```
+{% endtab %}
+{% endtabs %}
+
+### Static Configuration
+
+Using [Service Context ](../messaging/service-application-configuration.md)configuration for statically configuration.
+
+```php
+class Configuration
+{    
+    #[ServiceContext]
+    public function configuration() : array
+    {
+        return [
+            PollingMetadata::create("orders")
+                 ->setErrorChannelName("errorChannel")
+                 ->setInitialDelayInMilliseconds(100)
+                 ->setMemoryLimitInMegaBytes(100)
+                 ->setHandledMessageLimit(10)
+                 ->setExecutionTimeLimitInMilliseconds(100)
+        ];
+    }
+}
+```
+
+{% hint style="info" %}
+Dynamic configuration overrides static
+{% endhint %}
 
 ## Multiple Asynchronous Endpoints
 
 Using single asynchronous channel we may register multiple endpoints.   
 This allow for registering single asynchronous channel for whole Aggregate or group of related Command/Event Handlers. 
 
-## Polling Metadata for Asynchronous
-
-Polling Metadata describes how consumer should behave.   
-As asynchronous channel can have multiple endpoints, we can define [Polling Metadata](scheduling.md#polling-metadata) on the specific Endpoint. For that we can use [Service Configuration](../messaging/service-application-configuration.md)
-
 ```php
-class Configuration
-{    
-    #[ServiceContext]
-    public function registerAsyncChannelPollingMetadata() : array
-    {
-        return [
-            PollingMetadata::create("orders")
-                ->setErrorChannelName(self::ERROR_CHANNEL)
-        ];
-    }
+#[Asynchronous("orders")]
+#[EventHandler]
+public function onSuccess(SuccessEvent $event) : void
+{
+}
+
+#[Asynchronous("orders")]
+#[EventHandler]
+public function onSuccess(FailureEvent $event) : void
+{
 }
 ```
+
+#### Asynchronous Class
+
+You may put `Asynchronous` on the class, level so all the endpoints within a class will becomes asynchronous.
 
 ##  Intercepting asynchronous endpoint
 
