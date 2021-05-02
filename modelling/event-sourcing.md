@@ -276,7 +276,7 @@ Then tell the projection to make use of it:
 class BasketList
 ```
 
-## Storing and handling events by names
+## Storing And Handling Events By Names
 
 If you want to avoid storing class names of your events in the `Event Store` you may mark them with name.
 
