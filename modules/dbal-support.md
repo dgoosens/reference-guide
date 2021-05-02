@@ -161,9 +161,22 @@ class DbalConfiguration
 
 ## Dead Letter
 
+### Enable Dead Letter
+
+Using [Service Context](../messaging/service-application-configuration.md)
+
+```php
+#[ServiceContext]
+public function dbalConfiguration()
+{
+    return DbalConfiguration::createWithDefaults()
+        ->withDeadLetter(true);
+}
+```
+
 Dbal comes with full support for Dead Letter. You can [read more about it here](../modelling/asynchronous-handling.md#storing-retrying-failed-messages).
 
-Set up, Dbal Dead Letter as final error channel
+Setting up, Dbal Dead Letter as final error channel:
 
 ```php
 #[ServiceContext]
