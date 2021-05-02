@@ -279,9 +279,9 @@ public function handle(ErrorMessage $errorMessage): void
 }
 ```
 
-### Storing, Retrying Failed Messages
+### Storing, Replaying, Deleting Failed Messages
 
-If you want to make use of inbuilt solution for storing failed message you may use
+To make use full support for storing, replaying, deleting error messages, check:
 
 * [Dbal Dead Letter Support](../modules/dbal-support.md#dead-letter) 
 
