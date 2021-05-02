@@ -329,3 +329,67 @@ If projections are handling the events by names, then there is no need to deseri
     }
 ```
 
+## Running The Projection
+
+### Synchronously Event Driven Projection
+
+By default `Ecotone` runs the projections synchronously. There is no additional configuration needed for this.  
+This is good in order to avoid eventual consistency or for testing purposes.   
+However when you expect concurrent access to your Aggregates, you may consider using different approach to limit the time of your transaction time to minimum.
+
+### Polling Projection
+
+You may run your projection in the background.   
+It will query the database within constant time intervals, to look if new events have been registered.   
+Each projection is running as separate process.   
+To register Polling Projection make use of [ServiceContext](../messaging/service-application-configuration.md).
+
+```php
+#[ServiceContext]
+public function basketList()
+{
+    return ProjectionRunningConfiguration::createPolling("basket_list");
+}
+```
+
+After setting up Pollable Channel we can run the endpoint:
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:run basket_list -vvv
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+artisan ecotone:run basket_list -vvv
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+$messagingSystem->run("basket_list");
+```
+{% endtab %}
+{% endtabs %}
+
+### Asynchronously Event Driven Projection
+
+```php
+#[Asynchronous("asynchronous_projections")]
+#[Projection("basket_list")]
+class BasketList
+```
+
+You may pass your projections in event driven manner using [asynchronous channels](asynchronous-handling.md).  
+  
+The difference between `Polling` and `Event Driven` projection is the way they are triggered.   
+The Event Driven is only triggered when new event comes to the system. This avoid the pitfall of continues database access while using `Polling Projection`.  
+The second strength of Asynchronously Event Driven Projection is possibility of registering multiple projections under same channel \(which is same consumer\).
+
+{% hint style="success" %}
+Consider using [Dbal Message Channels](../modules/dbal-support.md#message-channel) to avoid 2PC transactions problems.   
+Thanks to that `Ecotone` will store events and publish them within same transaction. The solution is based on [Outbox Pattern](https://microservices.io/patterns/data/transactional-outbox.html). 
+{% endhint %}
+
