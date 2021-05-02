@@ -376,13 +376,14 @@ $messagingSystem->run("basket_list");
 
 ### Asynchronously Event Driven Projection
 
+You may pass your projections in event driven manner using [asynchronous channels](asynchronous-handling.md).
+
 ```php
 #[Asynchronous("asynchronous_projections")]
 #[Projection("basket_list")]
 class BasketList
 ```
 
-You may pass your projections in event driven manner using [asynchronous channels](asynchronous-handling.md).  
   
 The difference between `Polling` and `Event Driven` projection is the way they are triggered.   
 The Event Driven is only triggered when new event comes to the system. This avoid the pitfall of continues database access while using `Polling Projection`.  
