@@ -221,3 +221,67 @@ class MessagingConfiguration
 }
 ```
 
+## Dead Letter And Retries
+
+`Ecotone` comes with solution that allow to `retry failed messages` and push them to `error channel`for later investigation.
+
+### Error Channel
+
+The error channel is channel defined for handling failed messages. As a default it's turned off.   
+We may set up error channel for specific consumer
+
+* [Set up for specific consumer](asynchronous-handling.md#static-configuration)
+* [Set up globally for all consumers](../messaging/service-application-configuration.md#ecotone-core-configuration)
+
+{% hint style="info" %}
+Setting up Error Channel means that consumer can continue with handling next messages.  
+After sending it to error channel, message is considered as handled.
+{% endhint %}
+
+  
+After setting it up all errors messages will go to this channel so you may listen for it
+
+```php
+#[ServiceActivator("errorChannel")]
+public function handle(ErrorMessage $errorMessage): void
+{
+    // do something with ErrorMessage
+}
+```
+
+{% hint style="info" %}
+Service Activator are endpoints like Command Handlers, however they are not exposed using Command/Event/Query Buses.   
+You may use them for internal handling.
+{% endhint %}
+
+### Retries
+
+If you want to retry message before it will be finally handled, you may do it setting up `ErrorHandlerConfiguration` from [ServiceContext](../messaging/service-application-configuration.md).
+
+```php
+#[ServiceContext]
+public function errorConfiguration()
+{
+    return ErrorHandlerConfiguration::createWithDeadLetterChannel(
+        "errorChannel",
+        RetryTemplateBuilder::exponentialBackoff(1000, 10)
+            ->maxRetryAttempts(3),
+        "finalErrorChannel"
+    );
+}
+
+------
+
+#[ServiceActivator("finalErrorChannel")]
+public function handle(ErrorMessage $errorMessage): void
+{
+    // do something with ErrorMessage
+}
+```
+
+### Storing, Retrying Failed Messages
+
+If you want to make use of inbuilt solution for storing failed message you may use
+
+* [Dbal Dead Letter Support](../modules/dbal-support.md#dead-letter) 
+

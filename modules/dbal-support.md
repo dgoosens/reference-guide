@@ -159,3 +159,153 @@ class DbalConfiguration
 }
 ```
 
+## Dead Letter
+
+Dbal comes with full support for Dead Letter. You can [read more about it here](../modelling/asynchronous-handling.md#storing-retrying-failed-messages).
+
+Set up, Dbal Dead Letter as final error channel
+
+```php
+#[ServiceContext]
+public function errorConfiguration() {
+    return ErrorHandlerConfiguration::createWithDeadLetterChannel(
+        "errorChannel",
+        RetryTemplateBuilder::exponentialBackoff(1000, 10)
+            ->maxRetryAttempts(3),
+        "dbal_dead_letter"
+    );
+}
+```
+
+In above scenario, message after failing 3 times, will be stored in database for future investigation.
+
+## Dead Letter Console Commands
+
+### Help
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:deadletter:help
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```
+artisan ecotone:deadletter:help
+```
+{% endtab %}
+{% endtabs %}
+
+### Listing Error Messages
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:deadletter:list
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+artisan ecotone:deadletter:list
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+$list = $messagingSystem->runConsoleCommand("ecotone:deadletter:list", []);
+```
+{% endtab %}
+{% endtabs %}
+
+### Show Details About Error Message
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:deadletter:show {messageId}
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+artisan ecotone:deadletter:show {messageId}
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+$list = $messagingSystem->runConsoleCommand("ecotone:deadletter:show", ["messageId" => $messageId]);
+```
+{% endtab %}
+{% endtabs %}
+
+### Replay Error Message
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:deadletter:replay {messageId}
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+artisan ecotone:deadletter:replay {messageId}
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+$list = $messagingSystem->runConsoleCommand("ecotone:deadletter:replay", ["messageId" => $messageId]);
+```
+{% endtab %}
+{% endtabs %}
+
+### Replay All Messages
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:deadletter:replayAll
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+artisan ecotone:deadletter:replayAll
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+$list = $messagingSystem->runConsoleCommand("ecotone:deadletter:replayAll", []);
+```
+{% endtab %}
+{% endtabs %}
+
+### Delete Message
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:deadletter:delete {messageId}
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+artisan ecotone:deadletter:delete {messageId}
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```php
+$list = $messagingSystem->runConsoleCommand("ecotone:deadletter:delete", ["messageId" => $messageId]);
+```
+{% endtab %}
+{% endtabs %}
+
+### 
+
