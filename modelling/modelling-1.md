@@ -1,5 +1,5 @@
 ---
-description: Domain Driven Design PHP
+description: CQRS DDD PHP
 ---
 
 # Overview
