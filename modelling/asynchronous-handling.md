@@ -221,7 +221,7 @@ class MessagingConfiguration
 }
 ```
 
-## Dead Letter And Retries
+## Handling Error Messages
 
 `Ecotone` comes with solution that allow to `retry failed messages` and push them to `error channel`for later investigation.
 
