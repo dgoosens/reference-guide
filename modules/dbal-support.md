@@ -18,6 +18,8 @@ Powered by powerful database abstraction layer [Doctrine/Dbal](https://github.co
 
 In order to use `Dbal Support` we need to add `ConnectionFactory` to our `Dependency Container.` 
 
+### Using Database Connection String
+
 {% tabs %}
 {% tab title="Symfony" %}
 ```php
@@ -48,13 +50,47 @@ public function register()
 We register our `DbalConnectionFactory` under the class name `Enqueue\Dbal\DbalConnectionFactory`. This will help Ecotone resolve it automatically, without any additional configuration.
 {% endhint %}
 
+### Using Existing Connection
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+# config/services.yaml
+    Enqueue\Dbal\DbalConnectionFactory:
+        factory: ['Ecotone\Dbal\DbalConnection', 'create']
+        arguments: ["@Doctrine\DBAL\Connection"]
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```php
+# Register Service in Provider
+
+use Enqueue\Dbal\DbalConnectionFactory;
+use Ecotone\Dbal\DbalConnection;
+
+public function register()
+{
+     $this->app->singleton(DbalConnectionFactory::class, function ($app) {
+         return new DbalConnection::create(app("Doctrine\DBAL\Connection"));
+     });
+}
+```
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+We register our `DbalConnectionFactory` under the class name `Enqueue\Dbal\DbalConnectionFactory`. This will help Ecotone resolve it automatically, without any additional configuration.
+{% endhint %}
+
+### Using Manager Registry
+
 If we want to make use of existing connection using `Manager Registry`, we can do it this way
 
 {% tabs %}
 {% tab title="Symfony" %}
 ```php
 # config/services.yaml
-# You need to have RabbitMQ instance running on your localhost, or change DSN
     Enqueue\Dbal\DbalConnectionFactory:
         class: Enqueue\Dbal\ManagerRegistryConnectionFactory
         arguments:
