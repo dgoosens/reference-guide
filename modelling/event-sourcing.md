@@ -22,8 +22,12 @@ composer require ecotone/pdo-event-sourcing
 
 And go to [DBAL Support](../modules/dbal-support.md) in order to configure the connection.
 
-{% hint style="info" %}
-Ecotone Event Sourcing is based on well known and stable [Prooph's Event Store](https://github.com/prooph/event-store)
+{% hint style="success" %}
+Ecotone Event Sourcing is based on well known and stable [Prooph's Event Store](https://github.com/prooph/event-store).  
+It does provide support for three databases:  
+- PostgreSQL  
+- MySQL  
+- MariaDB
 {% endhint %}
 
 ## Event Sourced Aggregate
