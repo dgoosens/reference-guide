@@ -178,6 +178,10 @@ $messagingSystem->run($projectionName);
 {% endtab %}
 {% endtabs %}
 
+### Running configuration
+
+You may read about different running configuration in [Asynchronous section](asynchronous-handling.md#running-configuration).
+
 ### Projection initialization
 
 As projection can be restarted, deleted and created differently. It's easier to maintain, when the projection knows how to setup it itself, instead of depending on migrations.   
