@@ -9,12 +9,6 @@ description: Commands PHP
 `External Command Handlers` are handlers used as services available in your dependency container.
 
 ```php
-<?php
-
-namespace Ecotone;
-
-use Ecotone\Modelling\Attribute\CommandHandler;
-
 class TicketApi
 {
     #[CommandHandler] 

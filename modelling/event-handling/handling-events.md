@@ -80,6 +80,31 @@ This `Event Handler` listen for `billing.customer_was_invoiced.`
 How to publish named events, you may see in [Dispatching Events section](dispatching-events.md)
 {% endhint %}
 
+```php
+class EmailService
+{
+    #[EventHandler("billing.customer_was_invoiced")] 
+    public function notifyAboutGeneratedInvoiced(CustomerWasInvoiced $event) : void
+    {
+        // do something with $event
+    }
+}
+```
+
+In above case EventHandler will be registered only for event routed by `billing.customer_was_invoiced.` If you want to register it for class based routing also, then you should do it like below:
+
+```php
+class EmailService
+{
+    #[EventHandler("billing.customer_was_invoiced")] 
+    #[EventHandler()]
+    public function notifyAboutGeneratedInvoiced(CustomerWasInvoiced $event) : void
+    {
+        // do something with $event
+    }
+}
+```
+
 ### Handling group of named events
 
 In order to handle more than one named event, we can make use of regex like star **`*`**

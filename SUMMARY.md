@@ -30,7 +30,6 @@
 * [Event Handling](modelling/event-handling/README.md)
   * [Handling Events](modelling/event-handling/handling-events.md)
   * [Dispatching Events](modelling/event-handling/dispatching-events.md)
-  * [Advanced Usage of Event Handlers](modelling/event-handling/advanced-usage-of-event-handlers.md)
 * [Interceptors](modelling/interceptors.md)
 * [Saga](modelling/saga.md)
 * [Event Sourcing](modelling/event-sourcing.md)
