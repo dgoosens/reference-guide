@@ -115,9 +115,9 @@ class Basket
 1. In order to make use of alternative way of handling events, we need to set attribute to true`EventSourcingAggregate(true)`
 2. Command Handlers instead of returning events are acting the same as [State Stored Aggregates](command-handling/state-stored-aggregate.md). All events which will be published using `recordThat`will be passed to the [`Repository`](command-handling/repository.md) to be stored. 
 
-## Projections
+## About Projections
 
-Projections are way to build specific view from stored events.   
+**Projections are about deriving current state from the stream of events**.  
 Projections can be added in any moment of the application lifetime and be built up from existing history, till the current time.   
 This is powerful concept as it allow for building views quickly and discarding them without pain, when they are not longer needed. 
 
@@ -154,33 +154,77 @@ SQL)->fetchAllAssociative();
 2. Events that this projection subscribes to
 3. Optional Query Handlers for this projection. They can be placed in different classes depending on preferences. 
 
-## Projection Actions
+## Running Projection
 
-### Running the projection
+### Synchronously Event Driven Projection
+
+By default `Ecotone` runs the projections synchronously. There is no additional configuration needed for this.  
+This is good in order to avoid eventual consistency or for testing purposes.   
+However when you expect concurrent access to your Aggregates, you may consider using different approach to limit the time of your transaction time to minimum.
+
+### Polling Projection
+
+You may run your projection in the background.   
+It will query the database within constant time intervals, to look if new events have been registered.   
+Each projection is running as separate process.   
+To register Polling Projection make use of [ServiceContext](../messaging/service-application-configuration.md).
+
+```php
+#[ServiceContext]
+public function basketList()
+{
+    return ProjectionRunningConfiguration::createPolling("basket_list");
+}
+```
+
+After setting up Pollable Channel we can run the endpoint:
 
 {% tabs %}
 {% tab title="Symfony" %}
 ```php
-bin/console ecotone:run {projectionName}
+bin/console ecotone:run basket_list -vvv
 ```
 {% endtab %}
 
 {% tab title="Laravel" %}
 ```php
-artisan ecotone:run {projectionName}
+artisan ecotone:run basket_list -vvv
 ```
 {% endtab %}
 
 {% tab title="Lite" %}
 ```php
-$messagingSystem->run($projectionName);
+$messagingSystem->run("basket_list");
 ```
 {% endtab %}
 {% endtabs %}
 
-### Running configuration
+### Asynchronously Event Driven Projection
 
-You may read about different running configuration in [Asynchronous section](asynchronous-handling.md#running-configuration).
+You may pass your projections in event driven manner using [asynchronous channels](asynchronous-handling.md).
+
+```php
+#[Asynchronous("asynchronous_projections")]
+#[Projection("basket_list")]
+class BasketList
+```
+
+  
+The difference between `Polling` and `Event Driven` projection is the way they are triggered.   
+The Event Driven is only triggered when new event comes to the system. This avoid the pitfall of continues database access while using `Polling Projection`.  
+The second strength of Asynchronously Event Driven Projection is possibility of registering multiple projections under same channel \(which is same consumer\).
+
+{% hint style="success" %}
+Consider using [Dbal Message Channels](../modules/dbal-support.md#message-channel) to avoid 2PC transactions problems.   
+Thanks to that `Ecotone` will store events and publish them within same transaction. The solution is based on [Outbox Pattern](https://microservices.io/patterns/data/transactional-outbox.html). 
+{% endhint %}
+
+{% hint style="info" %}
+With Event Driven projections, your projections will not be created on startup, as they will be called when event happens.  
+If this is problem, you may consider starting with `Polling Projection` and then switching to `Event Driven Projection`.
+{% endhint %}
+
+## Projection Actions
 
 ### Projection initialization
 
@@ -272,6 +316,34 @@ SQL);
 }
 ```
 
+## Choosing Event Streams
+
+The `Projection` is deriving from `Event Stream.`  
+There may be situations when we will want to derive the projection from multiple streams however.   
+Let's see what options do we have:
+
+### From Single Stream
+
+If we are interested in single stream, we can listen directly for specific aggregate
+
+```php
+#[Projection("basketList", Basket::class)]
+class BasketList
+{
+    #[EventHandler]
+    public function addBasket(BasketWasCreated $event) : void
+    {
+        // do something
+    }
+}
+```
+
+In here we are handling events from single `Basket's Aggregate stream`. It will contain all the events in relation to this aggregate.
+
+### From Multiple Streams
+
+There may be situations, when we will want to handle different streams together
+
 ## Custom Stream Name
 
 If you want to make use of custom stream name \(default is Aggregate class name\), then you can apply `Stream` attribute to your aggregate.
@@ -337,73 +409,5 @@ If projections are handling the events by names, then there is no need to deseri
     }
 ```
 
-## Running The Projection
-
-### Synchronously Event Driven Projection
-
-By default `Ecotone` runs the projections synchronously. There is no additional configuration needed for this.  
-This is good in order to avoid eventual consistency or for testing purposes.   
-However when you expect concurrent access to your Aggregates, you may consider using different approach to limit the time of your transaction time to minimum.
-
-### Polling Projection
-
-You may run your projection in the background.   
-It will query the database within constant time intervals, to look if new events have been registered.   
-Each projection is running as separate process.   
-To register Polling Projection make use of [ServiceContext](../messaging/service-application-configuration.md).
-
-```php
-#[ServiceContext]
-public function basketList()
-{
-    return ProjectionRunningConfiguration::createPolling("basket_list");
-}
-```
-
-After setting up Pollable Channel we can run the endpoint:
-
-{% tabs %}
-{% tab title="Symfony" %}
-```php
-bin/console ecotone:run basket_list -vvv
-```
-{% endtab %}
-
-{% tab title="Laravel" %}
-```php
-artisan ecotone:run basket_list -vvv
-```
-{% endtab %}
-
-{% tab title="Lite" %}
-```php
-$messagingSystem->run("basket_list");
-```
-{% endtab %}
-{% endtabs %}
-
-### Asynchronously Event Driven Projection
-
-You may pass your projections in event driven manner using [asynchronous channels](asynchronous-handling.md).
-
-```php
-#[Asynchronous("asynchronous_projections")]
-#[Projection("basket_list")]
-class BasketList
-```
-
-  
-The difference between `Polling` and `Event Driven` projection is the way they are triggered.   
-The Event Driven is only triggered when new event comes to the system. This avoid the pitfall of continues database access while using `Polling Projection`.  
-The second strength of Asynchronously Event Driven Projection is possibility of registering multiple projections under same channel \(which is same consumer\).
-
-{% hint style="success" %}
-Consider using [Dbal Message Channels](../modules/dbal-support.md#message-channel) to avoid 2PC transactions problems.   
-Thanks to that `Ecotone` will store events and publish them within same transaction. The solution is based on [Outbox Pattern](https://microservices.io/patterns/data/transactional-outbox.html). 
-{% endhint %}
-
-{% hint style="info" %}
-With Event Driven projections, your projections will not be created on startup, as they will be called when event happens.  
-If this is problem, you may consider starting with `Polling Projection` and then switching to `Event Driven Projection`.
-{% endhint %}
+## 
 

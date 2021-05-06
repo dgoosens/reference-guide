@@ -32,8 +32,8 @@
   * [Dispatching Events](modelling/event-handling/dispatching-events.md)
 * [Interceptors](modelling/interceptors.md)
 * [Saga](modelling/saga.md)
-* [Event Sourcing](modelling/event-sourcing.md)
 * [Asynchronous Handling](modelling/asynchronous-handling.md)
+* [Event Sourcing](modelling/event-sourcing.md)
 * [Scheduling](modelling/scheduling.md)
 * [Microservices PHP](modelling/microservices-php.md)
 
