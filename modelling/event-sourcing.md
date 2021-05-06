@@ -439,6 +439,11 @@ class Ticket
 
 All instances of `Ticket` will be stored within `Domain\Ticket\Ticket stream`. 
 
+{% hint style="info" %}
+Read more about this strategy under `SingleStreamStrategy`:  
+[http://docs.getprooph.org/event-store/implementations/pdo\_event\_store/variants.html\#SingleStreamStrategy](http://docs.getprooph.org/event-store/implementations/pdo_event_store/variants.html#SingleStreamStrategy)
+{% endhint %}
+
 ### Stream Per Aggregate Strategy
 
 This persistence creates stream per aggregate instance.
@@ -460,6 +465,11 @@ class Ticket
 ```
 
 Instances of `Ticket` will be stored within `Domain\Ticket\Ticket-{ticketId} stream` where `ticketId` is identifier of specific aggregate. 
+
+{% hint style="info" %}
+Read more about this strategy under `AggregateStreamStrategy`:  
+[http://docs.getprooph.org/event-store/implementations/pdo\_event\_store/variants.html\#AggregateStreamStrategy](http://docs.getprooph.org/event-store/implementations/pdo_event_store/variants.html#AggregateStreamStrategy)
+{% endhint %}
 
 ## Custom Stream Name
 
