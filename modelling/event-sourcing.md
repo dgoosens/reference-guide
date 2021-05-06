@@ -342,7 +342,24 @@ In here we are handling events from single `Basket's Aggregate stream`. It will 
 
 ### From Multiple Streams
 
-There may be situations, when we will want to handle different streams together
+There may be situations, when we will want to handle different streams together.
+
+```php
+#[Projection("log_projection", [Ticket::class, Basket::class])]
+class Logger
+```
+
+### From Category
+
+In case if using `Stream Per Aggregate Persistence Strategy` we will need to use categories to target.  
+If we would listen on `Domain\Ticket` stream using `Stream Per Aggregate` then we would not target any event, as the streams that are created are suffixed by the identifier `Domain\Ticket-123`. 
+
+In that case we can make use of categories in order to target `Domain\Ticket-*.`
+
+```php
+#[Projection("category_projection", fromCategories: Ticket::class)]
+class FromCategoryUsingAggregatePerStreamProjection
+```
 
 ## Storing And Handling Events By Names
 
