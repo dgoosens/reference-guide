@@ -344,22 +344,6 @@ In here we are handling events from single `Basket's Aggregate stream`. It will 
 
 There may be situations, when we will want to handle different streams together
 
-## Custom Stream Name
-
-If you want to make use of custom stream name \(default is Aggregate class name\), then you can apply `Stream` attribute to your aggregate.
-
-```php
-#[Stream("basket_stream")]
-class Basket
-```
-
-Then tell the projection to make use of it:
-
-```php
-#[Projection(self::PROJECTION_NAME, "basket_stream")]
-class BasketList
-```
-
 ## Storing And Handling Events By Names
 
 If you want to avoid storing class names of your events in the `Event Store` you may mark them with name.
@@ -409,5 +393,70 @@ If projections are handling the events by names, then there is no need to deseri
     }
 ```
 
-## 
+## Event Sourcing Configuration
+
+To change Event Sourcing configuration we will use [Service Context](../messaging/service-application-configuration.md).
+
+## Persistence Strategy
+
+### Single Stream Strategy
+
+The default persistence strategy is Single Stream Strategy.  
+This persistence stores all instances of specific aggregate, within same stream.
+
+```php
+#[ServiceContext]
+public function persistenceStrategy()
+{
+    return \Ecotone\EventSourcing\EventSourcingConfiguration::createWithDefaults()
+        ->withSingleStreamPersistenceStrategy();
+}
+```
+
+```php
+namespace Domain\Ticket;
+
+#[EventSourcingAggregate]
+class Ticket
+```
+
+All instances of `Ticket` will be stored within `Domain\Ticket\Ticket stream`. 
+
+### Stream Per Aggregate Strategy
+
+This persistence creates stream per aggregate instance.
+
+```php
+#[ServiceContext]
+public function persistenceStrategy()
+{
+    return \Ecotone\EventSourcing\EventSourcingConfiguration::createWithDefaults()
+        ->withStreamPerAggregatePersistenceStrategy();
+}
+```
+
+```php
+namespace Domain\Ticket;
+
+#[EventSourcingAggregate]
+class Ticket
+```
+
+Instances of `Ticket` will be stored within `Domain\Ticket\Ticket-{ticketId} stream` where `ticketId` is identifier of specific aggregate. 
+
+## Custom Stream Name
+
+If you want to make use of custom stream name \(default is Aggregate class name\), then you can apply `Stream` attribute to your aggregate.
+
+```php
+#[Stream("basket_stream")]
+class Basket
+```
+
+Then tell the projection to make use of it:
+
+```php
+#[Projection(self::PROJECTION_NAME, "basket_stream")]
+class BasketList
+```
 
