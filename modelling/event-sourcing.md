@@ -366,7 +366,7 @@ class FromCategoryUsingAggregatePerStreamProjection
 If you want to avoid storing class names of your events in the `Event Store` you may mark them with name.
 
 ```php
-#[EventSourcedEvent("basket.was_created")]
+#[NamedEvent("basket.was_created")]
 class BasketWasCreated
 {
     public const EVENT_NAME = "basket.was_created";
