@@ -268,7 +268,7 @@ $messagingSystem->runConsoleCommand("ecotone:es:reset-projection", ["name" => $p
 {% endtab %}
 {% endtabs %}
 
-If the projection stores the state inside the Event Store, we can tell `Ecotone` what to do with the projection:
+And inside the projection we need to implement `ProjectionReset` to tell `Ecotone` what to do:
 
 ```php
 #[ProjectionReset]
@@ -304,7 +304,7 @@ $messagingSystem->runConsoleCommand("ecotone:es:delete-projection", ["name" => $
 {% endtab %}
 {% endtabs %}
 
-If the projection stores the state inside the Event Store, we can tell `Ecotone` what to do with the projection:
+And inside the projection we need to implement `ProjectionDelete` to tell `Ecotone` what to do:
 
 ```php
 #[ProjectionDelete]
