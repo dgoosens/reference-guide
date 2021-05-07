@@ -115,7 +115,7 @@ class Basket
 1. In order to make use of alternative way of handling events, we need to set attribute to true`EventSourcingAggregate(true)`
 2. Command Handlers instead of returning events are acting the same as [State Stored Aggregates](command-handling/state-stored-aggregate.md). All events which will be published using `recordThat`will be passed to the [`Repository`](command-handling/repository.md) to be stored. 
 
-## About Projections
+## Projections
 
 **Projections are about deriving current state from the stream of events**.  
 Projections can be added in any moment of the application lifetime and be built up from existing history, till the current time.   
