@@ -159,8 +159,8 @@ SQL)->fetchAllAssociative();
 ### Synchronously Event Driven Projection
 
 By default `Ecotone` runs the projections synchronously. There is no additional configuration needed for this.  
-This is good in order to avoid eventual consistency or for testing purposes.   
-However when you expect concurrent access to your Aggregates, you may consider using different approach to limit the time of your transaction time to minimum.
+This kind of running configuration can be used to avoid eventual consistency or for testing purposes.   
+However when you expect concurrent access to your Aggregates, you may consider using different approach to limit the time of your database transaction to minimum.
 
 ### Polling Projection
 
