@@ -152,7 +152,7 @@ SQL)->fetchAllAssociative();
 
 1. This tells `Ecotone` that specific class is Projection. The first parameter is the `name of the projection` and the second is name of the stream \(the default is the `name of the Aggregate`\) that this projection subscribes to. 
 2. Events that this projection subscribes to
-3. Optional Query Handlers for this projection. They can be placed in different classes depending on preferences. 
+3. Optional Query Handlers for this projection. They can be placed in different classes depending on preference. 
 
 ## Running Projection
 
