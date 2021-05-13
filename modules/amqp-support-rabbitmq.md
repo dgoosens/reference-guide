@@ -97,7 +97,7 @@ class MessagingConfiguration
 }
 ```
 
-## Publisher
+## Custom Message Publisher
 
 ### Available actions
 
