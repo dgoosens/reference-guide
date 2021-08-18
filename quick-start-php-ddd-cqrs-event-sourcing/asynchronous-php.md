@@ -6,7 +6,7 @@ description: Running the code asynchronously
 
 ## What is Asynchronous Processing and What Does It Give
 
-[Read more about Asynchronous in PHP and Ecotone](https://blog.ecotone.tech/event-handling-in-php/)
+[Read more about Asynchronous in PHP and Ecotone](https://blog.ecotone.tech/asynchronous-php/)
 
 ## To The Code!
 
