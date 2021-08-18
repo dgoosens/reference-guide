@@ -114,5 +114,5 @@ echo $queryBus->send(new GetOrder(1));
 
 ## Implementation Using Lite
 
-[https://github.com/ecotoneframework/quickstart-examples/tree/master/src/CQRS](https://github.com/ecotoneframework/quickstart-examples/tree/master/src/CQRS)
+[https://github.com/ecotoneframework/quickstart-examples/tree/master/src/CQRS](https://github.com/ecotoneframework/quickstart-examples/tree/master/CQRS)
 

@@ -57,5 +57,5 @@ $eventBus->publish(new OrderWasPlaced(1, "Milk"));
 
 ## Implementation Using Lite
 
-[https://github.com/ecotoneframework/quickstart-examples/tree/master/src/EventHandling](https://github.com/ecotoneframework/quickstart-examples/tree/master/src/EventHandling)
+[https://github.com/ecotoneframework/quickstart-examples/tree/master/EventHandling](https://github.com/ecotoneframework/quickstart-examples/tree/master/EventHandling)
 
