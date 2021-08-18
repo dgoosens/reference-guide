@@ -5,6 +5,7 @@
 * [Quick Start - DDD CQRS PHP](quick-start-php-ddd-cqrs-event-sourcing/README.md)
   * [CQRS PHP](quick-start-php-ddd-cqrs-event-sourcing/php-cqrs.md)
   * [Event Handling PHP](quick-start-php-ddd-cqrs-event-sourcing/php-event-handling.md)
+  * [Asynchronous PHP](quick-start-php-ddd-cqrs-event-sourcing/asynchronous-php.md)
 * [Tutorial](tutorial-php-ddd-cqrs-event-sourcing/README.md)
   * [Before we start tutorial](tutorial-php-ddd-cqrs-event-sourcing/before-we-start-tutorial.md)
   * [Lesson 1: Messaging Concepts](tutorial-php-ddd-cqrs-event-sourcing/php-messaging-architecture.md)

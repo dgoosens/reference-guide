@@ -4,13 +4,13 @@ description: Event Handlers PHP
 
 # Event Handling PHP
 
-## Description
+## What is Event Handling and what does it give
 
-In order to notify that some event happened in the system, we may use `event publishing and handling.`  
+[Read more about Event Handling in PHP and Ecotone](https://blog.ecotone.tech/event-handling-in-php/)
 
 ## To The Code!
 
-Let's create `Event` that the Order was placed.
+Let's create `Event` _Order was placed_.
 
 ```php
 class OrderWasPlaced
@@ -36,8 +36,7 @@ class OrderWasPlaced
 }
 ```
 
- And Event Handler that will be listening to the `OrderWasPlaced`.  
-Multiple `handlers` can listen to specific `event`.
+ And Event Handler that will be listening to the `OrderWasPlaced`.
 
 ```php
 class NotificationService

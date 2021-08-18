@@ -4,18 +4,15 @@ description: Command Query Responsibility Segregation PHP
 
 # CQRS PHP
 
-## Description
+## What is CQRS
 
-`Command Query Responsibility Segregation` \(CQRS\) is principle that help distinguish actions that change the state of the system from the actions that are responsible for queries it. 
+[Read Blog Post about CQRS in PHP and Ecotone](https://blog.ecotone.tech/cqrs-in-php/)
 
 ## To The Code!
 
 #### Registering Command Handlers
 
-`Command Handlers` are responsible for changing the state.   
-It's a place where we will put our business logic.   
-  
-Let's first create `PlaceOrder` `Command` that will place an order in our system.
+Let's create `PlaceOrder` `Command` that will place an order in our system.
 
 ```php
 class PlaceOrder
@@ -41,7 +38,7 @@ class PlaceOrder
 }
 ```
 
-And `Command Handler.`One `Command` can target only one `handler`. 
+And `Command Handler` that will handle this Command
 
 ```php
 use Ecotone\Modelling\Attribute\CommandHandler;
@@ -59,8 +56,6 @@ class OrderService
 ```
 
 #### Registering Query Handlers
-
-`Query Handlers` are responsible for querying the state of the system.
 
 Let's define `GetOrder` `Query` that will find our placed order.
 
@@ -81,7 +76,7 @@ class GetOrder
 }
 ```
 
-And `Query Handler.` One `query` can target only one `handler`.
+And `Query Handler`that will handle this query
 
 ```php
 use Ecotone\Modelling\Attribute\CommandHandler;
