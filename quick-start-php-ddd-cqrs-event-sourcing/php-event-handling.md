@@ -4,7 +4,7 @@ description: Event Handlers PHP
 
 # Event Handling PHP
 
-## What is Event Handling and what does it give
+## What is Event Handling and What Does It Give
 
 [Read more about Event Handling in PHP and Ecotone](https://blog.ecotone.tech/event-handling-in-php/)
 

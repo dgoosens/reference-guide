@@ -4,7 +4,7 @@ description: Command Query Responsibility Segregation PHP
 
 # CQRS PHP
 
-## What is CQRS
+## What is CQRS and What Does It Give
 
 [Read Blog Post about CQRS in PHP and Ecotone](https://blog.ecotone.tech/cqrs-in-php/)
 
