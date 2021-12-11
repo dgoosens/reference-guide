@@ -6,6 +6,7 @@
   * [CQRS PHP](quick-start-php-ddd-cqrs-event-sourcing/php-cqrs.md)
   * [Event Handling PHP](quick-start-php-ddd-cqrs-event-sourcing/php-event-handling.md)
   * [Asynchronous PHP](quick-start-php-ddd-cqrs-event-sourcing/asynchronous-php.md)
+  * [Event Sourcing PHP](quick-start-php-ddd-cqrs-event-sourcing/event-sourcing-php.md)
 * [Tutorial](tutorial-php-ddd-cqrs-event-sourcing/README.md)
   * [Before we start tutorial](tutorial-php-ddd-cqrs-event-sourcing/before-we-start-tutorial.md)
   * [Lesson 1: Messaging Concepts](tutorial-php-ddd-cqrs-event-sourcing/php-messaging-architecture.md)
@@ -38,7 +39,7 @@
 * [Scheduling](modelling/scheduling.md)
 * [Microservices PHP](modelling/microservices-php.md)
 
-## Messaging and Ecotone In Depth <a id="messaging"></a>
+## Messaging and Ecotone In Depth <a href="#messaging" id="messaging"></a>
 
 * [Overview](messaging/overview.md)
 * [Messaging concepts](messaging/messaging-concepts/README.md)
@@ -53,7 +54,7 @@
 * [Method Invocation And Conversion](messaging/conversion/README.md)
   * [Method Invocation](messaging/conversion/method-invocation.md)
   * [Conversion](messaging/conversion/conversion.md)
-* [Service \(Application\) Configuration](messaging/service-application-configuration.md)
+* [Service (Application) Configuration](messaging/service-application-configuration.md)
 
 ## Partners
 
@@ -68,4 +69,3 @@
 * [JMS Converter](modules/jms-converter.md)
 * [RabbitMQ Support](modules/amqp-support-rabbitmq.md)
 * [DBAL Support](modules/dbal-support.md)
-
