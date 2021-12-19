@@ -1,5 +1,5 @@
 ---
-description: 'Transactions, Asynchronous, Dead Letter Queue PHP DBAL'
+description: Transactions, Asynchronous, Dead Letter Queue PHP DBAL
 ---
 
 # DBAL Support
@@ -12,11 +12,11 @@ composer require ecotone/dbal
 
 ### Module Powered By
 
-Powered by powerful database abstraction layer [Doctrine/Dbal](https://github.com/doctrine/dbal) and [Enqueue](https://php-enqueue.github.io/) for asynchronous communication 
+Powered by powerful database abstraction layer [Doctrine/Dbal](https://github.com/doctrine/dbal) and [Enqueue](https://php-enqueue.github.io) for asynchronous communication&#x20;
 
 ## Configuration
 
-In order to use `Dbal Support` we need to add `ConnectionFactory` to our `Dependency Container.` 
+In order to use `Dbal Support` we need to add `ConnectionFactory` to our `Dependency Container.`&#x20;
 
 ### Using Database Connection String
 
@@ -92,23 +92,18 @@ If we want to make use of existing connection using `Manager Registry`, we can d
 ```php
 # config/services.yaml
     Enqueue\Dbal\DbalConnectionFactory:
-        class: Enqueue\Dbal\ManagerRegistryConnectionFactory
-        arguments:
-            - "@doctrine"
-            - 
-                connection_name: "default"
+        factory: ['Ecotone\Dbal\DbalConnection', 'createForManagerRegistry']
+        arguments: ["@doctrine","default"]
+
+Register Manager Registry under DbalConnectionFactory, if you want to make use of auto configuration. 
+Otherwise you will need to tell Message Channel, Transactions the name of Connection Factory.
 ```
 {% endtab %}
 {% endtabs %}
 
-{% hint style="info" %}
-Register Manager Registry under `DbalConnectionFactory`, if you want to make use of auto configuration.   
-Otherwise you will need to tell Message Channel, Transactions the name of `Connection Factory`.
-{% endhint %}
-
 ## Message Channel
 
-To create Dbal Backed [Message Channel](../modelling/asynchronous-handling.md), we need to create [Service Context](../messaging/service-application-configuration.md). 
+To create Dbal Backed [Message Channel](../modelling/asynchronous-handling.md), we need to create [Service Context](../messaging/service-application-configuration.md).&#x20;
 
 ```php
 class MessagingConfiguration
@@ -121,11 +116,11 @@ class MessagingConfiguration
 }
 ```
 
-Now `orders` channel will be available in our Messaging System. 
+Now `orders` channel will be available in our Messaging System.&#x20;
 
 ## Transactions
 
-`Ecotone Dbal` comes with support for transactions.    
+`Ecotone Dbal` comes with support for transactions.  \
 To enable transactions on specific endpoint, mark it with `Ecotone\Dbal\DbalTransaction\DbalTransaction` annotation.
 
 ```php
@@ -320,5 +315,4 @@ $list = $messagingSystem->runConsoleCommand("ecotone:deadletter:delete", ["messa
 {% endtab %}
 {% endtabs %}
 
-### 
-
+###
