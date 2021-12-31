@@ -8,7 +8,7 @@ Saga is responsible for coordination of long running processes. It can store inf
 
 ## Saga
 
-In `Ecotone, Saga is POPO Aggregate,`as Aggregate comes with a lot of functionality, that is used in typical Saga implementation. This provides a lot of flexibility, as Aggregate can combine behaviour of Saga and vice versa, when needed. 
+In `Ecotone, Saga is POPO Aggregate,`as Aggregate comes with a lot of functionality, that is used in typical Saga implementation. This provides a lot of flexibility, as Aggregate can combine behaviour of Saga and vice versa, when needed.&#x20;
 
 {% hint style="info" %}
 It's really up to you, if you want to distinct Sagas from Aggregates or combine them, `Ecotone` does not try to impose the solution.
@@ -16,7 +16,7 @@ It's really up to you, if you want to distinct Sagas from Aggregates or combine 
 
 ### Storing Saga's State
 
-Depending on the [Repository](command-handling/repository.md) implementation, you may store Saga as event stream or store whole current state. 
+Depending on the [Repository](command-handling/repository.md) implementation, you may store Saga as event stream or store whole current state.&#x20;
 
 ### Handling Saga
 
@@ -53,18 +53,19 @@ class OrderFulfillment
 }
 ```
 
-`Aggregate` - Saga can stated-stored [Aggregate](command-handling/state-stored-aggregate.md) or [Event Sourced Aggregate]()  
-`EventHandler` - We mark method to be called, when specific event happens. 
+`Aggregate` - Saga can stated-stored [Aggregate](command-handling/state-stored-aggregate.md) or [Event Sourced Aggregate](broken-reference)\
+`EventHandler` - We mark method to be called, when specific event happens.&#x20;
 
-* `start` - is `factory method`and should construct new instance `OrderFulfillment.`Depending on need you may construct differently as [Event Sourced Aggregate]().
-* `paymentWasDone` - Is called when `PaymentWasFinishedEvent` event is published. We have injected `CommandBus` into the method in order to finish process by sending `ShipOrderCommand.`  We could also publish event instead.
+* `start` - is `factory method`and should construct new instance `OrderFulfillment.`Depending on need you may construct differently as [Event Sourced Aggregate](broken-reference).
+* `paymentWasDone` - Is called when `PaymentWasFinishedEvent` event is published. We have injected `CommandBus` into the method in order to finish process by sending `ShipOrderCommand.` \
+  We could also publish event instead.
 
-### Event Correlation
+### Identifier Correlation
 
-As Saga is identified by identifier, just like an Aggregate the events need to be correlated with specific instance.  
+As Saga is identified by identifier, just like an Aggregate the events need to be correlated with specific instance.\
 When we do have event like `PaymentWasFinishedEvent` we need to tell `Ecotone` which instance of `OrderFulfillment` it should be retrieve from [Repository](command-handling/repository.md) and call method on.
 
-This is done automatically, when property name in `Event` is the same as property marked as `@AggregateIdentifier` in aggregate. 
+This is done automatically, when property name in `Event` is the same as property marked as `@AggregateIdentifier` in aggregate.&#x20;
 
 ```php
 class PaymentWasFinishedEvent
@@ -73,7 +74,7 @@ class PaymentWasFinishedEvent
 }
 ```
 
-If the property name is different we need to give `Ecotone` a hint, how to correlate identifiers. 
+If the property name is different we need to give `Ecotone` a hint, how to correlate identifiers.&#x20;
 
 ```php
 class SomeEvent
@@ -83,7 +84,7 @@ class SomeEvent
 }
 ```
 
-In other scenario, when there is no property to correlate, we can make use of `Before` or `Presend` [Interceptors](interceptors.md) to enrich event's metadata with required identifier.  
+In other scenario, when there is no property to correlate, we can make use of `Before` or `Presend` [Interceptors](interceptors.md) to enrich event's metadata with required identifier.\
 Suppose the orderId identifier is available in metadata under key orderNumber, then we can tell Endpoint to use the mapping.
 
 ```php
@@ -96,8 +97,8 @@ public function failPayment(PaymentWasFailedEvent $event, CommandBus $commandBus
 
 ### Unordered Events
 
-In the [previous example](saga.md#handling-saga) we have assumed, that the first event we will receive is `OrderWasPlacedEvent` and the second which finishes the Saga is `PaymentWasFinishedEvent.`   
-It it's always risky to make such assumptions, especially, when events comes from different systems.  
+In the [previous example](saga.md#handling-saga) we have assumed, that the first event we will receive is `OrderWasPlacedEvent` and the second which finishes the Saga is `PaymentWasFinishedEvent.` \
+It it's always risky to make such assumptions, especially, when events comes from different systems.\
 What we could do instead, is to expect them to come in different order and handle it gracefully.
 
 ```php
@@ -158,14 +159,14 @@ public static function startByPlacedOrder(OrderWasPlacedEvent $event) : self
 public function whenOrderWasPlaced(OrderWasPlacedEvent $event, CommandBus $commandBus) : self
 ```
 
-If you look closely, you will see that those the factory method `startByPlacedOrder` and action method `whenOrderWasPlaced` are handling the same event.   
-If that's the case, Ecotone will verify, before calling factory method, if the aggregate exists and if so, will reroute the event to the action method.   
-  
+If you look closely, you will see that those the factory method `startByPlacedOrder` and action method `whenOrderWasPlaced` are handling the same event. \
+If that's the case, Ecotone will verify, before calling factory method, if the aggregate exists and if so, will reroute the event to the action method. \
+\
 This solution will prevent us from depending on the order of events, without introducing routing functionality into our business code.
 
 ### Ignoring Events
 
-There may be situations, when we will want to handle events, only if Saga already started. 
+There may be situations, when we will want to handle events, only if Saga already started.&#x20;
 
 ```php
 #[Aggregate] 
@@ -193,7 +194,7 @@ class OrderFulfillment
 }
 ```
 
-We want to send promotion code to the customer, if he received great customer badge, but if not we do nothing. 
+We want to send promotion code to the customer, if he received great customer badge, but if not we do nothing.&#x20;
 
 ```php
 EventHandler(dropMessageOnNotFound=true)
@@ -204,4 +205,3 @@ If this saga instance will be not found, then this event will be dropped and wil
 {% hint style="info" %}
 Options we used in here, can also be applied to Command Handlers
 {% endhint %}
-

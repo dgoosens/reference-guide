@@ -8,7 +8,7 @@ Previous pages provide the background on how to handle command messages in your 
 
 ### Command Bus
 
-`Command Bus` is special type of Messaging Gateway. 
+`Command Bus` is special type of Messaging Gateway.&#x20;
 
 ```php
 namespace Ecotone\Modelling;
@@ -73,6 +73,44 @@ class CloseTicketCommandHandler
 ```
 {% endtab %}
 {% endtabs %}
+
+### Sending To Aggregate
+
+Ecotone knows which instance of Ticket it should call by mapping the property.
+
+{% tabs %}
+{% tab title="Command" %}
+```php
+class CloseTicketCommand
+{
+    private $ticketId;
+}
+```
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Command Handler" %}
+```php
+#[Aggregate]
+class Ticket
+{   
+    #[AggregateIdentifier]
+    private $ticketId;
+
+    #[CommandHandler]
+    public function closeTicket(CloseTicketCommand $command)
+    {
+//        handle closing ticket
+    }   
+}
+```
+
+
+{% endtab %}
+{% endtabs %}
+
+If you want to know more about identifier correlation, you can [read here](../saga.md#identifier-correlation).
 
 ## Send With Metadata
 
@@ -175,13 +213,52 @@ $commandBus->convertAndSend(
 ```php
 class CloseTicketCommandHandler
 {   
-    #[CommandHandler]
+    #[CommandHandler("closeTicket")]
     public function closeTicket(CloseTicketCommand $command)
     {
 //        handle closing ticket
     }   
 }
 ```
+
+
 {% endtab %}
 {% endtabs %}
 
+### Sending To Aggregate
+
+Ecotone knows which instance of Ticket it should call by mapping the property.
+
+{% tabs %}
+{% tab title="Command" %}
+```php
+class CloseTicketCommand
+{
+    private $ticketId;
+}
+```
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Command Handler" %}
+```php
+#[Aggregate]
+class Ticket
+{   
+    #[AggregateIdentifier]
+    private $ticketId;
+
+    #[CommandHandler("closeTicket")]
+    public function closeTicket(CloseTicketCommand $command)
+    {
+//        handle closing ticket
+    }   
+}
+```
+
+
+{% endtab %}
+{% endtabs %}
+
+If you want to know more about identifier correlation, you can [read here](../saga.md#identifier-correlation).
