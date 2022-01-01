@@ -261,7 +261,7 @@ class Ticket
 {% endtab %}
 {% endtabs %}
 
-You may also tell about the identifiers, when sending an command using meta data.&#x20;
+You may also tell about the identifiers, when sending an command using meta data. Then you command does not need to include identifier.
 
 ```php
 public function controllerAction()
