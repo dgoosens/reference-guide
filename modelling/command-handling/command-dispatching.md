@@ -261,4 +261,13 @@ class Ticket
 {% endtab %}
 {% endtabs %}
 
+You may also tell about the identifiers, when sending an command using meta data.&#x20;
+
+```php
+public function controllerAction()
+{
+    $this->commandBus->sendWithRouting("startPayment", metadata: ["aggregate.id" => 123])
+}
+```
+
 If you want to know more about identifier correlation, you can [read here](../saga.md#identifier-correlation).

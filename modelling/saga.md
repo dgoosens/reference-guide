@@ -95,15 +95,6 @@ public function failPayment(PaymentWasFailedEvent $event, CommandBus $commandBus
 }
 ```
 
-You may also tell about the identifiers, when sending an event using meta data. However this has more usage for Command Handlers.
-
-```php
-public function controllerAction()
-{
-    $this->commandBus->sendWithRouting("startPayment", metadata: ["aggregate.id" => 123])
-}
-```
-
 ### Unordered Events
 
 In the [previous example](saga.md#handling-saga) we have assumed, that the first event we will receive is `OrderWasPlacedEvent` and the second which finishes the Saga is `PaymentWasFinishedEvent.` \
