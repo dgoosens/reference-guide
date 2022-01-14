@@ -11,7 +11,7 @@ Thanks to that we will be able to have the whole history of what happened with s
 And build up projections, that targets specific view, in order to keep our code simple, even with really complicated queries. This divide Commands from Queries (CQRS).&#x20;
 
 {% hint style="info" %}
-Do you want to find out, how to apply Event Sourcing in your business? Try out [InspectIO](../other/inspectio.md)!
+Do you want to find out, how to apply Event Sourcing in your business? Try out [InspectIO](../partners/inspectio.md)!
 {% endhint %}
 
 ## Installation

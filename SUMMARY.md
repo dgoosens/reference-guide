@@ -70,4 +70,4 @@
 
 * [Contact](other/contact.md)
 * [Support ](other/support.md)
-* [InspectIO](other/inspectio.md)
+* [InspectIO](partners/inspectio.md)

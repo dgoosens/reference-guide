@@ -12,3 +12,8 @@ _`Ecotone` ****_ is Framework __ based on architectural principles of _Domain-Dr
 * Help you **deliver software quicker and in more robust way**
 * **Protects your business/domain code from introducing framework specific classes** and interfaces
 
+## How to get started
+
+* Check how to [install](install-php-service-bus.md) **Ecotone** for **Symfony**, **Laravel** or **Lite**
+* [Learn by example](quick-start-php-ddd-cqrs-event-sourcing/)
+* [Go through tutorial](tutorial-php-ddd-cqrs-event-sourcing/)
