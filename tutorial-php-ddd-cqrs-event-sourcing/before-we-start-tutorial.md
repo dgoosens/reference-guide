@@ -2,7 +2,7 @@
 
 ## Setup for tutorial
 
-Depending on your preferences, you may choose for the tutorial [`Symfony`](https://symfony.com/)  [`Laravel`](https://laravel.com/) or `Lite (No extra framework)`.  
+Depending on your preferences, you may choose for the tutorial [`Symfony`](https://symfony.com)  [`Laravel`](https://laravel.com) or `Lite (No extra framework)`.\
 If configuration will differ, there will be three tabs available, each with code specific to the chosen solution.
 
 1. Use [git](https://git-scm.com) to download  **a starting point** to follow the tutorial.
@@ -34,7 +34,7 @@ git clone git@github.com:ecotoneframework/lite-tutorial.git
 {% endtab %}
 {% endtabs %}
 
-2. Run command line application. There are two options, run on your _Local Environment_ or using _Docker_
+2\. Run command line application. There are two options, run on your _Local Environment_ or using _Docker_
 
 {% tabs %}
 {% tab title="Local Environment" %}
@@ -68,5 +68,6 @@ Good job, scenario ran with success!"
 Great, we are prepared for Lesson 1!
 {% endhint %}
 
-{% page-ref page="php-messaging-architecture.md" %}
-
+{% content-ref url="php-messaging-architecture.md" %}
+[php-messaging-architecture.md](php-messaging-architecture.md)
+{% endcontent-ref %}

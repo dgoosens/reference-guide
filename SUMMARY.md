@@ -56,10 +56,6 @@
   * [Conversion](messaging/conversion/conversion.md)
 * [Service (Application) Configuration](messaging/service-application-configuration.md)
 
-## Partners
-
-* [InspectIO](partners/inspectio.md)
-
 ## Modules
 
 * [Overview](modules/overview.md)
@@ -69,3 +65,9 @@
 * [JMS Converter](modules/jms-converter.md)
 * [RabbitMQ Support](modules/amqp-support-rabbitmq.md)
 * [DBAL Support](modules/dbal-support.md)
+
+## Other
+
+* [Contact](other/contact.md)
+* [Support ](other/support.md)
+* [InspectIO](other/inspectio.md)

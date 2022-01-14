@@ -2,7 +2,7 @@
 description: Ecotone Framework customization
 ---
 
-# Service \(Application\) Configuration
+# Service (Application) Configuration
 
 `Ecotone` allows for customization of the core functionality as well as the [modules](../modules/overview.md).
 
@@ -16,9 +16,9 @@ Depending on the provider you choose, you can follow configuration in specific m
 
 ## Module Configuration
 
-Module configuration is configuration for specific module. It's class based configuration.  
-  
-Let's take a look on [Dbal](../modules/dbal-support.md) module configuration as example: 
+Module configuration is configuration for specific module. It's class based configuration.\
+\
+Let's take a look on [Dbal](../modules/dbal-support.md) module configuration as example:&#x20;
 
 ```php
 class MyConfiguration // 1
@@ -36,10 +36,10 @@ class MyConfiguration // 1
 1. Create your own class. You can name it whatever you like.
 2. Add attribute to let `Ecotone` know that it should call this method to get the configuration.
 3. Name the method whatever you like. You may return `array` of configurations or `specific configuration instance`.
-4. Return specific configuration. 
+4. Return specific configuration.&#x20;
 
 {% hint style="info" %}
-Ecotone does not require specific class name or method name.   
+Ecotone does not require specific class name or method name. \
 All what is needed is `#[ServiceContext]` attribute.
 {% endhint %}
 
@@ -87,7 +87,7 @@ class MyConfiguration
 }
 ```
 
-If you don't pass `ConfigurationVariable` attribute, it will be taken from parameter name.   
+If you don't pass `ConfigurationVariable` attribute, it will be taken from parameter name. \
 Below example is equal to above.
 
 ```php
@@ -100,4 +100,3 @@ class MyConfiguration
     }
 }
 ```
-

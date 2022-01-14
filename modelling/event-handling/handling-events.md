@@ -33,7 +33,7 @@ public function notify(AppointmentRelatedEvent $event) : void
 }
 ```
 
-We also can tell `Ecotone` that we want to handle all events implementing specific Interface or extending specific abstract class. In that case all we need to do it is to type hint for this interface or abstract class. 
+We also can tell `Ecotone` that we want to handle all events implementing specific Interface or extending specific abstract class. In that case all we need to do it is to type hint for this interface or abstract class.&#x20;
 
 ### Event Handling Union Classes
 
@@ -61,7 +61,7 @@ If we will type hint for `object` then this `Event Handler` will be called for a
 
 ## Registering Name Based Events
 
-There may be a situations when events will arrive from different systems. We may not have access to specific class or we may not want to share events a cross applications. In that case we can listen for events with specific name. 
+There may be a situations when events will arrive from different systems. We may not have access to specific class or we may not want to share events a cross applications. In that case we can listen for events with specific name.&#x20;
 
 ```php
 class EmailService
@@ -74,7 +74,7 @@ class EmailService
 }
 ```
 
-This `Event Handler` listen for `billing.customer_was_invoiced.` 
+This `Event Handler` listen for `billing.customer_was_invoiced.`&#x20;
 
 {% hint style="info" %}
 How to publish named events, you may see in [Dispatching Events section](dispatching-events.md)
@@ -117,7 +117,7 @@ public function notifyAboutGeneratedInvoiced(array $event) : void
 }
 ```
 
-This `Event Handler` will listen for all events beginning with `shop.order` prefix. So `shop.order.was_started` `shop.order.was_finished` are going to be handled by this [Endpoint](../../messaging/messaging-concepts/message-endpoint/).  
+This `Event Handler` will listen for all events beginning with `shop.order` prefix. So `shop.order.was_started` `shop.order.was_finished` are going to be handled by this [Endpoint](../../messaging/messaging-concepts/message-endpoint/).\
 
 
 You may put the `*` expression anywhere you like
@@ -125,5 +125,4 @@ You may put the `*` expression anywhere you like
 * `shop.*.processed`
 * `*`
 
-If we put only the star, then it will handle all named events. 
-
+If we put only the star, then it will handle all named events.&#x20;

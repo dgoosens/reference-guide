@@ -1,5 +1,5 @@
 ---
-description: 'Installing Ecotone for Symfony, Laravel or Stand Alone'
+description: Installing Ecotone for Symfony, Laravel or Stand Alone
 ---
 
 # Installation
@@ -12,12 +12,12 @@ description: 'Installing Ecotone for Symfony, Laravel or Stand Alone'
 composer require [ecotone/](https://packagist.org/packages/ecotone/)symfony-bundle
 {% endhint %}
 
-If you're using _`Symfony Flex`_,  bundle will auto-configure. 
+If you're using _`Symfony Flex`_,  bundle will auto-configure.&#x20;
 
-2. Register bundle, if needed
+2\. Register bundle, if needed
 
 {% hint style="success" %}
-new Ecotone\SymfonyBundle\EcotoneSymfonyBundle::class =&gt; \['all' =&gt; true\]
+new Ecotone\SymfonyBundle\EcotoneSymfonyBundle::class => \['all' => true]
 {% endhint %}
 
 ## Install for Laravel
@@ -30,7 +30,7 @@ composer require [ecotone/](https://packagist.org/packages/ecotone/)laravel
 
 Provider should be automatically registered.
 
-2. Register provider, if needed
+2\. Register provider, if needed
 
 ```php
 'providers' => [
@@ -38,7 +38,7 @@ Provider should be automatically registered.
 ],
 ```
 
-## Install Lite \(No framework\)
+## Install Lite (No framework)
 
 ### Make use of prepared setup
 
@@ -48,16 +48,19 @@ git clone [https://github.com/ecotoneframework/lite-setup](https://github.com/ec
 
 ### Wire manually
 
-1. In order to start we have to have composer.json with PSR-4 or PSR-0 autoload setup.  Create `composer.json` in root catalog with `autoload for src` catalog.  And add `Ecotone`
+1. In order to start we have to have composer.json with PSR-4 or PSR-0 autoload setup.\
+   \
+   Create `composer.json` in root catalog with `autoload for src` catalog. \
+   And add `Ecotone`
 
 {% hint style="success" %}
 composer require ecotone/ecotone
 {% endhint %}
 
-    2. As `Ecotone` require access to Dependency Container, you have to choose one in order to run the example. As `Ecotone` may register classes for easier usage, we will make our container implement `GatewayAwareContainer` to access them.
+&#x20;   2\. As `Ecotone` require access to Dependency Container, you have to choose one in order to run the example. As `Ecotone` may register classes for easier usage, we will make our container implement `GatewayAwareContainer` to access them.
 
 {% hint style="success" %}
-Create `console.php` and set up your container \(look \#13 line\)
+Create `console.php` and set up your container (look #13 line)
 {% endhint %}
 
 ```php
@@ -101,4 +104,3 @@ $messagingSystem = EcotoneLiteConfiguration::createWithConfiguration(
     false
 );
 ```
-

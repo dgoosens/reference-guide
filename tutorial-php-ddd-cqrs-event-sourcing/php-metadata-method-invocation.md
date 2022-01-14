@@ -5,19 +5,19 @@ description: PHP Metadata and Method Invocation
 # Lesson 4: Metadata and Method Invocation
 
 {% hint style="info" %}
-Not having code for _Lesson 4?_   
-  
+Not having code for _Lesson 4?_ \
+\
 `git checkout lesson-4`
 {% endhint %}
 
 ### Metadata
 
-Message can contain headers. Headers may contain anything e.g. `currentUser`, `timestamp`, `contentType`, `messageId.` Headers are helpful, to give extra insights about the message and how it should be handled.   
+Message can contain headers. Headers may contain anything e.g. `currentUser`, `timestamp`, `contentType`, `messageId.` Headers are helpful, to give extra insights about the message and how it should be handled. \
 In `Ecotone` headers and metadata means the same. Those terms will be used interchangeably.
 
 We just got new requirement for our Products in Shopping System.:
 
-`User who registered the product, should be able to change it price.` 
+`User who registered the product, should be able to change it price.`&#x20;
 
 Let's start by adding `ChangePriceCommand.`
 
@@ -42,7 +42,7 @@ class ChangePriceCommand
 }
 ```
 
-We will handle this `Command` in a minute. Let's first add user information for registering the product.  
+We will handle this `Command` in a minute. Let's first add user information for registering the product.\
 We will do it, using `Meta Data`. Let's get back to our Testing Class `EcotoneQuickstart` and add 4th argument to our `CommandBus` call.
 
 ```php
@@ -61,9 +61,9 @@ public function run() : void
 }
 ```
 
-We call `sendWithRouting`, it accepts 4th argument, which is `associative array.` Whatever we will place in here, will be available during message handling for us.  
-So it's good place, to enrich the message with extra information, which we will want to use or store, but are is not part of the `command/query/event`.   
-Now we can change our `Product` aggregate: 
+We call `sendWithRouting`, it accepts 4th argument, which is `associative array.` Whatever we will place in here, will be available during message handling for us.\
+So it's good place, to enrich the message with extra information, which we will want to use or store, but are is not part of the `command/query/event`. \
+Now we can change our `Product` aggregate:&#x20;
 
 ```php
 #[Aggregate]
@@ -94,8 +94,8 @@ class Product
     }
 ```
 
-We have added second parameter `$metadata` to our `@CommandHandler`. `Ecotone` read parameters and evaluated what should be injected. We will see soon, how can we take control of this process.   
-  
+We have added second parameter `$metadata` to our `@CommandHandler`. `Ecotone` read parameters and evaluated what should be injected. We will see soon, how can we take control of this process. \
+\
 We can add `changePrice` method now.
 
 ```php
@@ -150,12 +150,12 @@ InvalidArgumentException
 
 ### Method Invocation
 
-We have been just informed, that customers are registering new products in our system.   
-  
+We have been just informed, that customers are registering new products in our system. \
+\
 `Only administrator should be allowed to register new product`
 
-Let's create simple `UserService` which will tell us, if specific user is administrator.   
-In our testing scenario we will suppose, that only user with `id` of 1 is administrator. 
+Let's create simple `UserService` which will tell us, if specific user is administrator. \
+In our testing scenario we will suppose, that only user with `id` of 1 is administrator.&#x20;
 
 ```php
 namespace App\Domain\Product;
@@ -169,8 +169,8 @@ class UserService
 }
 ```
 
-Now we need to think where we should call our `UserService.`   
-The good place for it, would not allow for any invocation of `product.register command` without being administrator, otherwise our constraint may be bypassed.  
+Now we need to think where we should call our `UserService.` \
+The good place for it, would not allow for any invocation of `product.register command` without being administrator, otherwise our constraint may be bypassed.\
 `Ecotone` does allow for auto-wire like injection for endpoints. All services registered in Depedency Container are available.
 
 ```php
@@ -186,9 +186,9 @@ public static function register(RegisterProductCommand $command, array $metadata
 }
 ```
 
-Great, there is no way to bypass the constraint now. The `isAdmin constraint` must be satisfied in order to register new product.   
-  
-Let's correct our testing class.  
+Great, there is no way to bypass the constraint now. The `isAdmin constraint` must be satisfied in order to register new product. \
+\
+Let's correct our testing class. &#x20;
 
 ```php
 public function run() : void
@@ -229,9 +229,9 @@ Good job, scenario ran with success!
 
 ### Injecting arguments
 
-`Ecotone` inject arguments based on `Parameter Converters`.  
-Parameter converters , tells `Ecotone` how to resolve specific parameter and what kind of argument it is expecting.  The one used for injecting services like `UserService` is `Reference` parameter converter.  
-Let's see how could we use it in our `product.register` command handler. 
+`Ecotone` inject arguments based on `Parameter Converters`.\
+Parameter converters , tells `Ecotone` how to resolve specific parameter and what kind of argument it is expecting.  The one used for injecting services like `UserService` is `Reference` parameter converter.\
+Let's see how could we use it in our `product.register` command handler.&#x20;
 
 Let's suppose UserService is registered under `user-service` in Dependency Container. Then we would need to set up the `CommandHandler`like below.
 
@@ -250,17 +250,17 @@ public static function register(
 
 `Headers` - Does inject all headers as array.
 
-`Header` - Does inject single header from the [message](../messaging/messaging-concepts/message.md).    
-  
-There is more to be said about this, but at this very moment, it will be enough for us to know that such possibility exists in order to continue.  
-You may read more detailed description in [Method Invocation section.](../messaging/conversion/method-invocation.md)   
+`Header` - Does inject single header from the [message](../messaging/messaging-concepts/message.md).  \
+\
+There is more to be said about this, but at this very moment, it will be enough for us to know that such possibility exists in order to continue.\
+You may read more detailed description in [Method Invocation section.](../messaging/conversion/method-invocation.md) \
 
 
 ### Default Converters
 
-`Ecotone`, if parameter converters are not passed provides default converters.   
-First parameter is always `@Payload.`   
-The second parameter, if is `array` then `@Headers` converter is taken, otherwise if class type hint is provided for parameter, then `@Reference` converter is picked.   
+`Ecotone`, if parameter converters are not passed provides default converters. \
+First parameter is always `@Payload.` \
+The second parameter, if is `array` then `@Headers` converter is taken, otherwise if class type hint is provided for parameter, then `@Reference` converter is picked. \
 If we would want to manually configure parameters for `product.register` Command Handler, then it would look like this:
 
 ```php
@@ -283,9 +283,8 @@ public static function register(
 {% hint style="success" %}
 Great, we have just finished Lesson 4!
 
-In this Lesson we learned about using Meta Data to provide extra information to our Message.  
-Besides we took a look on how arguments are injected into endpoint and how we can make use of it.  
-  
+In this Lesson we learned about using Meta Data to provide extra information to our Message.\
+Besides we took a look on how arguments are injected into endpoint and how we can make use of it.\
+\
 Now we will learn about powerful Interceptors, which can be describes as Middlewares on steroids.
 {% endhint %}
-

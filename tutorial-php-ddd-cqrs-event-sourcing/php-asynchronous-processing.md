@@ -5,8 +5,8 @@ description: Asynchronous PHP Workers
 # Lesson 6: Asynchronous Handling
 
 {% hint style="info" %}
-Not having code for _Lesson 6?_   
-  
+Not having code for _Lesson 6?_ \
+\
 `git checkout lesson-6`
 {% endhint %}
 
@@ -14,9 +14,9 @@ Not having code for _Lesson 6?_
 
 ### Asynchronous
 
-  
-We got new requirement:  
-`User should be able to place order for different products.` 
+\
+We got new requirement:\
+`User should be able to place order for different products.`&#x20;
 
 We will need to build `Order` aggregate.
 
@@ -131,11 +131,11 @@ class Order
 }
 ```
 
-`placeOrder` - Place order method make use of `QueryBus` to retrieve cost of each ordered product.  
+`placeOrder` - Place order method make use of `QueryBus` to retrieve cost of each ordered product.\
 You could find out, that we are not using `application/json` for `product.getCost` query, `ecotone/jms-converter` can handle `array` transformation, so we do not need to use `json`.
 
 {% hint style="info" %}
-You could inject service into  `placeOrder` that will hide `QueryBus` implementation from the domain, or you may get this data from `data store` directly. We do not want to complicate the solution now, so we will use `QueryBus` directly. 
+You could inject service into  `placeOrder` that will hide `QueryBus` implementation from the domain, or you may get this data from `data store` directly. We do not want to complicate the solution now, so we will use `QueryBus` directly.&#x20;
 {% endhint %}
 
 {% hint style="success" %}
@@ -193,14 +193,14 @@ Commit transaction
 Good job, scenario ran with success!
 ```
 
-We want to be sure, that we do not lose any order, so we will register our `order.place Command Handler` to run asynchronously using `RabbitMQ` now.   
+We want to be sure, that we do not lose any order, so we will register our `order.place Command Handler` to run asynchronously using `RabbitMQ` now. \
 Let's start by adding extension to `Ecotone`, that can handle `RabbitMQ:`
 
 ```php
 composer require ecotone/amqp
 ```
 
-We also need to add our `ConnectionFactory` to our `Dependency Container.` 
+We also need to add our `ConnectionFactory` to our `Dependency Container.`&#x20;
 
 {% tabs %}
 {% tab title="Symfony - Local" %}
@@ -325,8 +325,8 @@ public function __construct()
 We register our `AmqpConnectionFactory` under the class name `Enqueue\AmqpLib\AmqpConnectionFactory.` This will help Ecotone resolve it automatically, without any additional configuration.
 {% endhint %}
 
-Let's add our first `AMQP Backed Channel` \(RabbitMQ Channel\), in order to do it, we need to create our first `Application Context.`   
-Application Context is a non-constructor class, responsible for extending `Ecotone` with extra configurations, that will help the framework act in a specific way. In here we want to tell `Ecotone` about `AMQP Channel` with specific name.   
+Let's add our first `AMQP Backed Channel` (RabbitMQ Channel), in order to do it, we need to create our first `Application Context.` \
+Application Context is a non-constructor class, responsible for extending `Ecotone` with extra configurations, that will help the framework act in a specific way. In here we want to tell `Ecotone` about `AMQP Channel` with specific name. \
 Let's create new class `App\Infrastructure\MessagingConfiguration.`
 
 ```php
@@ -346,7 +346,7 @@ class MessagingConfiguration
 
 `ServiceContext` - Tell that this method returns configuration. It can return array of objects or a single object.
 
-Now we need to tell our `order.place` Command Handler, that it should run asynchronously using our new`orders` channel. 
+Now we need to tell our `order.place` Command Handler, that it should run asynchronously using our new`orders` channel.&#x20;
 
 ```php
 use Ecotone\Messaging\Annotation\Asynchronous;
@@ -367,8 +367,8 @@ public static function placeOrder(PlaceOrderCommand $command, array $metadata, Q
 }
 ```
 
-We do it by adding `Asynchronous` annotation with `channelName` used for asynchronous endpoint.   
-Endpoints using `Asynchronous` are required to have `endpointId` defined, the name can be anything as long as it's not the same as `routing key (order.place)`. 
+We do it by adding `Asynchronous` annotation with `channelName` used for asynchronous endpoint. \
+Endpoints using `Asynchronous` are required to have `endpointId` defined, the name can be anything as long as it's not the same as `routing key (order.place)`.&#x20;
 
 ```php
 #[CommandHandler("order.place", endpointId: "place_order_endpoint")]
@@ -391,7 +391,7 @@ bin/console ecotone:list
 +--------------------+
 ```
 
-We have new asynchronous endpoint available `orders.` Name comes from the message channel name.  
+We have new asynchronous endpoint available `orders.` Name comes from the message channel name.\
 You may wonder why it is not `place_order_endpoint,` it's because via single asynchronous channel we can handle multiple endpoints, if needed. This is further explained in [asynchronous section](../modelling/scheduling.md).
 
 Let's change `orderId` in our testing command, so we can place new order.
@@ -427,8 +427,8 @@ AggregateNotFoundException:
   rs {"orderId":990}  
 ```
 
-That's fine, we have registered `order.place` Command Handler to run asynchronously, so we need to run our `asynchronous endpoint` in order to handle `Command Message`. If you did not received and exception, it's probably because `orderId` was not changed and we already registered such order.  
-  
+That's fine, we have registered `order.place` Command Handler to run asynchronously, so we need to run our `asynchronous endpoint` in order to handle `Command Message`. If you did not received and exception, it's probably because `orderId` was not changed and we already registered such order.\
+\
 Let's run our asynchronous endpoint
 
 ```php
@@ -436,7 +436,7 @@ bin/console ecotone:run orders -vvv
 [info] {"orderId":990,"productIds":[1,2]}
 ```
 
-Like we can see, it ran our Command Handler and placed the order.  
+Like we can see, it ran our Command Handler and placed the order.\
 We can change our testing command to run only `Query Handler`and check, if the order really exists now.
 
 ```php
@@ -467,9 +467,9 @@ Running example...
 Good job, scenario ran with success!
 ```
 
-There is one thing we can change.   
-As in asynchronous scenario we may not have access to the context of executor to enrich the message,, we can change our `AddUserIdService Interceptor` to perform the action before sending it to asynchronous channel.  
-This Interceptor is registered as `Before Interceptor` which is before execution of our Command Handler, but what we want to achieve is, to call this interceptor before message will be send to the asynchronous channel. For this there is `Presend` Interceptor available.  
+There is one thing we can change. \
+As in asynchronous scenario we may not have access to the context of executor to enrich the message,, we can change our `AddUserIdService Interceptor` to perform the action before sending it to asynchronous channel.\
+This Interceptor is registered as `Before Interceptor` which is before execution of our Command Handler, but what we want to achieve is, to call this interceptor before message will be send to the asynchronous channel. For this there is `Presend` Interceptor available.\
 Change `Before` annotation to `Presend` annotation and we are done.
 
 ```php
@@ -486,21 +486,20 @@ class AddUserIdService
 ```
 
 {% hint style="success" %}
-Ecotone will do it best to handle serialization and deserialization of your headers. 
+Ecotone will do it best to handle serialization and deserialization of your headers.&#x20;
 {% endhint %}
 
 Now if non-administrator will try to execute this, exception will be thrown, before the Message will be put to the asynchronous channel. Thanks to `Presend` interceptor, we can validate messages, before they will go asynchronous, to prevent sending incorrect messages.
 
 {% hint style="info" %}
-The final code is available as lesson-7:  
-  
+The final code is available as lesson-7:\
+\
 `git checkout lesson-7`
 {% endhint %}
 
 {% hint style="success" %}
-We made it through, Congratulations!   
-We have successfully registered asynchronous Command Handler and safely placed the order.   
-  
+We made it through, Congratulations! \
+We have successfully registered asynchronous Command Handler and safely placed the order. \
+\
 We have finished last lesson. You may now apply the knowledge in real project or check more advanced usages starting here [Modelling Overview](../modelling/modelling-1.md).
 {% endhint %}
-

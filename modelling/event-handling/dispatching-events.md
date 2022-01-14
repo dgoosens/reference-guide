@@ -4,7 +4,7 @@ description: Events PHP
 
 # Dispatching Events
 
-Previous pages provide the background on how to handle event messages in your application. The dispatching process is the starting point for event message.  
+Previous pages provide the background on how to handle event messages in your application. The dispatching process is the starting point for event message.\
 You will mostly send events after successfully handling [Command Message](../command-handling/), examples will base on that assumption.
 
 {% hint style="info" %}
@@ -13,7 +13,7 @@ You can inject EventBus and send events wherever necessary. Ecotone tries not to
 
 ## Event Bus
 
-`Event Bus` is special type of Messaging Gateway. 
+`Event Bus` is special type of Messaging Gateway.&#x20;
 
 ```php
 namespace Ecotone\Modelling;
@@ -27,7 +27,7 @@ interface EventBus
 }
 ```
 
-### Publishing 
+### Publishing&#x20;
 
 Event is routed to the Handler by class type.
 
@@ -63,8 +63,8 @@ class NotificationService
 
 ### Publishing with routing
 
-Is used with `Command Handlers,`routed by name and converted using [Converter](../../messaging/conversion/) if needed.  
-Sending events by name instead of class type, may be found useful in integration with external application, when events are in different Media Type than PHP class.  
+Is used with `Command Handlers,`routed by name and converted using [Converter](../../messaging/conversion/) if needed.\
+Sending events by name instead of class type, may be found useful in integration with external application, when events are in different Media Type than PHP class. &#x20;
 
 {% tabs %}
 {% tab title="Command Handler" %}
@@ -106,18 +106,18 @@ JSON will be automatically converted to specific `class type hinted` in method d
 
 ## Publishing from Aggregate
 
-`Ecotone` does provide possibility to automatically gather events from `Aggregate` and publish them using `EventBus.` 
+`Ecotone` does provide possibility to automatically gather events from `Aggregate` and publish them using `EventBus.`&#x20;
 
 ### State-Stored Aggregate
 
-To tell `Ecotone`, which method it should use for retrieving Event objects when using [State-Stored Aggregate](../command-handling/state-stored-aggregate.md#state-stored-aggregate) mark method containing events with annotation `@AggregateEvents.` After handling `Command` or `Event`  on `Aggregate` events will be published. 
+To tell `Ecotone`, which method it should use for retrieving Event objects when using [State-Stored Aggregate](../command-handling/state-stored-aggregate.md#state-stored-aggregate) mark method containing events with annotation `@AggregateEvents.` After handling `Command` or `Event` on `Aggregate` events will be published.&#x20;
 
 ```php
  #[AggregateEvents]
 public function getRecordedEvents() : array
 ```
 
- If you do want to bother with implementation you can make use of trait `WithAggregateEvent`If you want to record event for publication just use `record`method.
+&#x20;If you do want to bother with implementation you can make use of trait `WithAggregateEvent`If you want to record event for publication just use `record`method.
 
 ```php
 $this->recordThat(new OrderWasPlaced());
@@ -134,9 +134,8 @@ public function assignWorker(AssignWorkerCommand $command) : array
 ```
 
 {% hint style="info" %}
-Events published from aggregate, are publish by class name and routing, if event is named.  
-  
-`#[NamedEvent("order_was_placed")]  
-class OrderWasPlaced`
+Events published from aggregate, are publish by class name and routing, if event is named.\
+\
+`#[NamedEvent("order_was_placed")]`\
+`class OrderWasPlaced`
 {% endhint %}
-

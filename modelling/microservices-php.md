@@ -6,16 +6,16 @@ description: Distributed Services PHP
 
 ## Distribution
 
-`Ecotone` provides support for communication in distributed architecture.   
-The support covers sending command directly to specific service \(application\) or publishing events, that specific services may listen for. 
+`Ecotone` provides support for communication in distributed architecture. \
+The support covers sending command directly to specific service (application) or publishing events, that specific services may listen for.&#x20;
 
 ## Configuration
 
-In order for `Ecotone` how to route messages you need to register Service Name \(Application Name\).
+In order for `Ecotone` how to route messages you need to register Service Name (Application Name).
 
 * [Symfony Service Name Configuration](../modules/symfony-ddd-cqrs-event-sourcing.md#servicename)
 * [Laravel Service Name Configuration](../modules/laravel-ddd-cqrs-event-sourcing.md#servicename)
-* [Ecotone Lite Service Name Configuration](../modules/ecotone-lite.md#servicename) 
+* [Ecotone Lite Service Name Configuration](../modules/ecotone-lite.md#servicename)&#x20;
 
 ### Modules Providing Support
 
@@ -23,10 +23,10 @@ In order for `Ecotone` how to route messages you need to register Service Name \
 
 ## Distribution Bus
 
-Distribution Bus is [Message Gateway](../messaging/messaging-concepts/messaging-gateway.md) just like CommandBus or EventBus.   
-The bus is responsible for distribution of your command and events. 
+Distribution Bus is [Message Gateway](../messaging/messaging-concepts/messaging-gateway.md) just like CommandBus or EventBus. \
+The bus is responsible for distribution of your command and events.&#x20;
 
-  
+\
 Depending on your [Module configuration](microservices-php.md#configuration) you can inject it by `class name` or `specific reference name`.
 
 ```php
@@ -173,4 +173,3 @@ To start listening for distributed events under specific key, provide `Distribut
 ### Run the consumer
 
 Run it the same as for [distributed command bus](microservices-php.md#run-the-consumer).
-

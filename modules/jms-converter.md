@@ -14,12 +14,12 @@ Ecotone comes with integration with [JMS Serializer](https://jmsyst.com/libs/ser
 
 ### Module Powered By
 
-Great library, which allow for advanced conversion between types [JMS/Serializer](https://github.com/schmittjoh/serializer). 
+Great library, which allow for advanced conversion between types [JMS/Serializer](https://github.com/schmittjoh/serializer).&#x20;
 
 ## Native Conversion
 
-Ecotone with JMS will do it's best to deserialize your classes without any additional configuration needed.  
-Suppose we have JSON like below: 
+Ecotone with JMS will do it's best to deserialize your classes without any additional configuration needed.\
+Suppose we have JSON like below:&#x20;
 
 ```javascript
 {
@@ -76,7 +76,7 @@ For deserialization of array without any extra configuration, simply describe it
 
 ## Custom Conversions To Classes
 
-The difference between Native Conversion is that you take control of deserialization mechanism for specific class. You may call factory method, which will validate correctness of the data or you may provide some default based on your business logic.   
+The difference between Native Conversion is that you take control of deserialization mechanism for specific class. You may call factory method, which will validate correctness of the data or you may provide some default based on your business logic. \
 Besides you may find it useful when there is a need to make conversion from `class` to simple type like `string` or `int`.
 
 `JMS Converter`make use of Converters registered as Converters in order to provide all the conversion types described in [Conversion Table](jms-converter.md#conversion-table). You can read how to register new`Converter` in [Conversion section.](../messaging/conversion/conversion.md#conversions-on-php-level)
@@ -125,7 +125,7 @@ class PlaceOrder
 }
 ```
 
-We do not need to add any metadata describing how to convert `JSON to PlaceOrder PHP class.` We already have it using type hints. 
+We do not need to add any metadata describing how to convert `JSON to PlaceOrder PHP class.` We already have it using type hints.&#x20;
 
 The only thing, that we need is to add how to convert string to UUID. We do it using Converter:
 
@@ -140,11 +140,11 @@ class ExampleConverterService
 }
 ```
 
-And that's enough. Whenever we will use `string to UUID` conversion or `string[] to UUID[]`. This converter will be automatically used. 
+And that's enough. Whenever we will use `string to UUID` conversion or `string[] to UUID[]`. This converter will be automatically used.&#x20;
 
 ## Custom Conversions from Classes
 
-Above example was for deserialization, however if you want to make use of serialization, then Converter from `UUID` to `string` is needed. 
+Above example was for deserialization, however if you want to make use of serialization, then Converter from `UUID` to `string` is needed.&#x20;
 
 ```php
 class ExampleConverterService
@@ -213,16 +213,16 @@ class Configuration
 
 ### withDefaultNullSerialization
 
-Should nulls be serialized \(`bool, default: false`\)
+Should nulls be serialized (`bool, default: false`)
 
 ### withNamingStrategy
 
-Serialization naming strategy \(`string "identicalPropertyNamingStrategy" || "camelCasePropertyNamingStrategy",   
-default: "identicalPropertyNamingStrategy"`\) 
+Serialization naming strategy (`string "identicalPropertyNamingStrategy" || "camelCasePropertyNamingStrategy",` \
+`default: "identicalPropertyNamingStrategy"`)&#x20;
 
 ## Serialize Nulls for specific conversion
 
-If you want to make convert nulls for [given conversion](../messaging/conversion/conversion.md#serializer), then you can provide Media Type parameters 
+If you want to make convert nulls for [given conversion](../messaging/conversion/conversion.md#serializer), then you can provide Media Type parameters&#x20;
 
 ```php
 $this->serializer->convertFromPHP(
@@ -237,7 +237,7 @@ $this->serializer->convertFromPHP(
 
 ## Conversion Table
 
-  
+\
 `JMS Converter` can handle conversions:
 
 ```php
@@ -261,4 +261,3 @@ application/xml => application/x-php;type=array | <productId>1</productId> => ["
 // conversion from PHP Array to XML
 application/x-php;type=array => application/xml | ["productId": 1] => <productId>1</productId>
 ```
-

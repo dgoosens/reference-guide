@@ -16,7 +16,7 @@ composer require ecotone/amqp
 
 ## Configuration
 
-In order to use `AMQP Support` we need to add `ConnectionFactory` to our `Dependency Container.` 
+In order to use `AMQP Support` we need to add `ConnectionFactory` to our `Dependency Container.`&#x20;
 
 {% tabs %}
 {% tab title="Symfony" %}
@@ -52,7 +52,7 @@ We register our AmqpConnection under the class name `Enqueue\AmqpExt\AmqpConnect
 
 ## Message Channel
 
-To create AMQP Backed [Message Channel](../modelling/asynchronous-handling.md) \(RabbitMQ Channel\), we need to create [Service Context](../messaging/service-application-configuration.md). 
+To create AMQP Backed [Message Channel](../modelling/asynchronous-handling.md) (RabbitMQ Channel), we need to create [Service Context](../messaging/service-application-configuration.md).&#x20;
 
 ```php
 class MessagingConfiguration
@@ -65,7 +65,7 @@ class MessagingConfiguration
 }
 ```
 
-Now `orders` channel will be available in our Messaging System. 
+Now `orders` channel will be available in our Messaging System.&#x20;
 
 ## Distributed Publisher and Consumer
 
@@ -149,8 +149,8 @@ class AMQPConfiguration
 2. `Exchange name` - Name of exchange where Message should be publisher
 3. `Default Conversion [Optional]` - Default type, payload will be converted to.
 
-Publisher is a special type of [Gateway](../messaging/messaging-concepts/messaging-gateway.md), which implements [Publisher interface](amqp-support-rabbitmq.md#available-actions).  
-It will be available in your Dependency Container under passed `Reference name.`  
+Publisher is a special type of [Gateway](../messaging/messaging-concepts/messaging-gateway.md), which implements [Publisher interface](amqp-support-rabbitmq.md#available-actions).\
+It will be available in your Dependency Container under passed `Reference name.`\
 In case interface name `Publisher:class` is used, it will be available using auto-wire.
 
 ```php
@@ -180,13 +180,13 @@ RegisterAmqpPublisher::create(
 ```
 
 1. `withDefaultPersistentDelivery` - should AMQP messages be `persistent`_._
-2. `withDefaultRoutingKey` - default routing key added to AMQP message 
+2. `withDefaultRoutingKey` - default routing key added to AMQP message&#x20;
 3. `withRoutingKeyFromHeader` - should routing key be retrieved from header with name
 4. `withHeaderMapper` - On default headers are not send with AMQP message. You map provide mapping for headers that should be mapped to `AMQP Message`
 
 ## Consumer
 
-To connect consumer directly to a AMQP Queue, we need to provide `Ecotone` with information, how the Queue is configured. 
+To connect consumer directly to a AMQP Queue, we need to provide `Ecotone` with information, how the Queue is configured.&#x20;
 
 ```php
 class AmqpConfiguration
@@ -236,12 +236,12 @@ ecotone:list
 +--------------------+
 ```
 
-  2. `queueName` - The queue name which will be polled by this consumer  
-  3. `headerMapper` - Headers which should be mapped to [Message](../messaging/messaging-concepts/message.md) 
+&#x20; 2\. `queueName` - The queue name which will be polled by this consumer\
+&#x20; 3\. `headerMapper` - Headers which should be mapped to [Message](../messaging/messaging-concepts/message.md)&#x20;
 
 ## Publisher Transactions
 
-`Ecotone AMQP` comes with support for RabbitMQ Transaction for published messages.   
+`Ecotone AMQP` comes with support for RabbitMQ Transaction for published messages. \
 To enable transactions on specific endpoint, mark it with `Ecotone\Amqp\AmqpTransaction\AmqpTransaction` annotation.
 
 ```php
@@ -253,7 +253,7 @@ To enable transactions on specific endpoint, mark it with `Ecotone\Amqp\AmqpTran
     }
 ```
 
-If you want to enable/disable for all [Asynchronous Endpoints](../tutorial-php-ddd-cqrs-event-sourcing/php-asynchronous-processing.md) or specific for Command Bus. You may use of `ServiceContext.` 
+If you want to enable/disable for all [Asynchronous Endpoints](../tutorial-php-ddd-cqrs-event-sourcing/php-asynchronous-processing.md) or specific for Command Bus. You may use of `ServiceContext.`&#x20;
 
 {% hint style="info" %}
 By default all transactions are enabled
@@ -274,4 +274,3 @@ class ChannelConfiguration
 
 }
 ```
-

@@ -28,11 +28,11 @@ public function when(OrderWasPlaced $event) : void
 }
 ```
 
-We need to add `endpointId` on our endpoint's annotation, in this case in `CommandHandler.`   
-`Asynchronous` has channel name defined as `orders` we need to register such channel. In order to do it, we need to use one of the Modules, that provides pollable channels.   
+We need to add `endpointId` on our endpoint's annotation, in this case in `CommandHandler.` \
+`Asynchronous` has channel name defined as `orders` we need to register such channel. In order to do it, we need to use one of the Modules, that provides pollable channels. \
 At this moment following modules with pollable channels are available:
 
-* [AMQP Support \(RabbitMQ\)](../modules/amqp-support-rabbitmq.md#message-channel)
+* [AMQP Support (RabbitMQ)](../modules/amqp-support-rabbitmq.md#message-channel)
 * [DBAL Support](../modules/dbal-support.md#message-channel)
 
 {% hint style="info" %}
@@ -96,8 +96,8 @@ $messagingSystem->run("orders");
 ### Dynamic Configuration  You may set up running configuration for given consumer while running it.
 
 * `handledMessageLimit` - Amount of messages to be handled before stopping consumer
-* `executionTimeLimit` - How long consumer should run before stopping \(milliseconds\)
-* `memoryLimit` - How much memory can be consumed by before stopping consumer \(Megabytes\)
+* `executionTimeLimit` - How long consumer should run before stopping (milliseconds)
+* `memoryLimit` - How much memory can be consumed by before stopping consumer (Megabytes)
 * `stopOnFailure` - Stop consumer in case of exception
 
 {% tabs %}
@@ -163,8 +163,8 @@ Dynamic configuration overrides static
 
 ## Multiple Asynchronous Endpoints
 
-Using single asynchronous channel we may register multiple endpoints.   
-This allow for registering single asynchronous channel for whole Aggregate or group of related Command/Event Handlers. 
+Using single asynchronous channel we may register multiple endpoints. \
+This allow for registering single asynchronous channel for whole Aggregate or group of related Command/Event Handlers.&#x20;
 
 ```php
 #[Asynchronous("orders")]
@@ -184,14 +184,14 @@ public function onSuccess(FailureEvent $event) : void
 
 You may put `Asynchronous` on the class, level so all the endpoints within a class will becomes asynchronous.
 
-##  Intercepting asynchronous endpoint
+## &#x20;Intercepting asynchronous endpoint
 
-All asynchronous endpoints are marked with special attribute`Ecotone\Messaging\Attribute\AsynchronousRunningEndpoint`   
+All asynchronous endpoints are marked with special attribute`Ecotone\Messaging\Attribute\AsynchronousRunningEndpoint` \
 If you want to intercept all polling endpoints you should make use of [annotation related point cut](interceptors.md#pointcut) on this.
 
 ## Running synchronously
 
-You may register channel to be synchronously in order to run whenever the event is published.  
+You may register channel to be synchronously in order to run whenever the event is published.\
 This can be useful in testing scenarios, where we want to test whole flow in simple manner.
 
 ```php
@@ -207,7 +207,7 @@ class MessagingConfiguration
 
 ## Dropping messages coming to the channel
 
-You may register channel to be `null channel` which means it will drop the any message it receive.  
+You may register channel to be `null channel` which means it will drop the any message it receive.\
 This can be useful in testing scenarios, if we want to turn off specific functionality.
 
 ```php
@@ -227,18 +227,18 @@ class MessagingConfiguration
 
 ### Error Channel
 
-The error channel is channel defined for handling failed messages. As a default it's turned off.   
+The error channel is channel defined for handling failed messages. As a default it's turned off. \
 We may set up error channel for specific consumer
 
 * [Set up for specific consumer](asynchronous-handling.md#static-configuration)
 * [Set up globally for all consumers](../messaging/service-application-configuration.md#ecotone-core-configuration)
 
 {% hint style="info" %}
-Setting up Error Channel means that consumer can continue with handling next messages.  
+Setting up Error Channel means that consumer can continue with handling next messages.\
 After sending it to error channel, message is considered as handled.
 {% endhint %}
 
-  
+\
 After setting it up all errors messages will go to this channel so you may listen for it
 
 ```php
@@ -250,7 +250,7 @@ public function handle(ErrorMessage $errorMessage): void
 ```
 
 {% hint style="info" %}
-Service Activator are endpoints like Command Handlers, however they are not exposed using Command/Event/Query Buses.   
+Service Activator are endpoints like Command Handlers, however they are not exposed using Command/Event/Query Buses. \
 You may use them for internal handling.
 {% endhint %}
 
@@ -283,5 +283,4 @@ public function handle(ErrorMessage $errorMessage): void
 
 To make use full support for storing, replaying, deleting error messages, check:
 
-* [Dbal Dead Letter Support](../modules/dbal-support.md#dead-letter) 
-
+* [Dbal Dead Letter Support](../modules/dbal-support.md#dead-letter)&#x20;
