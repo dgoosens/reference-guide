@@ -70,4 +70,4 @@
 
 * [Contact](other/contact.md)
 * [Support ](other/support.md)
-* [InspectIO - Remote Event Storming](partners/inspectio.md)
+* [Prooph Board - Remote Event Storming](partners/inspectio.md)
