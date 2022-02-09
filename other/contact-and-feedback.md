@@ -11,13 +11,5 @@
 
 **Are you using Ecotone and would you like to share your experience with others?**\
 ****\
-**Please send a following form to "**_**ecotoneframework@gmail.com**_**", so we can share it on **_**docs.ecotone.tech:**_
-
-****\
-**`Name:`**\
-**`Company Name:`**\
-**`Feedback:`**\
-****\
-****\
-**Or write a feedback tweet tagging **_**@EcotonePHP**_** :)**&#x20;
+**Please write a feedback tweet tagging **_**@EcotonePHP**_** :)**&#x20;
 
