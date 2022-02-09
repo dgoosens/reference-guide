@@ -69,6 +69,6 @@
 
 ## Other
 
-* [Contact](other/contact.md)
+* [Contact and Feedback](other/contact-and-feedback.md)
 * [Support Ecotone](other/support-ecotone.md)
 * [Prooph Board - Remote Event Storming](partners/inspectio.md)
