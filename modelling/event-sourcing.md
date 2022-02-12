@@ -161,7 +161,7 @@ SQL)->fetchAllAssociative();
 
 By default `Ecotone` runs the projections synchronously. There is no additional configuration needed for this.\
 This kind of running configuration can be used to avoid eventual consistency or for testing purposes. \
-However when you expect concurrent access to your Aggregates, you may consider using different approach to limit the time of your database transaction to minimum.
+However when you expect multiple accesses to your Aggregates at the same time, you may consider asynchronous projection to protect yourself from concurrency problems.
 
 ### Polling Projection
 
@@ -220,16 +220,11 @@ Consider using [Dbal Message Channels](../modules/dbal-support.md#message-channe
 Thanks to that `Ecotone` will store events and publish them within same transaction. The solution is based on [Outbox Pattern](https://microservices.io/patterns/data/transactional-outbox.html).&#x20;
 {% endhint %}
 
-{% hint style="info" %}
-With Event Driven projections, your projections will not be created on startup, as they will be called when event happens.\
-If this is problem, you may consider starting with `Polling Projection` and then switching to `Event Driven Projection`.
-{% endhint %}
-
 ## Projection Actions
 
 ### Projection initialization
 
-As projection can be restarted, deleted and created differently. It's easier to maintain, when the projection knows how to setup it itself, instead of depending on migrations. \
+As projection can be restarted, deleted and created differently. When the projection knows how to setup it itself, it's easy to rebuild it when change is needed.\
 Method with attribute `#[ProjectionInitialization]` will be called on startup of the projection.
 
 ```php
@@ -244,6 +239,31 @@ $this->connection->executeStatement(<<<SQL
 SQL);
 }
 ```
+
+{% tabs %}
+{% tab title="Symfony" %}
+```php
+bin/console ecotone:es:initialize-projection {projectionName}
+```
+{% endtab %}
+
+{% tab title="Laravel" %}
+```
+artisan ecotone:es:initialize-projectionn {projectionName}
+```
+{% endtab %}
+
+{% tab title="Lite" %}
+```
+$messagingSystem->runConsoleCommand("ecotone:es:initialize-projection", ["name" => $projectionName]);
+```
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+With Polling projections, your projection will be initialized automatically.\
+With Event Driven projections, your projections will not be created on startup, consider running command first.
+{% endhint %}
 
 ### Resetting the projection
 
