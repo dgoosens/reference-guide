@@ -224,21 +224,7 @@ Thanks to that `Ecotone` will store events and publish them within same transact
 
 ### Projection initialization
 
-As projection can be restarted, deleted and created differently. When the projection knows how to setup it itself, it's easy to rebuild it when change is needed.\
-Method with attribute `#[ProjectionInitialization]` will be called on startup of the projection.
-
-```php
-#[ProjectionInitialization]
-public function initialization() : void
-{
-$this->connection->executeStatement(<<<SQL
-    CREATE TABLE IF NOT EXISTS in_progress_tickets (
-        ticket_id VARCHAR(36) PRIMARY KEY,
-        ticket_type VARCHAR(25)
-    )
-SQL);
-}
-```
+As projection can be restarted, deleted and created differently. When the projection knows how to setup it itself, it's easy to rebuild it when change is needed.
 
 {% tabs %}
 {% tab title="Symfony" %}
@@ -259,6 +245,21 @@ $messagingSystem->runConsoleCommand("ecotone:es:initialize-projection", ["name" 
 ```
 {% endtab %}
 {% endtabs %}
+
+And inside the projection we need to implement `ProjectionInitialization` to tell `Ecotone` what to do:
+
+```php
+#[ProjectionInitialization]
+public function initialization() : void
+{
+$this->connection->executeStatement(<<<SQL
+    CREATE TABLE IF NOT EXISTS in_progress_tickets (
+        ticket_id VARCHAR(36) PRIMARY KEY,
+        ticket_type VARCHAR(25)
+    )
+SQL);
+}
+```
 
 {% hint style="info" %}
 With Polling projections, your projection will be initialized automatically.\
